@@ -445,7 +445,7 @@ declare class UiRenderable extends UiNode {
    * @zh 节点的尺寸。
    * @en The size of the node.
    */
-  readonly size: Coord2;
+  readonly size:  Coord2;
   /**
    * @zh 节点的层级，用于确定节点的渲染顺序。
    * @en The z-index of the node, used to determine the rendering order.
