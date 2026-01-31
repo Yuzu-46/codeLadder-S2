@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@shares/*": ["../shares/*"],
+      "@server/*": ["./*"],
+      "@root/*": ["../*"]
+    }
+  },
+  "exclude": ["node_modules", "./**/dist"],
+  "include": [
+    "./types/**/*",
+    "./src/**/*",
+    "../i18n/**/*",
+    "../shares/**/*",
+    "../env.d.ts"
+  ]
+}

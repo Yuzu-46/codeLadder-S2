@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "box3lab.box3arenaprocolorprovider",
+    "box3lab.box3arenaprodataspace",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "lokalise.i18n-ally"
+  ]
+}
