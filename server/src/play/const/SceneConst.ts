@@ -30,9 +30,14 @@ export const SceneConfig: ISceneConfig<SceneType> = {
             desc: '一个汉堡店',
             terrainMap: [
                 {
-                    start: [0, 0],
-                    end: [10, 10],
+                    start: [10, 15],
+                    end: [52, 47],
                     voxelId: 137,
+                },
+                {
+                    start: [11, 16],
+                    end: [51, 46],
+                    voxelId: 0,
                 },
             ],
         },
