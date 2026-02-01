@@ -21,7 +21,7 @@ export const SceneConfig: ISceneConfig<SceneType> = {
     data: {
         main: null as unknown as ISceneData,
         hamburgerRestaurant: {
-            id: 1,
+            id: SceneType.HamburgerRestaurant,
             link: {
                 edit: '/edit/b1a1bd12335e46fde617',
                 play: '/play/0d02da68a974b1ddea79',

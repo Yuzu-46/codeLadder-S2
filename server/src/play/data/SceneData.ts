@@ -5,7 +5,7 @@ export interface ISceneData {
     /**
      * 场景ID
      */
-    id: number;
+    id: string;
     /**
      * 链接
      */
