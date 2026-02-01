@@ -15,4 +15,9 @@ export const enum PlayerType {
 /**
  * 可交互对象类型 / Interactable type
  */
-export const enum InteractableType {}
+export const enum InteractableType {
+    /**
+     * 传送NPC
+     */
+    PortalNpc = 'PortalNpc',
+}

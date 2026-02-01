@@ -1,12 +1,41 @@
-import type { ISceneConfig } from '../data/SceneData';
+import type { ISceneConfig, ISceneData } from '../data/SceneData';
 
-export const SceneConfig: ISceneConfig = {
-    data: [
-        {
+/**
+ * 场景类型 / Scene type
+ */
+export enum SceneType {
+    /**
+     * 主图
+     */
+    Main = 'main',
+    /**
+     * 汉堡店
+     */
+    HamburgerRestaurant = 'hamburgerRestaurant',
+}
+
+/**
+ * 场景配置 / Scene configuration
+ */
+export const SceneConfig: ISceneConfig<SceneType> = {
+    data: {
+        main: null as unknown as ISceneData,
+        hamburgerRestaurant: {
             id: 1,
+            link: {
+                edit: '/edit/b1a1bd12335e46fde617',
+                play: '/play/0d02da68a974b1ddea79',
+            },
             name: '汉堡店',
             desc: '一个汉堡店',
             terrainMap: [],
         },
-    ],
+    },
 };
+
+/**
+ * 场景列表 / Scene list
+ */
+export const SceneList = Object.values(SceneConfig.data).filter(
+    (scene) => !!scene
+);

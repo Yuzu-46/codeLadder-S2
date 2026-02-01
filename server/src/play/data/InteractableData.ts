@@ -1,3 +1,5 @@
+import type { SceneType } from '../const/SceneConst';
+
 /**
  * 可交互对象数据接口 / Interactable object data interface
  */
@@ -32,5 +34,5 @@ export interface IInteractableConfig {
     /**
      * 可交互对象数据列表
      */
-    data: IInteractableData[];
+    data: Record<SceneType, IInteractableData[]>;
 }

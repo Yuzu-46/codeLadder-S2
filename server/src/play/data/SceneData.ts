@@ -7,6 +7,10 @@ export interface ISceneData {
      */
     id: number;
     /**
+     * 链接
+     */
+    link: IMapLink;
+    /**
      * 场景名称
      */
     name: string;
@@ -23,9 +27,23 @@ export interface ISceneData {
 /**
  * 场景配置 / Scene configuration
  */
-export interface ISceneConfig {
+export interface ISceneConfig<T extends string> {
     /**
      * 场景数据列表 / Scene data list
      */
-    data: ISceneData[];
+    data: Record<T, ISceneData>;
+}
+
+/**
+ * 地图链接 / Map link
+ */
+export interface IMapLink {
+    /**
+     * 编辑链接 / Edit link
+     */
+    edit: string;
+    /**
+     * 游玩链接 / Play link
+     */
+    play: string;
 }
