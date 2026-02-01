@@ -17,7 +17,7 @@ export interface ISceneData {
     /**
      * 地形数据
      */
-    terrainMap: voxelId[][][];
+    terrainMap: voxelId[][];
 }
 
 /**
