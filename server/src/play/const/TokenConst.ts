@@ -13,11 +13,6 @@ export const enum PlayerType {
 }
 
 /**
- * NPC类型 / NPC type
+ * 可交互对象类型 / Interactable type
  */
-export const enum NpcType {
-    /**
-     * 仓库管理员NPC / Warehouse keeper NPC
-     */
-    WarehouseKeeper = 'WarehouseKeeper',
-}
+export const enum InteractableType {}

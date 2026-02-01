@@ -1,27 +1,30 @@
-import type { INpcData } from '../../data/NpcData';
+import type { IInteractableData } from '../../../data/InteractableData';
 
-export class BaseNpc {
+/**
+ * 可交互的 / Interactable
+ */
+export class Interactable {
     /**
-     * NPC的唯一标识
+     * 唯一标识
      */
     protected id: string = '';
     /**
-     * NPC实体
+     * 实体
      */
     protected entity: GameEntity | null = null;
     /**
-     * 新建NPC实例
+     * 新建可交互对象
      */
     constructor() {}
 
     /**
-     * 启动NPC
-     * @param config NPC配置
+     * 启动可交互对象
+     * @param config 可交互对象配置
      */
-    public start(config: INpcData): void {
+    public start(config: IInteractableData): void {
         this.id = config.id;
         this.entity = world.createEntity({
-            fixed: true, // NPC固定位置
+            fixed: true, // 默认固定位置
             ...config.entityConfig,
         });
         if (this.entity) {
@@ -30,9 +33,9 @@ export class BaseNpc {
             this.entity.interactRadius = config.interactRadius || 3;
             // entity.interactSound;
             this.entity.enableInteract = true;
-            console.log(`(Server) Npc ${this.id} start`);
+            console.log(`(Server) Interactable ${this.id} start`);
         } else {
-            console.warn(`(Server) Npc ${this.id} entity not found`);
+            console.warn(`(Server) Interactable ${this.id} entity not found`);
         }
 
         // this.bindInteractEvents();
@@ -41,31 +44,24 @@ export class BaseNpc {
     /**
      * 绑定交互事件
      */
-    private bindInteractEvents(): void {
-        const npc = this.entity || world.querySelector(`#${this.id}`)!;
-        if (npc) {
-            npc.onInteract((event) => {
-                this.onInteract(event);
-            });
-        }
-    }
+    private bindInteractEvents(): void {}
 
     /**
      * 处理交互事件
      * @param event 交互事件
      */
     public async onInteract(event: GameInteractEvent): Promise<void> {
-        console.log(`(Server) Npc ${this.id} interact`);
+        console.log(`(Server) Interactable ${this.id} interact`);
     }
 
     /**
-     * 销毁NPC
+     * 销毁可交互对象
      */
     public destroy(): void {
         if (this.entity) {
             this.entity.destroy();
             this.entity = null;
         }
-        console.log(`(Server) Npc ${this.id} destroy`);
+        console.log(`(Server) Interactable ${this.id} destroy`);
     }
 }

@@ -1,9 +1,9 @@
 /**
- * NPC数据 / NPC data
+ * 可交互对象数据接口 / Interactable object data interface
  */
-export interface INpcData {
+export interface IInteractableData {
     /**
-     * NPC的唯一标识
+     * 唯一标识
      */
     id: string;
     /**
@@ -11,7 +11,7 @@ export interface INpcData {
      */
     token: string;
     /**
-     * NPC实体配置
+     * 实体配置
      */
     entityConfig: Partial<GameEntityConfig>;
     /**
@@ -26,11 +26,11 @@ export interface INpcData {
 }
 
 /**
- * NPC配置接口 / NPC configuration interface
+ * 可交互对象配置接口 / Interactable object configuration interface
  */
-export interface INpcConfig {
+export interface IInteractableConfig {
     /**
-     * NPC数据列表
+     * 可交互对象数据列表
      */
-    data: INpcData[];
+    data: IInteractableData[];
 }
