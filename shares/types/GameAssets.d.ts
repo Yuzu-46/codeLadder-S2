@@ -1,5 +1,5 @@
 // 可在命令行执行【apc resource】重新同步资源
-// 生成时间: 2026年1月31日星期六 GMT+8 17:13:13
+// 生成时间: 2026年2月1日星期日 GMT+8 16:06:27
 
 /**
  * @description [ID:100547352]地图音频资源
@@ -15,9 +15,9 @@ type GamePictureAssets = never;
 
 /**
  * @description [ID:100547352]地图模型资源
- * 共 3 个资源
+ * 共 4 个资源
  */
-type GameModelAssets = 'mesh/盘子.vb' | 'mesh/平底锅.vb' | 'mesh/砧板.vb' ;
+type GameModelAssets = 'mesh/npc_7.vb' | 'mesh/盘子.vb' | 'mesh/平底锅.vb' | 'mesh/砧板.vb' ;
 
 /**
  * @description [ID:100547352]地图商城资源
