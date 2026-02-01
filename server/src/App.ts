@@ -4,6 +4,7 @@ import { PlayerMgr } from './play/mgr/PlayerMgr';
 import { PlayerDataMgr } from './play/mgr/PlayerDataMgr';
 import { RemoteMgr } from './play/mgr/RemoteMgr';
 import { InteractableMgr } from './play/mgr/InteractableMgr';
+import { SceneMgr } from './play/mgr/SceneMgr';
 
 export class App extends Singleton<App>() {
     /** 玩家管理器 / Player manager */
@@ -14,6 +15,8 @@ export class App extends Singleton<App>() {
     private _remoteMgr: RemoteMgr = RemoteMgr.instance;
     /** 可交互对象管理器 / Interactable manager */
     private _interactableMgr: InteractableMgr = InteractableMgr.instance;
+    /** 场景管理器 / Scene manager */
+    private _sceneMgr: SceneMgr = SceneMgr.instance;
 
     /**
      * 应用程序启动方法 / Application start method
@@ -27,5 +30,6 @@ export class App extends Singleton<App>() {
         this._playerMgr.start();
         this._remoteMgr.start();
         this._interactableMgr.start(id);
+        this._sceneMgr.start(id);
     }
 }
