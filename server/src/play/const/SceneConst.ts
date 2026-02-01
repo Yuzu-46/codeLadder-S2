@@ -29,6 +29,7 @@ export const SceneConfig: ISceneConfig<SceneType> = {
             name: '汉堡店',
             desc: '一个汉堡店',
             terrainMap: [
+                // 围墙
                 {
                     start: [10, 15],
                     end: [52, 47],
@@ -38,6 +39,12 @@ export const SceneConfig: ISceneConfig<SceneType> = {
                     start: [11, 16],
                     end: [51, 46],
                     voxelId: 0,
+                },
+                // 食物出口
+                {
+                    start: [52, 28],
+                    end: [52, 34],
+                    voxelId: 650,
                 },
             ],
         },
