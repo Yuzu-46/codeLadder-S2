@@ -20,8 +20,15 @@ export interface ISceneData {
     desc: string;
     /**
      * 地形数据
+     * @property start - 地形起始坐标 / Terrain start position
+     * @property end - 地形结束坐标 / Terrain end position
+     * @property voxelId - 方块ID / Voxel ID
      */
-    terrainMap: voxelId[][];
+    terrainMap: {
+        start: [number, number];
+        end: [number, number];
+        voxelId: voxelId;
+    }[];
 }
 
 /**
