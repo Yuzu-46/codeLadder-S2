@@ -3,6 +3,7 @@ import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '@src/play/const/TokenConst';
 import { SceneList } from '../../../const/SceneConst';
 import type { IInteractableData } from '../../../data/InteractableData';
+import type { IMapLink } from '../../../data/SceneData';
 
 /**
  * 传送门NPC / Portal NPC
@@ -26,6 +27,30 @@ export class PortalNpc extends Interactable {
                 content: '请选择要进入的场景',
                 options: this._sceneList.map((scene) => scene.name),
             });
+
+            if (result) {
+                try {
+                    this.teleport(entity, this._sceneList[result.index].link);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
         }
+    }
+
+    private teleport(entity: GamePlayerEntity, link: IMapLink) {
+        const { url } = entity.player;
+
+        const host =
+            url.host === 'view.dao3.fun'
+                ? 'https://dao3.fun'
+                : 'https://goboxgame.com';
+
+        const path = url.pathname.includes('/e/') ? link.edit : link.play;
+
+        entity.player.link(host + path, {
+            isConfirm: false,
+            isNewTab: false,
+        });
     }
 }
