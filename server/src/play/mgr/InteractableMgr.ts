@@ -21,14 +21,14 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
      * 启动 / Start
      * @param id 地图ID / Map ID
      */
-    public start(id: string): void {
+    public start(mapId: string): void {
         this.registerInteractables();
         try {
-            InteractableConfig.data[id as SceneType].forEach((config) => {
+            InteractableConfig.data[mapId as SceneType].forEach((config) => {
                 this.createInteractable(config);
             });
         } catch (e) {
-            console.warn('(Server)', e);
+            console.warn(`(Server) InteractableMgr ${e}, mapId:${mapId}`);
         }
         this.bindInteractEvents();
     }
