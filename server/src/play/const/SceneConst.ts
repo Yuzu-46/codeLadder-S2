@@ -40,6 +40,16 @@ export const SceneConfig: ISceneConfig<SceneType> = {
                     end: [51, 46],
                     voxelId: 0,
                 },
+                {
+                    start: [31, 16],
+                    end: [31, 26],
+                    voxelId: 137,
+                },
+                {
+                    start: [31, 36],
+                    end: [31, 46],
+                    voxelId: 137,
+                },
                 // 食物出口
                 {
                     start: [52, 28],
