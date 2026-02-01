@@ -4,6 +4,8 @@ import { InteractableType } from '../const/TokenConst';
 import type { IInteractableData } from '../data/InteractableData';
 import { InteractableConfig } from '../const/InteractableConst';
 import type { Interactable } from '../entity/interactable/base/Interactable';
+import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
+import type { SceneType } from '../const/SceneConst';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -19,12 +21,14 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
      * 启动 / Start
      * @param id 地图ID / Map ID
      */
-    public start(id: number | string): void {
+    public start(id: string): void {
         this.registerInteractables();
-        if (id === 'main') {
-            InteractableConfig.data.forEach((config) => {
+        try {
+            InteractableConfig.data[id as SceneType].forEach((config) => {
                 this.createInteractable(config);
             });
+        } catch (e) {
+            console.warn('(Server)', e);
         }
         this.bindInteractEvents();
     }
@@ -32,7 +36,16 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
     /**
      * 注册可交互对象 / Register interactable objects
      */
-    public registerInteractables(): void {}
+    public registerInteractables(): void {
+        factory.registerByToken(
+            InteractableType.PortalNpc as string,
+            PortalNpc,
+            {
+                singleton: false,
+                token: InteractableType.PortalNpc,
+            }
+        );
+    }
 
     /**
      * 绑定交互事件 / Bind interact events
@@ -47,6 +60,8 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         const interactable = this._interactableMap.get(event.targetEntity.id);
         if (interactable) {
             interactable.onInteract(event);
+        } else {
+            console.warn('(Server)', 'No interactable found');
         }
     }
 
