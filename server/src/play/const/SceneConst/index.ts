@@ -1,4 +1,4 @@
-import type { ISceneConfig, ISceneData } from '../data/SceneData';
+import type { ISceneConfig, ISceneData } from '../../data/SceneData';
 
 /**
  * 场景类型 / Scene type
