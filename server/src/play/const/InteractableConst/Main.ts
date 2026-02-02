@@ -4,7 +4,7 @@ import { InteractableType } from '../TokenConst';
 /**
  * 主场景交互对象数据 / Main scene interactable data
  */
-const main_InteractableData: IInteractableData[] = [
+const main: IInteractableData[] = [
     {
         id: InteractableType.PortalNpc,
         token: InteractableType.PortalNpc,
@@ -19,4 +19,4 @@ const main_InteractableData: IInteractableData[] = [
     },
 ];
 
-export default main_InteractableData;
+export default main;

@@ -4,7 +4,7 @@ import { SceneType } from './SceneType';
 /**
  * 汉堡店场景 / Hamburger restaurant scene
  */
-export const hamburgerRestaurant: ISceneData = {
+const hamburgerRestaurant: ISceneData = {
     id: SceneType.HamburgerRestaurant,
     link: {
         edit: '/edit/b1a1bd12335e46fde617',
@@ -42,3 +42,5 @@ export const hamburgerRestaurant: ISceneData = {
         },
     ],
 };
+
+export default hamburgerRestaurant;

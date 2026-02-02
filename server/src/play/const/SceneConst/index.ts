@@ -1,7 +1,7 @@
 import type { ISceneConfig, ISceneData } from '../../data/SceneData';
 import { SceneType } from '../../const/SceneConst/SceneType';
-import { codeLadderS2 } from './CodeLadderS2';
-import { hamburgerRestaurant } from './HamburgerRestaurant';
+import codeLadderS2 from './CodeLadderS2';
+import hamburgerRestaurant from './HamburgerRestaurant';
 
 /**
  * 场景配置 / Scene configuration

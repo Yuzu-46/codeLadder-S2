@@ -4,7 +4,7 @@ import { SceneType } from './SceneType';
 /**
  * 天梯S2 定制场景 / CodeLadderS2 Scene
  */
-export const codeLadderS2: ISceneData = {
+const codeLadderS2: ISceneData = {
     id: SceneType.CodeLadderS2,
     link: {
         edit: '/edit/b28b47cb47c6dfe8152f',
@@ -42,3 +42,5 @@ export const codeLadderS2: ISceneData = {
         },
     ],
 };
+
+export default codeLadderS2;
