@@ -2,7 +2,7 @@ import type { IInteractableData } from '../../data/InteractableData';
 import { InteractableType } from '../TokenConst';
 
 /**
- * 主场景交互对象数据 / Main scene interactable data
+ * 主场景可交互对象数据 / Main scene interactable data
  */
 const main: IInteractableData[] = [
     {

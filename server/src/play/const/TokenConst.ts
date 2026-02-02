@@ -20,4 +20,8 @@ export const enum InteractableType {
      * 传送NPC
      */
     PortalNpc = 'PortalNpc',
+    /**
+     * 桌子
+     */
+    TableProp = 'TableProp',
 }
