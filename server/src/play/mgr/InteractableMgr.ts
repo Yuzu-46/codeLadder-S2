@@ -4,8 +4,9 @@ import { InteractableType } from '../const/TokenConst';
 import type { IInteractableData } from '../data/InteractableData';
 import { InteractableConfig } from '../const/InteractableConst';
 import type { Interactable } from '../entity/interactable/base/Interactable';
-import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
 import type { SceneType } from '../const/SceneConst';
+import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
+import { TableProp } from '../entity/interactable/prop/TableProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -45,6 +46,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
                 token: InteractableType.PortalNpc,
             }
         );
+
+        factory.registerByToken(
+            InteractableType.TableProp as string,
+            TableProp,
+            {
+                singleton: false,
+                token: InteractableType.TableProp,
+            }
+        );
     }
 
     /**
@@ -61,7 +71,7 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         if (interactable) {
             interactable.onInteract(event);
         } else {
-            console.warn('(Server)', 'No interactable found');
+            console.warn('(Server) InteractableMgr no interactable found');
         }
     }
 

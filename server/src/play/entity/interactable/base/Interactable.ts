@@ -24,6 +24,7 @@ export class Interactable {
     public start(config: IInteractableData): void {
         this.id = config.id;
         this.entity = world.createEntity({
+            id: this.id,
             fixed: true, // 默认固定位置
             ...config.entityConfig,
         });

@@ -9,7 +9,6 @@ const main: IInteractableData[] = [
         id: InteractableType.PortalNpc,
         token: InteractableType.PortalNpc,
         entityConfig: {
-            id: InteractableType.PortalNpc,
             mesh: 'mesh/npc_7.vb',
             position: new GameVector3(20, 2.5, 20),
             meshScale: new GameVector3(0.0625, 0.0625, 0.0625),

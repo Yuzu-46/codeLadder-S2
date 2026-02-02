@@ -6,7 +6,7 @@ import { InteractableType } from '../TokenConst';
  * @property x - x坐标 / x coordinate
  * @property z - z坐标 / z coordinate
  */
-const tablePositions: { x: number; z: number }[] = [{ x: 11, z: 16 }];
+const tablePositions: { x: number; z: number }[] = [{ x: 11.5, z: 16.5 }];
 
 /**
  * 天梯S2 定制可交互对象数据 / CodeLadderS2 Custom Interactable Data
