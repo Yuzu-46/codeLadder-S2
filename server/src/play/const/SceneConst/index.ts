@@ -1,22 +1,7 @@
 import type { ISceneConfig, ISceneData } from '../../data/SceneData';
-
-/**
- * 场景类型 / Scene type
- */
-export enum SceneType {
-    /**
-     * 主图
-     */
-    Main = 'main',
-    /**
-     * 天梯S2 定制
-     */
-    CodeLadderS2 = 'codeLadderS2',
-    /**
-     * 汉堡店
-     */
-    HamburgerRestaurant = 'hamburgerRestaurant',
-}
+import { SceneType } from '../../const/SceneConst/SceneType';
+import { codeLadderS2 } from './CodeLadderS2';
+import { hamburgerRestaurant } from './HamburgerRestaurant';
 
 /**
  * 场景配置 / Scene configuration
@@ -24,82 +9,8 @@ export enum SceneType {
 export const SceneConfig: ISceneConfig<SceneType> = {
     data: {
         main: null as unknown as ISceneData,
-        codeLadderS2: {
-            id: SceneType.CodeLadderS2,
-            link: {
-                edit: '/edit/b28b47cb47c6dfe8152f',
-                play: '/play/d0a4feaab63396a28755',
-            },
-            name: '天梯S2 定制',
-            desc: '为参加天梯S2定制的场景',
-            terrainMap: [
-                // 围墙
-                {
-                    start: [10, 15],
-                    end: [52, 47],
-                    voxelId: 137,
-                },
-                {
-                    start: [11, 16],
-                    end: [51, 46],
-                    voxelId: 0,
-                },
-                {
-                    start: [31, 16],
-                    end: [31, 26],
-                    voxelId: 137,
-                },
-                {
-                    start: [31, 36],
-                    end: [31, 46],
-                    voxelId: 137,
-                },
-                // 出餐口
-                {
-                    start: [52, 28],
-                    end: [52, 34],
-                    voxelId: 650,
-                },
-            ],
-        },
-        hamburgerRestaurant: {
-            id: SceneType.HamburgerRestaurant,
-            link: {
-                edit: '/edit/b1a1bd12335e46fde617',
-                play: '/play/0d02da68a974b1ddea79',
-            },
-            name: '汉堡店',
-            desc: '一个汉堡店',
-            terrainMap: [
-                // 围墙
-                {
-                    start: [10, 15],
-                    end: [52, 47],
-                    voxelId: 137,
-                },
-                {
-                    start: [11, 16],
-                    end: [51, 46],
-                    voxelId: 0,
-                },
-                {
-                    start: [31, 16],
-                    end: [31, 26],
-                    voxelId: 137,
-                },
-                {
-                    start: [31, 36],
-                    end: [31, 46],
-                    voxelId: 137,
-                },
-                // 出餐口
-                {
-                    start: [52, 28],
-                    end: [52, 34],
-                    voxelId: 650,
-                },
-            ],
-        },
+        codeLadderS2,
+        hamburgerRestaurant,
     },
 };
 
@@ -109,3 +20,4 @@ export const SceneConfig: ISceneConfig<SceneType> = {
 export const SceneList = Object.values(SceneConfig.data).filter(
     (scene) => !!scene
 );
+export { SceneType };
