@@ -1,5 +1,6 @@
 import type { IInteractableConfig } from '../../data/InteractableData';
 import main from './Main';
+import codeLadderS2 from './CodeLadderS2';
 
 /**
  * 可交互对象配置 / Interactable object configuration
@@ -7,7 +8,7 @@ import main from './Main';
 export const InteractableConfig: IInteractableConfig = {
     data: {
         main,
-        codeLadderS2: [],
+        codeLadderS2,
         hamburgerRestaurant: [],
     },
 };
