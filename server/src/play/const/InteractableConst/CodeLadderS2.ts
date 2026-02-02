@@ -22,7 +22,7 @@ const codeLadderS2: IInteractableData[] = [
         entityConfig: {
             mesh: 'mesh/医院桌子.vb',
             position: new GameVector3(position.x, 1.5, position.z),
-            meshScale: new GameVector3(0.06, 0.1, 0.168),
+            meshScale: new GameVector3(0.055, 0.1, 0.154),
         },
         interactHint: '',
         interactRadius: 2,
