@@ -20,6 +20,7 @@ export const InteractableConfig: IInteractableConfig = {
                 interactRadius: 3,
             },
         ],
+        codeLadderS2: [],
         hamburgerRestaurant: [],
     },
 };
