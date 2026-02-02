@@ -50,7 +50,7 @@ export const SceneConfig: ISceneConfig<SceneType> = {
                     end: [31, 46],
                     voxelId: 137,
                 },
-                // 食物出口
+                // 出餐口
                 {
                     start: [52, 28],
                     end: [52, 34],
