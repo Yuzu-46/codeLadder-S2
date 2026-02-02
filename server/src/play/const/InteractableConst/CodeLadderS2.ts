@@ -6,7 +6,7 @@ import { InteractableType } from '../TokenConst';
  * @property x - x坐标 / x coordinate
  * @property z - z坐标 / z coordinate
  */
-const tablePositions: { x: number; z: number }[] = [{ x: 11.5, z: 16.5 }];
+const tablePositions: { x: number; z: number }[] = [{ x: 12, z: 17 }];
 
 /**
  * 天梯S2 定制可交互对象数据 / CodeLadderS2 Custom Interactable Data
@@ -17,9 +17,8 @@ const codeLadderS2: IInteractableData[] = [
         token: InteractableType.TableProp,
         entityConfig: {
             mesh: 'mesh/医院桌子.vb',
-            position: new GameVector3(position.x, 1, position.z),
-            rotation: new GameVector3(0, 0, 0),
-            scale: new GameVector3(1, 1, 1),
+            position: new GameVector3(position.x, 1.5, position.z),
+            meshScale: new GameVector3(0.06, 0.1, 0.168),
         },
         interactHint: '',
     })),
