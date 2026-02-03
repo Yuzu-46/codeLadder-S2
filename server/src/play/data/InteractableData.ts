@@ -17,14 +17,25 @@ export interface IInteractableData {
      */
     entityConfig: Partial<GameEntityConfig>;
     /**
-     * 交互提示文本
+     * 交互颜色
+     * @default white
      */
-    interactHint: string;
+    interactColor?: GameRGBColor;
     /**
-     * 交互距离
+     * 交互提示文本
+     * @default undefined
+     */
+    interactHint?: string;
+    /**
+     * 交互半径
      * @default 3
      */
     interactRadius?: number;
+    /**
+     * 交互时的声音配置
+     * @default undefined
+     */
+    interactSound?: GameSoundEffectConfig | undefined;
 }
 
 /**

@@ -27,13 +27,14 @@ export class Interactable {
             id: this.id,
             fixed: true, // 默认固定位置
             ...config.entityConfig,
+            enableInteract: true,
+            interactColor:
+                config.interactColor || new GameRGBColor(255, 255, 255),
+            interactHint: config.interactHint,
+            interactRadius: config.interactRadius || 3,
+            interactSound: undefined,
         });
         if (this.entity) {
-            this.entity.interactColor.copy(new GameRGBColor(255, 255, 255));
-            this.entity.interactHint = config.interactHint;
-            this.entity.interactRadius = config.interactRadius || 3;
-            // entity.interactSound;
-            this.entity.enableInteract = true;
             console.log(`(Server) Interactable ${this.id} start`);
         } else {
             console.warn(`(Server) Interactable ${this.id} entity not found`);
