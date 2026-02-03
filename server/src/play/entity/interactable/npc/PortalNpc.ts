@@ -15,6 +15,7 @@ export class PortalNpc extends Interactable {
     public start(config: IInteractableData): void {
         super.start(config);
         this.entity?.motion.setDefaultMotionByName('talk');
+        console.log('(Server) PortalNpc start with id ', config.id);
     }
 
     public async onInteract(event: GameInteractEvent): Promise<void> {

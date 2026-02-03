@@ -24,4 +24,8 @@ export const enum InteractableType {
      * 桌子
      */
     TableProp = 'TableProp',
+    /**
+     * 灶台
+     */
+    StoveProp = 'StoveProp',
 }

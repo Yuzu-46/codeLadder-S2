@@ -1,15 +1,15 @@
 import { Interactable } from '../base/Interactable';
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
-import { InteractableType } from '@src/play/const/TokenConst';
+import { InteractableType } from '../../../const/TokenConst';
 import type { IInteractableData } from '../../../data/InteractableData';
 
 /**
- * 桌子道具 / Table Prop
+ * 灶台道具 / Stove Prop
  */
-@FactoryToken(InteractableType.TableProp)
-export class TableProp extends Interactable {
+@FactoryToken(InteractableType.StoveProp)
+export class StoveProp extends Interactable {
     public start(config: IInteractableData): void {
         super.start(config);
-        console.log('(Server) TableProp start with id ', config.id);
+        console.log('(Server) StoveProp start with id ', config.id);
     }
 }

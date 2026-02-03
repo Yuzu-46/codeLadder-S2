@@ -34,11 +34,6 @@ export class Interactable {
             interactRadius: config.interactRadius || 3,
             interactSound: config.interactSound,
         });
-        if (this.entity) {
-            console.log(`(Server) Interactable ${this.id} start`);
-        } else {
-            console.warn(`(Server) Interactable ${this.id} entity not found`);
-        }
 
         // this.bindInteractEvents();
     }
