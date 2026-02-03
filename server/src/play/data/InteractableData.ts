@@ -23,7 +23,7 @@ export interface IInteractableData {
     interactColor?: GameRGBColor;
     /**
      * 交互提示文本
-     * @default undefined
+     * @default '''
      */
     interactHint?: string;
     /**

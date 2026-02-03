@@ -14,7 +14,6 @@ const main: IInteractableData[] = [
             meshScale: new GameVector3(0.0625, 0.0625, 0.0625),
         },
         interactHint: '传送',
-        interactRadius: 3,
     },
 ];
 

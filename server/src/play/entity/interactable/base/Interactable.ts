@@ -30,9 +30,9 @@ export class Interactable {
             enableInteract: true,
             interactColor:
                 config.interactColor || new GameRGBColor(255, 255, 255),
-            interactHint: config.interactHint,
+            interactHint: config.interactHint || '',
             interactRadius: config.interactRadius || 3,
-            interactSound: undefined,
+            interactSound: config.interactSound,
         });
         if (this.entity) {
             console.log(`(Server) Interactable ${this.id} start`);
