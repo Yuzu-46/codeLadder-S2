@@ -40,7 +40,8 @@
     "@dao3fun/react-motion": "^0.2.2",
     "@dao3fun/react-ui": "^0.4.1",
     "i18next": "^25.8.0",
-    "react-i18next": "^16.5.4"
+    "react-i18next": "^16.5.4",
+    "reflect-metadata": "^0.2.2"
   },
   "exports": {
     ".": {
