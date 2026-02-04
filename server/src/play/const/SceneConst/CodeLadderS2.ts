@@ -16,28 +16,28 @@ const codeLadderS2: ISceneData = {
         // 围墙
         {
             start: [10, 15],
-            end: [52, 46],
+            end: [49, 46],
             voxelId: 137,
         },
         {
             start: [11, 16],
-            end: [51, 45],
+            end: [48, 45],
             voxelId: 0,
         },
         {
-            start: [31, 16],
-            end: [31, 26],
+            start: [29, 16],
+            end: [30, 25],
             voxelId: 137,
         },
         {
-            start: [31, 35],
-            end: [31, 45],
+            start: [29, 34],
+            end: [30, 45],
             voxelId: 137,
         },
         // 出餐口
         {
-            start: [52, 28],
-            end: [52, 33],
+            start: [49, 28],
+            end: [49, 33],
             voxelId: 650,
         },
     ],
