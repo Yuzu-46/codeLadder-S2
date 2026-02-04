@@ -9,6 +9,7 @@ import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
 import { TableProp } from '../entity/interactable/prop/TableProp';
 import { StoveProp } from '../entity/interactable/prop/StoveProp';
 import { FoodBoxProp } from '../entity/interactable/prop/FoodBoxProp';
+import { BinProp } from '../entity/interactable/prop/BinProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -75,6 +76,11 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
                 token: InteractableType.FoodBoxProp,
             }
         );
+
+        factory.registerByToken(InteractableType.BinProp as string, BinProp, {
+            singleton: false,
+            token: InteractableType.BinProp,
+        });
     }
 
     /**

@@ -32,4 +32,8 @@ export const enum InteractableType {
      * 无限食材箱
      */
     FoodBoxProp = 'FoodBoxProp',
+    /**
+     * 垃圾箱
+     */
+    BinProp = 'BinProp',
 }

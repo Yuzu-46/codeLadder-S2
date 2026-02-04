@@ -143,7 +143,7 @@ const codeLadderS2: IInteractableData[] = [
         token: InteractableType.StoveProp,
         entityConfig: {
             mesh: 'mesh/灶台.vb',
-            position: new GameVector3(position.x, 1.8, position.z),
+            position: new GameVector3(position.x, 1.5, position.z),
             meshScale: new GameVector3(0.125, 0.125, 0.125),
             meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
                 Math.PI / 2
@@ -151,6 +151,16 @@ const codeLadderS2: IInteractableData[] = [
         },
         interactRadius: 2,
     })),
+    {
+        id: 'bin',
+        token: InteractableType.BinProp,
+        entityConfig: {
+            mesh: 'mesh/垃圾桶.vb',
+            position: new GameVector3(12, 1.8, 43),
+            meshScale: new GameVector3(0.15, 0.15, 0.15),
+        },
+        interactRadius: 2,
+    },
 ];
 
 export default codeLadderS2;
