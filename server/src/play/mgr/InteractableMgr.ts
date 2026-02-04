@@ -121,13 +121,18 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
     /**
      * 通过配置创建可交互对象 / Create interactable by config
      * @param config 可交互对象配置 / Interactable config
+     * @param entity 可交互对象实体实例 / Interactable entity instance
+     * 如果entity不为空，则使用entity作为可交互对象实体实例，不会创建新的实体实例
      */
-    public createInteractable(config: IInteractableData): Interactable {
+    public createInteractable(
+        config: IInteractableData,
+        entity?: GameEntity
+    ): Interactable {
         const interactable = factory.createByToken(
             config.token
         ) as Interactable;
         this.addInteractable(config.id, interactable);
-        interactable.start(config);
+        interactable.start(config, entity);
         return interactable;
     }
 
