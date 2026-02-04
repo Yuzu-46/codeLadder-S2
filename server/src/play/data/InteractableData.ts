@@ -1,5 +1,5 @@
 import type { FoodType } from '../const/FoodConst';
-import type { SceneType } from '../const/SceneConst';
+import type { SceneType } from '../config/SceneConfig';
 
 /**
  * 可交互对象数据接口 / Interactable object data interface

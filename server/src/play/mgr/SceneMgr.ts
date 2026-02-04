@@ -1,5 +1,5 @@
 import { Singleton } from '../../framework/common/Singleton';
-import { SceneConfig, SceneType } from '../const/SceneConst';
+import { SceneConfig, SceneType } from '../config/SceneConfig';
 import type { ISceneData } from '../data/SceneData';
 
 /**

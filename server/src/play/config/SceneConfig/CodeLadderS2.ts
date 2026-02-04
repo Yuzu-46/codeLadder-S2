@@ -1,5 +1,5 @@
 import type { ISceneData } from '../../data/SceneData';
-import { SceneType } from './SceneType';
+import { SceneType } from '../../const/SceneConst';
 
 /**
  * 天梯S2 定制场景 / CodeLadderS2 Scene

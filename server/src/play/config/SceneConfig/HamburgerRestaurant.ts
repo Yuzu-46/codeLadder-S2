@@ -1,5 +1,5 @@
 import type { ISceneData } from '../../data/SceneData';
-import { SceneType } from './SceneType';
+import { SceneType } from '../../const/SceneConst';
 
 /**
  * 汉堡店场景 / Hamburger restaurant scene

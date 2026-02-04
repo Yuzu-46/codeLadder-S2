@@ -1,7 +1,7 @@
 import { Interactable } from '../base/Interactable';
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '@src/play/const/TokenConst';
-import { SceneList } from '../../../const/SceneConst';
+import { SceneList } from '../../../config/SceneConfig';
 import type { IInteractableData } from '../../../data/InteractableData';
 import type { IMapLink } from '../../../data/SceneData';
 

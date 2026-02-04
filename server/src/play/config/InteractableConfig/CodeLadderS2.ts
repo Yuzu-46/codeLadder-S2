@@ -2,8 +2,8 @@ import type {
     FoodBoxPropConfig,
     IInteractableData,
 } from '../../data/InteractableData';
-import { InteractableType } from '../TokenConst';
-import type { FoodType } from '../FoodConst';
+import { InteractableType } from '../../const/TokenConst';
+import type { FoodType } from '../../const/FoodConst';
 
 /**
  * 桌子位置 / Table positions
