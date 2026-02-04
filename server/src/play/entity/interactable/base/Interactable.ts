@@ -20,43 +20,28 @@ export class Interactable {
     /**
      * 启动可交互对象
      * @param config 可交互对象配置
-     * @param entity 可交互对象实体
-     * 如果entity不为空，则使用entity作为实体
      */
-    public start(config: IInteractableData, entity?: GameEntity): void {
+    public start(config: IInteractableData): void {
         this.id = config.id;
-        if (entity) {
-            this.entity = entity;
-        } else {
-            this.entity = world.createEntity({
-                id: this.id,
-                fixed: true, // 默认固定位置
-                ...config.entityConfig,
-            });
-        }
+        this.entity = world.createEntity({
+            id: this.id,
+            fixed: true, // 默认固定位置
+            ...config.entityConfig,
+            enableInteract: true,
+            interactColor:
+                config.interactColor || new GameRGBColor(255, 255, 255),
+            interactHint: config.interactHint || '',
+            interactRadius: config.interactRadius || 3,
+            interactSound: config.interactSound,
+        });
 
-        this.bindInteractEvents(config);
+        // this.bindInteractEvents();
     }
 
     /**
-     * 绑定交互事件（开启交互）
+     * 绑定交互事件
      */
-    private bindInteractEvents(config: IInteractableData): void {
-        const { entity } = this;
-        const { interactColor, interactHint, interactRadius, interactSound } =
-            config;
-        if (entity) {
-            entity.enableInteract = true;
-            if (interactColor) {
-                entity.interactColor = interactColor;
-            }
-            entity.interactHint = interactHint || '';
-            entity.interactRadius = interactRadius || 3;
-            if (interactSound) {
-                entity.interactSound = interactSound;
-            }
-        }
-    }
+    private bindInteractEvents(): void {}
 
     /**
      * 处理交互事件
