@@ -1,3 +1,4 @@
+import type { FoodType } from '../const/FoodConst';
 import type { SceneType } from '../const/SceneConst';
 
 /**
@@ -46,4 +47,14 @@ export interface IInteractableConfig {
      * 可交互对象数据列表
      */
     data: Record<SceneType, IInteractableData[]>;
+}
+
+/**
+ * 无限食材箱配置接口 / Infinite ingredients box configuration interface
+ */
+export interface FoodBoxPropConfig extends IInteractableData {
+    /**
+     * 食材类型
+     */
+    foodType: FoodType;
 }

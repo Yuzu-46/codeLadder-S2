@@ -28,4 +28,8 @@ export const enum InteractableType {
      * 灶台
      */
     StoveProp = 'StoveProp',
+    /**
+     * 无限食材箱
+     */
+    FoodBoxProp = 'FoodBoxProp',
 }

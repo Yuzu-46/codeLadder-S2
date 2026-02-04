@@ -8,6 +8,7 @@ import type { SceneType } from '../const/SceneConst';
 import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
 import { TableProp } from '../entity/interactable/prop/TableProp';
 import { StoveProp } from '../entity/interactable/prop/StoveProp';
+import { FoodBoxProp } from '../entity/interactable/prop/FoodBoxProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -63,6 +64,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
             {
                 singleton: false,
                 token: InteractableType.StoveProp,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.FoodBoxProp as string,
+            FoodBoxProp,
+            {
+                singleton: false,
+                token: InteractableType.FoodBoxProp,
             }
         );
     }
