@@ -23,25 +23,42 @@ export class Interactable {
      */
     public start(config: IInteractableData): void {
         this.id = config.id;
-        this.entity = world.createEntity({
-            id: this.id,
-            fixed: true, // 默认固定位置
-            ...config.entityConfig,
-            enableInteract: true,
-            interactColor:
-                config.interactColor || new GameRGBColor(255, 255, 255),
-            interactHint: config.interactHint || '',
-            interactRadius: config.interactRadius || 3,
-            interactSound: config.interactSound,
-        });
+        if (config.entity) {
+            this.entity = config.entity;
+        } else if (config.entityConfig) {
+            this.entity = world.createEntity({
+                id: this.id,
+                fixed: true, // 默认固定位置
+                ...config.entityConfig,
+            });
+        } else {
+            throw new Error(
+                '(Server) Interactable entity or entityConfig is required'
+            );
+        }
 
-        // this.bindInteractEvents();
+        this.bindInteractEvents(config);
     }
 
     /**
-     * 绑定交互事件
+     * 绑定交互事件（开启交互）
      */
-    private bindInteractEvents(): void {}
+    private bindInteractEvents(config: IInteractableData): void {
+        const { entity } = this;
+        const { interactColor, interactHint, interactRadius, interactSound } =
+            config;
+        if (entity) {
+            entity.enableInteract = true;
+            if (interactColor) {
+                entity.interactColor = interactColor;
+            }
+            entity.interactHint = interactHint || '';
+            entity.interactRadius = interactRadius || 3;
+            if (interactSound) {
+                entity.interactSound = interactSound;
+            }
+        }
+    }
 
     /**
      * 处理交互事件

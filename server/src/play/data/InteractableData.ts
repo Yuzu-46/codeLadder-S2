@@ -16,7 +16,12 @@ export interface IInteractableData {
     /**
      * 实体配置
      */
-    entityConfig: Partial<GameEntityConfig>;
+    entityConfig?: Partial<GameEntityConfig>;
+    /**
+     * 实体
+     * 如果实体存在，则不会使用实体配置再创建实体
+     */
+    entity?: GameEntity;
     /**
      * 交互颜色
      * @default white
