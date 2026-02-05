@@ -9,6 +9,9 @@ import { Observer } from '../../../framework/common/Observer';
 import type { MessageData } from '@shares/data/Message';
 import i18n from '@root/i18n';
 import type { IPlayerCarryingPropData } from '../../data/GamePlayerData';
+import { InteractableMgr } from '../../mgr/InteractableMgr';
+import { MovablePropConfig } from '../../config/MovablePropConfig';
+import type { IContainerPropData } from '../../data/MovablePropData';
 
 /**
  * 玩家参与游戏
@@ -89,5 +92,44 @@ export class InGamePlayer extends BasePlayer {
         // 如果玩家处于挂机状态，按下任意键后恢复游戏状态
         this.gameState = PlayerGameState.PLAYING;
         // console.log('(Server) GamePlayer onKeyDown, keyCode:', event.keyCode);
+    }
+
+    /**
+     * 在指定位置放置道具 / Place a prop at the specified position
+     * @param position 位置 / Position
+     */
+    public async placeProp(position: GameVector3): Promise<void> {
+        if (this.carryingProp) {
+            if (this.carryingProp.container) {
+                const config = MovablePropConfig.data[
+                    this.carryingProp.container.type
+                ] as IContainerPropData;
+                InteractableMgr.instance.createInteractable({
+                    ...config.interactableConfig,
+                    entityConfig: {
+                        mesh: config.mesh,
+                        position,
+                        ...config.interactableConfig.entityConfig,
+                    },
+                });
+            }
+            this.carryingProp.foods.forEach((prop) => {
+                const config = MovablePropConfig.data[
+                    prop.type
+                ] as IContainerPropData;
+                InteractableMgr.instance.createInteractable({
+                    ...config.interactableConfig,
+                    entityConfig: {
+                        mesh: config.mesh,
+                        position,
+                        ...config.interactableConfig.entityConfig,
+                    },
+                });
+            });
+            this.carryingProp = null;
+            this.entity?.player
+                .wearables(GameBodyPart.TORSO)
+                .forEach((wearable) => wearable.remove());
+        }
     }
 }

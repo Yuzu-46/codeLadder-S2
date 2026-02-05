@@ -21,12 +21,12 @@ export interface ICarryingProp<T, S> {
  */
 export interface IPlayerCarryingPropData {
     /**
-     * 道具数据 / Prop data
+     * 容器数据 / Container data
      */
-    data: ICarryingProp<ContainerType, ContainerState>;
+    container?: ICarryingProp<ContainerType, ContainerState>;
 
     /**
-     * 子项 / Subitem
+     * 食材数据 / Food data
      */
-    children?: ICarryingProp<FoodType, FoodState>[];
+    foods: ICarryingProp<FoodType, FoodState>[];
 }

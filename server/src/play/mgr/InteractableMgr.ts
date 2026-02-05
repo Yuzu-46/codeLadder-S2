@@ -136,8 +136,10 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         const interactable = factory.createByToken(
             config.token
         ) as Interactable;
-        this.addInteractable(config.id, interactable);
-        interactable.start(config);
+        const id: string =
+            typeof config.id === 'string' ? config.id : config.id();
+        this.addInteractable(id, interactable);
+        interactable.start({ ...config, id });
         return interactable;
     }
 
