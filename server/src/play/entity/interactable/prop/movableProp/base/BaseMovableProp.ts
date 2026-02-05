@@ -25,7 +25,32 @@ export abstract class BaseMovableProp extends Interactable {
     }
 
     /**
-     * 穿戴到玩家上
+     * 所在容器 / Container
+     */
+    public get container(): Interactable | null {
+        return this.getInteractable(this._containerId);
+    }
+
+    /**
+     * 放置到容器中 / Place to container
+     * @param containerId 容器ID / Container ID
+     */
+    public placeToContainer(containerId: string): void {
+        if (this._containerId) {
+            throw new Error('Prop already placed');
+        }
+        this._containerId = containerId;
+    }
+
+    /**
+     * 离开容器 / Leave container
+     */
+    public leaveContainer(): void {
+        this._containerId = null;
+    }
+
+    /**
+     * 穿戴到玩家上 / Wear on player
      * @param player 玩家对象 / Player object
      */
     public wear(player: InGamePlayer): void {

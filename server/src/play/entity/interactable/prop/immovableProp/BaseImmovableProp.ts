@@ -14,13 +14,7 @@ export abstract class BaseImmovableProp extends Interactable {
      * 放置的道具 / Placed prop
      */
     public get placedProp(): Interactable | null {
-        if (!this._placedPropId) {
-            return null;
-        }
-
-        return (
-            InteractableMgr.instance.getInteractable(this._placedPropId) || null
-        );
+        return this.getInteractable(this._placedPropId);
     }
 
     /**

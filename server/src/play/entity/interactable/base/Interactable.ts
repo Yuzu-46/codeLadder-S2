@@ -1,4 +1,5 @@
 import type { IInteractableData } from '../../../data/InteractableData';
+import { InteractableMgr } from '../../../mgr/InteractableMgr';
 
 /**
  * 可交互的 / Interactable
@@ -80,5 +81,18 @@ export abstract class Interactable {
             this.entity = null;
         }
         console.log(`(Server) Interactable ${this.id} destroy`);
+    }
+
+    /**
+     * 获取可交互对象 / Get interactable
+     * @description 供子类使用
+     * @param id 可交互对象ID
+     * @returns 可交互对象
+     */
+    protected getInteractable(id: string | null): Interactable | null {
+        if (!id) {
+            return null;
+        }
+        return InteractableMgr.instance.getInteractable(id) || null;
     }
 }

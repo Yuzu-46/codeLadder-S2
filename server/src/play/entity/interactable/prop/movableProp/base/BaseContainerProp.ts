@@ -62,6 +62,8 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public destroy(): void {
         super.destroy();
-        // 解除关联
+        const container = this.container as BaseImmovableProp;
+        container.removePlacedProp();
+        this.leaveContainer();
     }
 }
