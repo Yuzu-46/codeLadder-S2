@@ -173,8 +173,8 @@ const codeLadderS2: IInteractableData[] = [
         },
         interactRadius: 2,
     },
-    ...platePositions.map<IInteractableData>((position, idx) => ({
-        id: `plate_${idx}`,
+    ...platePositions.map<IInteractableData>((position) => ({
+        id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
         entityConfig: {
             mesh: 'mesh/盘子.vb',
