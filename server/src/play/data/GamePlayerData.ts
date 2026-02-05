@@ -1,19 +1,19 @@
-import type { ContainerState } from '../const/ContainerConst';
-import type { FoodState } from '../const/FoodConst';
+import type { ContainerState, ContainerType } from '../const/ContainerConst';
+import type { FoodState, FoodType } from '../const/FoodConst';
 
 /**
  * 携带的道具数据 / Carrying prop data
  * @param T 状态类型 / State type
  */
-export interface ICarryingProp<T> {
+export interface ICarryingProp<T, S> {
     /**
-     * 道具ID / Prop ID
+     * 道具类型 / Prop type
      */
-    id: string;
+    type: T;
     /**
      * 道具状态 / Prop state
      */
-    state: T;
+    state: S;
 }
 
 /**
@@ -23,10 +23,10 @@ export interface IPlayerCarryingPropData {
     /**
      * 道具数据 / Prop data
      */
-    data: ICarryingProp<ContainerState>;
+    data: ICarryingProp<ContainerType, ContainerState>;
 
     /**
      * 子项 / Subitem
      */
-    children?: ICarryingProp<FoodState>[];
+    children?: ICarryingProp<FoodType, FoodState>[];
 }
