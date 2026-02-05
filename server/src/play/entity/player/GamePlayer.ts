@@ -8,7 +8,7 @@ import { EventEmitter } from '../../../framework/common/EventEmitter';
 import { Observer } from '../../../framework/common/Observer';
 import type { MessageData } from '@shares/data/Message';
 import i18n from '@root/i18n';
-import type { ICarryingPropData } from '../../data/GamePlayerData';
+import type { IPlayerCarryingPropData } from '../../data/GamePlayerData';
 
 /**
  * 玩家参与游戏
@@ -20,7 +20,7 @@ export class InGamePlayer extends BasePlayer {
     /**
      * 携带的道具 / Carrying prop
      */
-    public carryingProp: ICarryingPropData | null = null;
+    public carryingProp: IPlayerCarryingPropData | null = null;
 
     constructor() {
         super();
