@@ -1,5 +1,6 @@
 import type { ContainerState, ContainerType } from '../const/ContainerConst';
 import type { FoodState, FoodType } from '../const/FoodConst';
+import type { IInteractableData } from './InteractableData';
 
 /**
  * 可移动道具数据 / Movable prop data
@@ -16,14 +17,9 @@ export interface IMovablePropData<S> {
     mesh: GameModelAssets;
 
     /**
-     * 实体配置 / Entity config
+     * 可交互实体配置 / Interactable entity config
      */
-    entityConfig: Partial<GameEntityConfig> & {
-        /**
-         * 相对于所在桌子的坐标偏移量 / Offset relative to the table
-         */
-        offset: GameVector3;
-    };
+    interactableConfig: IInteractableData;
 
     /**
      * 穿戴配置 / Wearable config

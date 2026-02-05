@@ -8,7 +8,7 @@ export interface IInteractableData {
     /**
      * 唯一标识
      */
-    id: string;
+    id: string | (() => string);
     /**
      * 工厂标识
      */
@@ -17,6 +17,10 @@ export interface IInteractableData {
      * 实体配置
      */
     entityConfig?: Partial<GameEntityConfig>;
+    /**
+     * 通过实体配置创建实体时的位置偏移 / Entity configuration position offset
+     */
+    offset?: GameVector3;
     /**
      * 实体
      * 如果实体存在，则不会使用实体配置再创建实体

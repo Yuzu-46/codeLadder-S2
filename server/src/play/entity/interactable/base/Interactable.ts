@@ -22,7 +22,7 @@ export class Interactable {
      * @param config 可交互对象配置
      */
     public start(config: IInteractableData): void {
-        this.id = config.id;
+        this.id = typeof config.id === 'string' ? config.id : config.id();
         if (config.entity) {
             this.entity = config.entity;
         } else if (config.entityConfig) {
@@ -30,6 +30,9 @@ export class Interactable {
                 id: this.id,
                 fixed: true, // 默认固定位置
                 ...config.entityConfig,
+                position: config.entityConfig.position?.add(
+                    config.offset || new GameVector3(0, 0, 0)
+                ),
             });
         } else {
             throw new Error(
