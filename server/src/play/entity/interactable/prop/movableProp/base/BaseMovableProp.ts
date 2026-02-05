@@ -15,6 +15,11 @@ export abstract class BaseMovableProp extends Interactable {
      */
     protected _type: ContainerType | FoodType | null = null;
 
+    /**
+     * 所在容器ID / Container ID
+     */
+    protected _containerId: string | null = null;
+
     public start(config: IInteractableData): void {
         super.start(config);
     }

@@ -6,10 +6,12 @@ import { InteractableConfig } from '../config/InteractableConfig';
 import type { Interactable } from '../entity/interactable/base/Interactable';
 import type { SceneType } from '../config/SceneConfig';
 import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
-import { TableProp } from '../entity/interactable/prop/TableProp';
-import { StoveProp } from '../entity/interactable/prop/StoveProp';
-import { FoodBoxProp } from '../entity/interactable/prop/FoodBoxProp';
-import { BinProp } from '../entity/interactable/prop/BinProp';
+import {
+    BinProp,
+    FoodBoxProp,
+    StoveProp,
+    TableProp,
+} from '../entity/interactable/prop/immovableProp';
 import { PlateProp } from '../entity/interactable/prop/movableProp';
 
 /**
