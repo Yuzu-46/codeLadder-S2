@@ -8,6 +8,7 @@ import { EventEmitter } from '../../../framework/common/EventEmitter';
 import { Observer } from '../../../framework/common/Observer';
 import type { MessageData } from '@shares/data/Message';
 import i18n from '@root/i18n';
+import type { ICarryingPropData } from '../../data/GamePlayerData';
 
 /**
  * 玩家参与游戏
@@ -15,6 +16,12 @@ import i18n from '@root/i18n';
 @FactoryToken(PlayerType.GamePlayer)
 export class InGamePlayer extends BasePlayer {
     // 由于与GameAPI.d.ts中定义的GamePlayer类型重名，无法使用，故使用InGamePlayer
+
+    /**
+     * 携带的道具 / Carrying prop
+     */
+    public carryingProp: ICarryingPropData | null = null;
+
     constructor() {
         super();
     }
