@@ -1,5 +1,5 @@
 import type {
-    FoodBoxPropConfig,
+    IFoodBoxPropConfig,
     IInteractableData,
 } from '../../data/InteractableData';
 import { InteractableType } from '../../const/TokenConst';
@@ -139,7 +139,7 @@ const codeLadderS2: IInteractableData[] = [
         },
         interactRadius: 2,
     })),
-    ...foodBoxConfigs.map<FoodBoxPropConfig>((config) => ({
+    ...foodBoxConfigs.map<IFoodBoxPropConfig>((config) => ({
         id: `foodBox_${config.x}_${config.z}`,
         token: InteractableType.FoodBoxProp,
         entityConfig: {

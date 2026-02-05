@@ -57,7 +57,7 @@ export interface IInteractableConfig {
 /**
  * 无限食材箱配置接口 / Infinite ingredients box configuration interface
  */
-export interface FoodBoxPropConfig extends IInteractableData {
+export interface IFoodBoxPropConfig extends IInteractableData {
     /**
      * 食材类型
      */
