@@ -49,5 +49,5 @@ export interface IMovablePropConfig {
     /**
      * 可移动道具数据列表 / Movable prop data list
      */
-    data: Record<ContainerType, IContainerPropData | IFoodPropData>;
+    data: Record<ContainerType | FoodType, IContainerPropData | IFoodPropData>;
 }

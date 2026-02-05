@@ -3,7 +3,7 @@ import type { IInteractableData } from '../../../data/InteractableData';
 /**
  * 可交互的 / Interactable
  */
-export class Interactable {
+export abstract class Interactable {
     /**
      * 唯一标识
      */
