@@ -2,34 +2,28 @@ import type { MachineConfig, MachineOptions } from '@dao3fun/fsm';
 import { StateMachine } from '@dao3fun/fsm';
 
 /**
+ * 无用游戏实体
+ */
+const entity = world.createEntity({
+    id: 'fsm',
+    collides: false,
+    meshScale: new GameVector3(0, 0, 0),
+})!;
+
+/**
  * 状态机 / Finite State Machine
  */
 export class FiniteStateMachine<S extends string, E extends string> {
     private _fsm: StateMachine<S, E>;
-    private _entity: GameEntity;
+    private _entity: GameEntity = entity;
 
     /**
      * 创建状态机 / Create a finite state machine
      * @param config 状态机配置 / State machine configuration
      * @param options 状态机选项 / State machine options
-     * @param entity 实体 / Entity
-     * @description 实体仅用于fsm注册
      */
-    constructor(
-        config: MachineConfig<S, E>,
-        options?: MachineOptions<S, E>,
-        entity?: GameEntity
-    ) {
+    constructor(config: MachineConfig<S, E>, options?: MachineOptions<S, E>) {
         this._fsm = new StateMachine(config, options);
-        if (entity) {
-            this._entity = entity;
-        } else {
-            this._entity = world.createEntity({
-                id: 'fsm',
-                collides: false,
-                meshScale: new GameVector3(0, 0, 0),
-            })!;
-        }
         this._fsm.register(this._entity);
     }
 
