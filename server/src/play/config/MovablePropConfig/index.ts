@@ -11,6 +11,7 @@ export const MovablePropConfig: IMovablePropConfig = {
             mesh: 'mesh/盘子.vb',
             entityConfig: {
                 meshScale: new GameVector3(0.1, 0.1, 0.1),
+                offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),

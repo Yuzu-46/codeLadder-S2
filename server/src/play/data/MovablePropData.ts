@@ -18,7 +18,12 @@ export interface IMovablePropData<S> {
     /**
      * 实体配置 / Entity config
      */
-    entityConfig: Partial<GameEntityConfig>;
+    entityConfig: Partial<GameEntityConfig> & {
+        /**
+         * 相对于所在桌子的坐标偏移量 / Offset relative to the table
+         */
+        offset: GameVector3;
+    };
 
     /**
      * 穿戴配置 / Wearable config

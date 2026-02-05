@@ -178,7 +178,7 @@ const codeLadderS2: IInteractableData[] = [
         token: InteractableType.PlateProp,
         entityConfig: {
             mesh: 'mesh/盘子.vb',
-            position: new GameVector3(position.x, 1.5, position.z),
+            position: new GameVector3(position.x, 1.75, position.z),
             meshScale: new GameVector3(0.1, 0.1, 0.1),
         },
     })),
