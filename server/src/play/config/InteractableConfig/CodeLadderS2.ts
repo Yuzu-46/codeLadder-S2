@@ -114,6 +114,18 @@ const stovePositions: { x: number; z: number }[] = Array.from({
 }));
 
 /**
+ * 盘子位置 / Plate positions
+ * @property x - x坐标 / x coordinate
+ * @property z - z坐标 / z coordinate
+ */
+const platePositions: { x: number; z: number }[] = Array.from({
+    length: 5,
+}).map((_, i) => ({
+    x: 34 + i * 2,
+    z: 45,
+}));
+
+/**
  * 天梯S2 定制可交互对象数据 / CodeLadderS2 Custom Interactable Data
  */
 const codeLadderS2: IInteractableData[] = [
@@ -161,6 +173,15 @@ const codeLadderS2: IInteractableData[] = [
         },
         interactRadius: 2,
     },
+    ...platePositions.map<IInteractableData>((position, idx) => ({
+        id: `plate_${idx}`,
+        token: InteractableType.PlateProp,
+        entityConfig: {
+            mesh: 'mesh/盘子.vb',
+            position: new GameVector3(position.x, 1.5, position.z),
+            meshScale: new GameVector3(0.1, 0.1, 0.1),
+        },
+    })),
 ];
 
 export default codeLadderS2;
