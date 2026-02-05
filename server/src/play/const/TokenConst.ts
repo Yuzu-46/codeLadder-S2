@@ -36,4 +36,8 @@ export const enum InteractableType {
      * 垃圾箱
      */
     BinProp = 'BinProp',
+    /**
+     * 盘子
+     */
+    PlateProp = 'PlateProp',
 }

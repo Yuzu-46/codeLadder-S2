@@ -10,6 +10,7 @@ import { TableProp } from '../entity/interactable/prop/TableProp';
 import { StoveProp } from '../entity/interactable/prop/StoveProp';
 import { FoodBoxProp } from '../entity/interactable/prop/FoodBoxProp';
 import { BinProp } from '../entity/interactable/prop/BinProp';
+import { PlateProp } from '../entity/interactable/prop/movableProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -81,6 +82,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
             singleton: false,
             token: InteractableType.BinProp,
         });
+
+        factory.registerByToken(
+            InteractableType.PlateProp as string,
+            PlateProp,
+            {
+                singleton: false,
+                token: InteractableType.PlateProp,
+            }
+        );
     }
 
     /**
