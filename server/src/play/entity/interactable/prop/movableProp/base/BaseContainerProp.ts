@@ -50,8 +50,6 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public start(config: IInteractableData): void {
         super.start(config);
-        console.log('(Server) PlateProp start with id ', config.id);
-        this._type = 'plate';
         // 获取关联的桌子
         const containerId = ['table', 'stove']
             .map(
@@ -60,12 +58,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             )
             .find((propId) => InteractableMgr.instance.getInteractable(propId));
         if (containerId) {
-            const container = InteractableMgr.instance.getInteractable(
-                containerId
-            ) as BaseImmovableProp;
-
             // 绑定关联的桌子
-            container.placeProp(this.id);
             this.placeToContainer(containerId);
         }
     }
@@ -80,18 +73,10 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         const player = PlayerMgr.instance.getPlayer(
             entity.player.userId
         ) as InGamePlayer;
-        if (player.carryingProp) {
+        if (player.carryingProp.container) {
             // 如果玩家拿着某道具
             // more...
         } else {
-            // 玩家没有拿着道具
-            player.carryingProp = {
-                container: {
-                    type: this._type,
-                    state: ContainerState.CLEAN,
-                },
-                foods: [],
-            };
             this.foods?.wear(player);
             this.wear(player);
         }
@@ -128,5 +113,26 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public get container(): BaseImmovableProp | null {
         return super.container as BaseImmovableProp | null;
+    }
+
+    public placeToContainer(containerId: string): void {
+        super.placeToContainer(containerId);
+        this.container?.placeProp(this.id);
+    }
+
+    public wear(player: InGamePlayer) {
+        super.wear(player);
+        if (this._type) {
+            player.pickUpProp({
+                container: {
+                    type: this._type,
+                    state: this._fsm.State,
+                },
+                foods: [],
+            });
+        }
+        if (this.foods) {
+            this.foods.wear(player);
+        }
     }
 }

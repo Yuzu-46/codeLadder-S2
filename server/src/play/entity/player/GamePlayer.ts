@@ -162,10 +162,15 @@ export class InGamePlayer extends BasePlayer {
                     state: propData.container.state,
                 };
             }
-        } else {
+        }
+        if (propData.foods.length) {
             this.carryingProp.foods.push(...propData.foods);
             // TODO: 添加食物
         }
+        console.log(
+            '(Server) GamePlayer carryingProp:',
+            JSON.stringify(this.carryingProp)
+        );
     }
 
     /**

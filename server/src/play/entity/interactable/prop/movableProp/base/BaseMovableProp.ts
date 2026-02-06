@@ -53,5 +53,8 @@ export abstract class BaseMovableProp extends Interactable {
      * 穿戴到玩家上 / Wear on player
      * @param player 玩家对象 / Player object
      */
-    public wear(player: InGamePlayer): void {}
+    public wear(player: InGamePlayer): void {
+        // 销毁道具
+        this.destroy();
+    }
 }
