@@ -1,4 +1,4 @@
-import type { FoodType, FoodState } from '../const/FoodConst';
+import type { IngredientType, FoodState } from '../const/FoodConst';
 
 /**
  * 食物/食材状态配置数据接口 / Food/Ingredient state configuration data interface
@@ -34,7 +34,7 @@ export interface IFoodStateConfig {
  * 食物/食材配置接口 / Food/Ingredient configuration interface
  */
 export type IFoodConfig = Record<
-    FoodType,
+    IngredientType,
     {
         /**
          * 各个状态的配置映射 / State configuration mapping

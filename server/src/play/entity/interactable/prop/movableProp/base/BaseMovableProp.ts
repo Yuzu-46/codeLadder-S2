@@ -3,7 +3,7 @@ import type { IInteractableData } from '../../../../../data/InteractableData';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import type { ContainerType } from '../../../../../const/ContainerConst';
-import type { FoodType } from '../../../../../const/FoodConst';
+import type { IngredientType } from '../../../../../const/FoodConst';
 import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
 
 /**
@@ -13,7 +13,7 @@ export abstract class BaseMovableProp extends Interactable {
     /**
      * 道具类型 / Prop type
      */
-    protected _type: ContainerType | FoodType[] | null = null;
+    protected _type: ContainerType | IngredientType[] | null = null;
 
     /**
      * 所在容器ID / Container ID

@@ -3,7 +3,7 @@ import type {
     IInteractableData,
 } from '../../data/InteractableData';
 import { InteractableType } from '../../const/TokenConst';
-import type { FoodType } from '../../const/FoodConst';
+import type { IngredientType } from '../../const/FoodConst';
 
 /**
  * 桌子位置 / Table positions
@@ -73,7 +73,7 @@ const foodBoxConfigs: {
     x: number;
     z: number;
     mesh: GameModelAssets;
-    foodType: FoodType;
+    foodType: IngredientType;
 }[] = [
     {
         x: 12,

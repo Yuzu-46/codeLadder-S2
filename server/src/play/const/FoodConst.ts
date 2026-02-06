@@ -1,7 +1,16 @@
 /**
- * 食物/食材类型 / Food/Ingredient type
+ * 食材类型 / Ingredient type
  */
-export type FoodType = 'bread' | 'meat' | 'vegetable' | 'tomato';
+export type IngredientType = 'bread' | 'meat' | 'vegetable' | 'tomato';
+
+/**
+ * 食物类型 / Food type
+ */
+export type FoodType =
+    | 'meatBurger'
+    | 'mixedBurger'
+    | 'nutritiousBurger'
+    | 'beefSoup';
 
 /**
  * 食材状态 / Ingredient state

@@ -1,5 +1,5 @@
 import type { ContainerState, ContainerType } from '../const/ContainerConst';
-import type { FoodState, FoodType } from '../const/FoodConst';
+import type { FoodState, IngredientType } from '../const/FoodConst';
 
 /**
  * 携带的道具数据 / Carrying prop data
@@ -28,5 +28,5 @@ export interface IPlayerCarryingPropData {
     /**
      * 食材数据 / Food data
      */
-    foods: ICarryingProp<FoodType, FoodState>[];
+    foods: ICarryingProp<IngredientType, FoodState>[];
 }

@@ -1,4 +1,4 @@
-import type { FoodType } from '../const/FoodConst';
+import type { IngredientType } from '../const/FoodConst';
 import type { SceneType } from '../config/SceneConfig';
 
 /**
@@ -65,5 +65,5 @@ export interface IFoodBoxPropConfig extends IInteractableData {
     /**
      * 食材类型
      */
-    foodType: FoodType;
+    foodType: IngredientType;
 }

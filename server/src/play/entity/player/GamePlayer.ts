@@ -16,7 +16,7 @@ import { InteractableMgr } from '../../mgr/InteractableMgr';
 import { MovablePropConfig } from '../../config/MovablePropConfig';
 import type { IContainerPropData } from '../../data/MovablePropData';
 import type { ContainerState, ContainerType } from '../../const/ContainerConst';
-import type { FoodState, FoodType } from '../../const/FoodConst';
+import type { FoodState, IngredientType } from '../../const/FoodConst';
 
 /**
  * 玩家参与游戏
@@ -177,7 +177,7 @@ export class InGamePlayer extends BasePlayer {
      * 添加道具穿戴 / Add prop wearble
      * @param propType
      */
-    private addPropWearable(propType: ContainerType | FoodType): void {
+    private addPropWearable(propType: ContainerType | IngredientType): void {
         this.entity?.player.addWearable({
             bodyPart: GameBodyPart.TORSO,
             mesh: MovablePropConfig.data[propType].mesh,
