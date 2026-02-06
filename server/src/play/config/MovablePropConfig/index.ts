@@ -12,7 +12,6 @@ import { IngredientState } from '../../const/FoodConst';
 export const MovablePropConfig: IMovablePropConfig = {
     data: {
         plate: {
-            initialState: ContainerState.CLEAN,
             mesh: 'mesh/盘子.vb',
             interactableConfig: {
                 id: () =>
@@ -27,7 +26,6 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         bread: {
-            initialState: IngredientState.RAW,
             mesh: 'mesh/面包.vb',
             interactableConfig: {
                 id: () =>
