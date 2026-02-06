@@ -53,19 +53,5 @@ export abstract class BaseMovableProp extends Interactable {
      * 穿戴到玩家上 / Wear on player
      * @param player 玩家对象 / Player object
      */
-    public wear(player: InGamePlayer): void {
-        if (this._type) {
-            if (typeof this._type === 'string') {
-                player.pickUpProp({
-                    container: { type: this._type, state: // 实现状态机后加
-                        },
-                    foods: [],
-                });
-            } else {
-                // 此时为食材
-            }
-
-            InteractableMgr.instance.destroyInteractable(this.id);
-        }
-    }
+    public wear(player: InGamePlayer): void {}
 }
