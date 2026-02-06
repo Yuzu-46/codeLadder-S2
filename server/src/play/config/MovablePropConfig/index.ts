@@ -40,7 +40,6 @@ export const MovablePropConfig: IMovablePropConfig = {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
             },
-            recipe: [],
         },
         meat: null as unknown as IFoodPropData,
         vegetable: null as unknown as IFoodPropData,

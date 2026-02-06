@@ -35,14 +35,7 @@ export type IContainerPropData = IMovablePropData<ContainerState>;
 /**
  * 食物/食材道具数据 / Food/Food prop data
  */
-export interface IFoodPropData extends IMovablePropData<FoodState> {
-    /**
-     * 配方 / Recipe
-     * @property type - 食材类型 / Food type
-     * @property state - 食材状态 / Food state
-     */
-    recipe: { type: IngredientType; state: FoodState }[];
-}
+export type IFoodPropData = IMovablePropData<FoodState>;
 
 /**
  * 可移动道具配置接口 / Movable prop config interface
