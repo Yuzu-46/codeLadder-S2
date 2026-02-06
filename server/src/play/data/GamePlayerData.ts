@@ -23,7 +23,7 @@ export interface IPlayerCarryingPropData {
     /**
      * 容器数据 / Container data
      */
-    container?: ICarryingProp<ContainerType, ContainerState>;
+    container: ICarryingProp<ContainerType, ContainerState> | null;
 
     /**
      * 食材数据 / Food data

@@ -38,8 +38,10 @@ export type IContainerPropData = IMovablePropData<ContainerState>;
 export interface IFoodPropData extends IMovablePropData<FoodState> {
     /**
      * 配方 / Recipe
+     * @property type - 食材类型 / Food type
+     * @property state - 食材状态 / Food state
      */
-    recipe: FoodType[];
+    recipe: { type: FoodType; state: FoodState }[];
 }
 
 /**

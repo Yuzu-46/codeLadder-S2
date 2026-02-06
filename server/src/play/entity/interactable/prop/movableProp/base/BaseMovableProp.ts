@@ -13,7 +13,7 @@ export abstract class BaseMovableProp extends Interactable {
     /**
      * 道具类型 / Prop type
      */
-    protected _type: ContainerType | FoodType | null = null;
+    protected _type: ContainerType | FoodType[] | null = null;
 
     /**
      * 所在容器ID / Container ID
@@ -55,11 +55,15 @@ export abstract class BaseMovableProp extends Interactable {
      */
     public wear(player: InGamePlayer): void {
         if (this._type) {
-            player.entity?.player.addWearable({
-                bodyPart: GameBodyPart.TORSO,
-                mesh: MovablePropConfig.data[this._type].mesh,
-                ...MovablePropConfig.data[this._type].wearableConfig,
-            });
+            if (typeof this._type === 'string') {
+                player.pickUpProp({
+                    container: { type: this._type, state: // 实现状态机后加
+                        },
+                    foods: [],
+                });
+            } else {
+                // 此时为食材
+            }
 
             InteractableMgr.instance.destroyInteractable(this.id);
         }

@@ -8,10 +8,15 @@ import { EventEmitter } from '../../../framework/common/EventEmitter';
 import { Observer } from '../../../framework/common/Observer';
 import type { MessageData } from '@shares/data/Message';
 import i18n from '@root/i18n';
-import type { IPlayerCarryingPropData } from '../../data/GamePlayerData';
+import type {
+    ICarryingProp,
+    IPlayerCarryingPropData,
+} from '../../data/GamePlayerData';
 import { InteractableMgr } from '../../mgr/InteractableMgr';
 import { MovablePropConfig } from '../../config/MovablePropConfig';
 import type { IContainerPropData } from '../../data/MovablePropData';
+import type { ContainerState, ContainerType } from '../../const/ContainerConst';
+import type { FoodState, FoodType } from '../../const/FoodConst';
 
 /**
  * 玩家参与游戏
@@ -23,7 +28,10 @@ export class InGamePlayer extends BasePlayer {
     /**
      * 携带的道具 / Carrying prop
      */
-    public carryingProp: IPlayerCarryingPropData | null = null;
+    public carryingProp: IPlayerCarryingPropData = {
+        container: null,
+        foods: [],
+    };
 
     constructor() {
         super();
@@ -126,10 +134,49 @@ export class InGamePlayer extends BasePlayer {
                     },
                 });
             });
-            this.carryingProp = null;
+            this.carryingProp = {
+                container: null,
+                foods: [],
+            };
             this.entity?.player
                 .wearables(GameBodyPart.TORSO)
                 .forEach((wearable) => wearable.remove());
         }
+    }
+
+    /**
+     * 拿起道具 / Pick up a prop
+     * @param propData 道具数据 / Prop data
+     */
+    public pickUpProp(propData: IPlayerCarryingPropData): void {
+        if (propData.container) {
+            // 如果玩家正在携带容器道具且准备拿起容器道具，则抛出错误。否则拿起容器道具
+            if (this.carryingProp.container) {
+                throw new Error(
+                    'Cannot pick up a container while carrying a container'
+                );
+            } else {
+                this.addPropWearable(propData.container?.type);
+                this.carryingProp.container = {
+                    type: propData.container.type,
+                    state: propData.container.state,
+                };
+            }
+        } else {
+            this.carryingProp.foods.push(...propData.foods);
+            // TODO: 添加食物
+        }
+    }
+
+    /**
+     * 添加道具穿戴 / Add prop wearble
+     * @param propType
+     */
+    private addPropWearable(propType: ContainerType | FoodType): void {
+        this.entity?.player.addWearable({
+            bodyPart: GameBodyPart.TORSO,
+            mesh: MovablePropConfig.data[propType].mesh,
+            ...MovablePropConfig.data[propType].wearableConfig,
+        });
     }
 }
