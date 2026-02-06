@@ -94,3 +94,5 @@ export class FiniteStateMachine<S extends string, E extends string> {
         return this._fsm.send(this._entity, event);
     }
 }
+
+export { MachineConfig, MachineOptions };

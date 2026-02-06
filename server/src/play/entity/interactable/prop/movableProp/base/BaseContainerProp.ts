@@ -1,21 +1,52 @@
 import { BaseMovableProp } from './BaseMovableProp';
 import type { ContainerType } from '../../../../../const/ContainerConst';
-import { ContainerState } from '../../../../../const/ContainerConst';
+import {
+    ContainerState,
+    ContainerEvent,
+} from '../../../../../const/ContainerConst';
 import type { IInteractableData } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
 import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
+import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
+import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
 
 /**
  * 容器道具基类 / Container prop base class
  */
 export abstract class BaseContainerProp extends BaseMovableProp {
     protected _type: ContainerType | null = null;
+
     /**
      * 食材道具ID / Food prop ID
      */
     private _foodsId: string | null = null;
+
+    /**
+     * 有限状态机 / Finite state machine
+     */
+    private _fsm: FiniteStateMachine<ContainerState, ContainerEvent>;
+
+    constructor() {
+        super();
+        const config: MachineConfig<ContainerState, ContainerEvent> = {
+            initial: ContainerState.CLEAN,
+            states: {
+                [ContainerState.CLEAN]: {
+                    on: {
+                        [ContainerEvent.POLLUTE]: ContainerState.DIRTY,
+                    },
+                },
+                [ContainerState.DIRTY]: {
+                    on: {
+                        [ContainerEvent.CLEAN]: ContainerState.CLEAN,
+                    },
+                },
+            },
+        };
+        this._fsm = new FiniteStateMachine(config);
+    }
 
     public start(config: IInteractableData): void {
         super.start(config);
