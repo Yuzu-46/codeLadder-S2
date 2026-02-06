@@ -11,9 +11,9 @@ import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
  */
 export abstract class BaseContainerProp extends BaseMovableProp {
     /**
-     * 食材道具 / Food prop
+     * 食材道具ID / Food prop ID
      */
-    public foods: BaseMovableProp | null = null;
+    private _foodsId: string | null = null;
 
     public start(config: IInteractableData): void {
         super.start(config);
@@ -33,7 +33,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
             // 绑定关联的桌子
             container.placeProp(this.id);
-            this._containerId = containerId;
+            this.placeToContainer(containerId);
         }
     }
 
@@ -65,5 +65,31 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         const container = this.container as BaseImmovableProp;
         container.removePlacedProp();
         this.leaveContainer();
+    }
+
+    /**
+     * 食材道具 / Food prop
+     */
+    public get foods(): BaseMovableProp | null {
+        return this.getInteractable(this._foodsId) as BaseMovableProp | null;
+    }
+
+    /**
+     * 放置食材 / Place food
+     * @param foodsId 食材道具ID / Food prop ID
+     */
+    public placeFoods(foodsId: string): void {
+        this._foodsId = foodsId;
+    }
+
+    /**
+     * 移除食材 / Remove food
+     */
+    public removeFoods(): void {
+        this._foodsId = null;
+    }
+
+    public get container(): BaseImmovableProp | null {
+        return super.container as BaseImmovableProp | null;
     }
 }
