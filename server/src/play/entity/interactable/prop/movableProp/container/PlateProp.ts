@@ -14,15 +14,6 @@ import { BaseContainerProp } from '../base/BaseContainerProp';
  */
 @FactoryToken(InteractableType.PlateProp)
 export class PlateProp extends BaseContainerProp {
-    /**
-     * 食材道具 / Food prop
-     */
-    public foods: BaseMovableProp | null = null;
-    /**
-     * 所在的桌子 / Table where the prop is located
-     */
-    public table: TableProp | null = null;
-
     public start(config: IInteractableData): void {
         super.start(config);
         console.log('(Server) PlateProp start with id ', config.id);
