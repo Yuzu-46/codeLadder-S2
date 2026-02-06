@@ -4,7 +4,7 @@ import type {
 } from '../../data/MovablePropData';
 import { ContainerState } from '../../const/ContainerConst';
 import { InteractableType } from '../../const/TokenConst';
-import { FoodState } from '../../const/FoodConst';
+import { IngredientState } from '../../const/FoodConst';
 
 /**
  * 可移动道具配置 / Movable prop configuration
@@ -27,7 +27,7 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         bread: {
-            initialState: FoodState.RAW,
+            initialState: IngredientState.RAW,
             mesh: 'mesh/面包.vb',
             interactableConfig: {
                 id: () =>

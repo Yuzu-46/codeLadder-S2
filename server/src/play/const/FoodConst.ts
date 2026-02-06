@@ -15,7 +15,7 @@ export type FoodType =
 /**
  * 食材状态 / Ingredient state
  */
-export const enum FoodState {
+export const enum IngredientState {
     /**
      * 生
      */

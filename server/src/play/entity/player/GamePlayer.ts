@@ -14,9 +14,18 @@ import type {
 } from '../../data/GamePlayerData';
 import { InteractableMgr } from '../../mgr/InteractableMgr';
 import { MovablePropConfig } from '../../config/MovablePropConfig';
-import type { IContainerPropData } from '../../data/MovablePropData';
+import type {
+    IContainerPropData,
+    IFoodPropData,
+} from '../../data/MovablePropData';
 import type { ContainerState, ContainerType } from '../../const/ContainerConst';
-import type { FoodState, IngredientType } from '../../const/FoodConst';
+import type {
+    FoodType,
+    IngredientState,
+    IngredientType,
+} from '../../const/FoodConst';
+import { FoodConfig } from '../../config/FoodConfig';
+import type { IRecipeConfig } from '../../data/FoodData';
 
 /**
  * 玩家参与游戏
@@ -124,7 +133,7 @@ export class InGamePlayer extends BasePlayer {
             this.carryingProp.foods.forEach((prop) => {
                 const config = MovablePropConfig.data[
                     prop.type
-                ] as IContainerPropData;
+                ] as IFoodPropData;
                 InteractableMgr.instance.createInteractable({
                     ...config.interactableConfig,
                     entityConfig: {
@@ -165,7 +174,17 @@ export class InGamePlayer extends BasePlayer {
         }
         if (propData.foods.length) {
             this.carryingProp.foods.push(...propData.foods);
-            // TODO: 添加食物
+
+            // 查找可以合成的配方
+            const creatableFood = this.findCreatableRecipe();
+            if (creatableFood) {
+                console.log(
+                    `(Server) Found creatable recipe: ${creatableFood}`
+                );
+                this.addPropWearable(creatableFood);
+            } else {
+                this.addPropWearable(propData.foods[0].type);
+            }
         }
         console.log(
             '(Server) GamePlayer carryingProp:',
@@ -174,10 +193,71 @@ export class InGamePlayer extends BasePlayer {
     }
 
     /**
+     * 查找可以合成的配方 / Find creatable recipe
+     * @returns 可以合成的食物类型，如果没有则返回null / Creatable food type, or null if none
+     */
+    private findCreatableRecipe(): FoodType | null {
+        const carryingFoods = [...this.carryingProp.foods];
+
+        // 遍历所有配方
+        for (const [foodType, recipe] of Object.entries(FoodConfig.recipe)) {
+            if (this.canCreateRecipe(recipe, carryingFoods)) {
+                return foodType as FoodType;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 检查是否可以创建指定配方 / Check if specified recipe can be created
+     * @param recipe 配方配置 / Recipe configuration
+     * @param carryingFoods 携带的食材数据 / Carrying food data
+     * @returns 是否可以创建 / Whether it can be created
+     */
+    private canCreateRecipe(
+        recipe: IRecipeConfig[],
+        carryingFoods: ICarryingProp<IngredientType, IngredientState>[]
+    ): boolean {
+        // 创建食材需求统计
+        const requiredIngredients = new Map<string, number>();
+
+        // 统计配方所需的各种食材及其数量和状态
+        recipe.forEach((ingredient) => {
+            const key = `${ingredient.type}_${ingredient.state}`;
+            requiredIngredients.set(
+                key,
+                (requiredIngredients.get(key) || 0) + ingredient.count
+            );
+        });
+
+        // 用玩家携带的食材数据减去配方所需的食材数据
+        for (const food of carryingFoods) {
+            const key = `${food.type}_${food.state}`;
+            const currentRequiredCount =
+                (requiredIngredients.get(key) || 0) - 1;
+            if (currentRequiredCount < 0) {
+                return false;
+            }
+            requiredIngredients.set(key, currentRequiredCount);
+        }
+
+        // 检查是否满足所有需求
+        for (const [key, count] of requiredIngredients) {
+            if (count > 0 || count < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    /**
      * 添加道具穿戴 / Add prop wearble
      * @param propType
      */
-    private addPropWearable(propType: ContainerType | IngredientType): void {
+    private addPropWearable(
+        propType: ContainerType | IngredientType | FoodType
+    ): void {
         this.entity?.player.addWearable({
             bodyPart: GameBodyPart.TORSO,
             mesh: MovablePropConfig.data[propType].mesh,

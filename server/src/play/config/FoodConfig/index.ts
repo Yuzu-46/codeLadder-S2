@@ -1,39 +1,39 @@
 import type { IFoodConfig } from '../../data/FoodData';
-import { FoodState } from '../../const/FoodConst';
+import { IngredientState } from '../../const/FoodConst';
 
 export const FoodConfig: IFoodConfig = {
     ingredient: {
         bread: {
             states: {
-                [FoodState.RAW]: {
+                [IngredientState.RAW]: {
                     canBeCut: true,
                     canBeCooked: true,
                     canBePlated: true,
                     mustBePlated: false,
                     mesh: 'mesh/面包.vb',
                 },
-                [FoodState.CHOPPED]: {
+                [IngredientState.CHOPPED]: {
                     canBeCut: false,
                     canBeCooked: true,
                     canBePlated: true,
                     mustBePlated: false,
                     mesh: 'mesh/面包.vb',
                 },
-                [FoodState.COOKING]: {
+                [IngredientState.COOKING]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/面包.vb',
                 },
-                [FoodState.COOKED]: {
+                [IngredientState.COOKED]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: true,
                     mustBePlated: false,
                     mesh: 'mesh/面包.vb',
                 },
-                [FoodState.BURNT]: {
+                [IngredientState.BURNT]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
@@ -44,35 +44,35 @@ export const FoodConfig: IFoodConfig = {
         },
         meat: {
             states: {
-                [FoodState.RAW]: {
+                [IngredientState.RAW]: {
                     canBeCut: true,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/牛肉.vb',
                 },
-                [FoodState.CHOPPED]: {
+                [IngredientState.CHOPPED]: {
                     canBeCut: false,
                     canBeCooked: true,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/牛肉.vb',
                 },
-                [FoodState.COOKING]: {
+                [IngredientState.COOKING]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/牛肉.vb',
                 },
-                [FoodState.COOKED]: {
+                [IngredientState.COOKED]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: true,
                     mustBePlated: true,
                     mesh: 'mesh/牛肉.vb',
                 },
-                [FoodState.BURNT]: {
+                [IngredientState.BURNT]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
@@ -83,35 +83,35 @@ export const FoodConfig: IFoodConfig = {
         },
         vegetable: {
             states: {
-                [FoodState.RAW]: {
+                [IngredientState.RAW]: {
                     canBeCut: true,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/蔬菜.vb',
                 },
-                [FoodState.CHOPPED]: {
+                [IngredientState.CHOPPED]: {
                     canBeCut: false,
                     canBeCooked: true,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/蔬菜.vb',
                 },
-                [FoodState.COOKING]: {
+                [IngredientState.COOKING]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/蔬菜.vb',
                 },
-                [FoodState.COOKED]: {
+                [IngredientState.COOKED]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: true,
                     mustBePlated: false,
                     mesh: 'mesh/蔬菜.vb',
                 },
-                [FoodState.BURNT]: {
+                [IngredientState.BURNT]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
@@ -122,35 +122,35 @@ export const FoodConfig: IFoodConfig = {
         },
         tomato: {
             states: {
-                [FoodState.RAW]: {
+                [IngredientState.RAW]: {
                     canBeCut: true,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/番茄.vb',
                 },
-                [FoodState.CHOPPED]: {
+                [IngredientState.CHOPPED]: {
                     canBeCut: false,
                     canBeCooked: true,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/番茄.vb',
                 },
-                [FoodState.COOKING]: {
+                [IngredientState.COOKING]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
                     mustBePlated: false,
                     mesh: 'mesh/番茄.vb',
                 },
-                [FoodState.COOKED]: {
+                [IngredientState.COOKED]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: true,
                     mustBePlated: false,
                     mesh: 'mesh/番茄.vb',
                 },
-                [FoodState.BURNT]: {
+                [IngredientState.BURNT]: {
                     canBeCut: false,
                     canBeCooked: false,
                     canBePlated: false,
@@ -164,58 +164,58 @@ export const FoodConfig: IFoodConfig = {
         meatBurger: [
             {
                 type: 'bread',
-                state: FoodState.RAW,
+                state: IngredientState.RAW,
                 count: 1,
             },
             {
                 type: 'meat',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
         ],
         mixedBurger: [
             {
                 type: 'bread',
-                state: FoodState.RAW,
+                state: IngredientState.RAW,
                 count: 1,
             },
             {
                 type: 'meat',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
             {
                 type: 'vegetable',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
         ],
         nutritiousBurger: [
             {
                 type: 'bread',
-                state: FoodState.RAW,
+                state: IngredientState.RAW,
                 count: 1,
             },
             {
                 type: 'meat',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
             {
                 type: 'vegetable',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
             {
                 type: 'tomato',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
         ],
         beefSoup: [
             {
                 type: 'meat',
-                state: FoodState.COOKED,
+                state: IngredientState.COOKED,
                 count: 1,
             },
         ],

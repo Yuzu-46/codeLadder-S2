@@ -1,5 +1,9 @@
 import type { ContainerState, ContainerType } from '../const/ContainerConst';
-import type { FoodState, IngredientType } from '../const/FoodConst';
+import type {
+    IngredientState,
+    FoodType,
+    IngredientType,
+} from '../const/FoodConst';
 import type { IInteractableData } from './InteractableData';
 
 /**
@@ -35,7 +39,7 @@ export type IContainerPropData = IMovablePropData<ContainerState>;
 /**
  * 食物/食材道具数据 / Food/Food prop data
  */
-export type IFoodPropData = IMovablePropData<FoodState>;
+export type IFoodPropData = IMovablePropData<IngredientState>;
 
 /**
  * 可移动道具配置接口 / Movable prop config interface
@@ -44,8 +48,16 @@ export interface IMovablePropConfig {
     /**
      * 可移动道具数据列表 / Movable prop data list
      */
-    data: Record<
-        ContainerType | IngredientType,
-        IContainerPropData | IFoodPropData
-    >;
+    data: {
+        [K in
+            | ContainerType
+            | IngredientType
+            | FoodType]: K extends ContainerType
+            ? IMovablePropData<ContainerState>
+            : K extends IngredientType
+              ? IMovablePropData<IngredientState>
+              : K extends FoodType
+                ? IMovablePropData<never>
+                : never;
+    };
 }
