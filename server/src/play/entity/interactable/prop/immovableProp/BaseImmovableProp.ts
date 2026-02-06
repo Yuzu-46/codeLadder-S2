@@ -1,4 +1,3 @@
-import { InteractableMgr } from '../../../../mgr/InteractableMgr';
 import { Interactable } from '../../base/Interactable';
 
 /**
