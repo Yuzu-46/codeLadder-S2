@@ -27,11 +27,6 @@ export interface IFoodStateConfig {
      * 是否必须装盘 / Must be plated
      */
     mustBePlated: boolean;
-
-    /**
-     * 当前状态下的模型资源 / Model resource under current state
-     */
-    mesh: GameModelAssets;
 }
 
 /**
@@ -71,7 +66,15 @@ export type IFoodConfig = {
         }
     >;
     /**
-     * 食物配方 / Food recipe
+     * 食物 / Food
      */
-    recipe: Record<FoodType, IRecipeConfig[]>;
+    food: Record<
+        FoodType,
+        {
+            /**
+             * 食物配方 / Food recipe
+             */
+            recipe: IRecipeConfig[];
+        }
+    >;
 };
