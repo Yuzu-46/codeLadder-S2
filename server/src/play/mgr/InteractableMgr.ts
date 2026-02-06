@@ -12,7 +12,7 @@ import {
     StoveProp,
     TableProp,
 } from '../entity/interactable/prop/immovableProp';
-import { PlateProp } from '../entity/interactable/prop/movableProp';
+import { PlateProp, FoodProp } from '../entity/interactable/prop/movableProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -93,6 +93,11 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
                 token: InteractableType.PlateProp,
             }
         );
+
+        factory.registerByToken(InteractableType.FoodProp as string, FoodProp, {
+            singleton: false,
+            token: InteractableType.FoodProp,
+        });
     }
 
     /**
