@@ -57,8 +57,8 @@ export abstract class BaseMovableProp extends Interactable {
         if (this._type) {
             player.entity?.player.addWearable({
                 bodyPart: GameBodyPart.TORSO,
-                mesh: MovablePropConfig.data.plate.mesh,
-                ...MovablePropConfig.data.plate.wearableConfig,
+                mesh: MovablePropConfig.data[this._type].mesh,
+                ...MovablePropConfig.data[this._type].wearableConfig,
             });
 
             InteractableMgr.instance.destroyInteractable(this.id);
