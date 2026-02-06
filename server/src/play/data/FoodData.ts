@@ -1,7 +1,7 @@
-import type { IngredientType, FoodState } from '../const/FoodConst';
+import type { IngredientType, FoodState, FoodType } from '../const/FoodConst';
 
 /**
- * 食物/食材状态配置数据接口 / Food/Ingredient state configuration data interface
+ * 食材状态配置数据接口 / Ingredient state configuration data interface
  */
 export interface IFoodStateConfig {
     /**
@@ -31,14 +31,43 @@ export interface IFoodStateConfig {
 }
 
 /**
+ * 食物配方配置接口 / Recipe configuration interface
+ */
+export interface IRecipeConfig {
+    /**
+     * 食材类型 / Food type
+     */
+    type: IngredientType;
+
+    /**
+     * 食材状态 / Food state
+     */
+    state: FoodState;
+
+    /**
+     * 食材数量 / Food count
+     */
+    count: number;
+}
+
+/**
  * 食物/食材配置接口 / Food/Ingredient configuration interface
  */
-export type IFoodConfig = Record<
-    IngredientType,
-    {
-        /**
-         * 各个状态的配置映射 / State configuration mapping
-         */
-        states: Record<FoodState, IFoodStateConfig>;
-    }
->;
+export type IFoodConfig = {
+    /**
+     * 食材 / Ingredient
+     */
+    ingredient: Record<
+        IngredientType,
+        {
+            /**
+             * 各个状态的配置映射 / State configuration mapping
+             */
+            states: Record<FoodState, IFoodStateConfig>;
+        }
+    >;
+    /**
+     * 食物配方 / Food recipe
+     */
+    recipe: Record<FoodType, IRecipeConfig[]>;
+};
