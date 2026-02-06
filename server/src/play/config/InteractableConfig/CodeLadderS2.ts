@@ -137,7 +137,6 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(position.x, 1.5, position.z),
             meshScale: new GameVector3(0.125, 0.125, 0.125),
         },
-        interactRadius: 2,
     })),
     ...foodBoxConfigs.map<IFoodBoxPropConfig>((config) => ({
         id: `foodBox_${config.x}_${config.z}`,
@@ -147,7 +146,6 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(config.x, 1.5, config.z),
             meshScale: new GameVector3(0.08, 0.08, 0.08),
         },
-        interactRadius: 2,
         foodType: config.foodType,
     })),
     ...stovePositions.map<IInteractableData>((position) => ({
@@ -161,7 +159,6 @@ const codeLadderS2: IInteractableData[] = [
                 Math.PI / 2
             ),
         },
-        interactRadius: 2,
     })),
     {
         id: 'bin',
@@ -171,7 +168,6 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(12, 1.8, 43),
             meshScale: new GameVector3(0.15, 0.15, 0.15),
         },
-        interactRadius: 2,
     },
     ...platePositions.map<IInteractableData>((position) => ({
         id: `plate_${position.x}_${position.z}`,

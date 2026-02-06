@@ -19,7 +19,6 @@ export const MovablePropConfig: IMovablePropConfig = {
                 token: InteractableType.PlateProp,
                 entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
                 offset: new GameVector3(0, 0.25, 0),
-                interactRadius: 2,
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),

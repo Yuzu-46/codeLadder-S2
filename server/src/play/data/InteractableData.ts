@@ -38,7 +38,7 @@ export interface IInteractableData {
     interactHint?: string;
     /**
      * 交互半径
-     * @default 3
+     * @default 2
      */
     interactRadius?: number;
     /**

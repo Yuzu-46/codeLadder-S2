@@ -57,7 +57,7 @@ export abstract class Interactable {
                 entity.interactColor = interactColor;
             }
             entity.interactHint = interactHint || '';
-            entity.interactRadius = interactRadius || 3;
+            entity.interactRadius = interactRadius || 2;
             if (interactSound) {
                 entity.interactSound = interactSound;
             }
