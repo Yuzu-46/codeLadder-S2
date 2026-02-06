@@ -1,6 +1,6 @@
 import type {
-    IFoodPropData,
     IMovablePropConfig,
+    IMovablePropData,
 } from '../../data/MovablePropData';
 import { ContainerState } from '../../const/ContainerConst';
 import { InteractableType } from '../../const/TokenConst';
@@ -39,8 +39,8 @@ export const MovablePropConfig: IMovablePropConfig = {
                 offset: new GameVector3(0, 0, 0.75),
             },
         },
-        meat: null as unknown as IFoodPropData,
-        vegetable: null as unknown as IFoodPropData,
-        tomato: null as unknown as IFoodPropData,
+        meat: null as unknown as IMovablePropData,
+        vegetable: null as unknown as IMovablePropData,
+        tomato: null as unknown as IMovablePropData,
     },
 };
