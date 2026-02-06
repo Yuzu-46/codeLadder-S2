@@ -40,4 +40,8 @@ export const enum InteractableType {
      * 盘子
      */
     PlateProp = 'PlateProp',
+    /**
+     * 食物/食材（普通）
+     */
+    FoodProp = 'FoodProp',
 }

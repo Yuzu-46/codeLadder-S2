@@ -1,4 +1,5 @@
 import { BaseMovableProp } from './BaseMovableProp';
+import type { ContainerType } from '../../../../../const/ContainerConst';
 import { ContainerState } from '../../../../../const/ContainerConst';
 import type { IInteractableData } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
@@ -10,6 +11,7 @@ import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
  * 容器道具基类 / Container prop base class
  */
 export abstract class BaseContainerProp extends BaseMovableProp {
+    protected _type: ContainerType | null = null;
     /**
      * 食材道具ID / Food prop ID
      */
@@ -39,6 +41,10 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public async onInteract(event: GameInteractEvent): Promise<void> {
         super.onInteract(event);
+        if (!this._type) {
+            throw new Error('PlateProp: type is null');
+        }
+
         const { entity } = event;
         const player = PlayerMgr.instance.getPlayer(
             entity.player.userId
@@ -50,7 +56,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             // 玩家没有拿着道具
             player.carryingProp = {
                 container: {
-                    type: 'plate',
+                    type: this._type,
                     state: ContainerState.CLEAN,
                 },
                 foods: [],
