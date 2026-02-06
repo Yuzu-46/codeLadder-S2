@@ -1,4 +1,7 @@
-import type { IMovablePropConfig } from '../../data/MovablePropData';
+import type {
+    IFoodPropData,
+    IMovablePropConfig,
+} from '../../data/MovablePropData';
 import { ContainerState } from '../../const/ContainerConst';
 import { InteractableType } from '../../const/TokenConst';
 
@@ -16,11 +19,16 @@ export const MovablePropConfig: IMovablePropConfig = {
                 token: InteractableType.PlateProp,
                 entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
                 offset: new GameVector3(0, 0.25, 0),
+                interactRadius: 2,
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
             },
         },
+        bread: null as unknown as IFoodPropData,
+        meat: null as unknown as IFoodPropData,
+        vegetable: null as unknown as IFoodPropData,
+        tomato: null as unknown as IFoodPropData,
     },
 };
