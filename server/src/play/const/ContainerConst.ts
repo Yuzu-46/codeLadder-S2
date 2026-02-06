@@ -10,10 +10,24 @@ export enum ContainerState {
     /**
      * 干净的
      */
-    CLEAN = 0,
+    CLEAN = 'clean',
 
     /**
      * 脏的
      */
-    DIRTY = 1,
+    DIRTY = 'dirty',
+}
+
+/**
+ * 容器事件 / Container event
+ */
+export enum ContainerEvent {
+    /**
+     * 污染
+     */
+    POLLUTE = 'pollute',
+    /**
+     * 清洗
+     */
+    CLEAN = 'clean',
 }

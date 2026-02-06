@@ -10,21 +10,21 @@ export const enum FoodState {
     /**
      * 生
      */
-    RAW = 0,
+    RAW = 'raw',
     /**
      * 已切
      */
-    CHOPPED = 1,
+    CHOPPED = 'chopped',
     /**
      * 烹饪中
      */
-    COOKING = 2,
+    COOKING = 'cooking',
     /**
      * 熟
      */
-    COOKED = 3,
+    COOKED = 'cooked',
     /**
      * 糊
      */
-    BURNT = 4,
+    BURNT = 'burnt',
 }
