@@ -15,14 +15,14 @@ export class TableProp extends BaseImmovableProp {
         console.log('(Server) TableProp start with id ', config.id);
     }
 
-    public async onInteract(event: GameInteractEvent): Promise<void> {
+    public onInteract(event: GameInteractEvent): void {
         super.onInteract(event);
 
         if (this._placedPropId) {
             // 如果桌子上有道具，则调用道具的交互事件
             const { placedProp } = this;
             if (placedProp) {
-                await placedProp.onInteract(event);
+                placedProp.onInteract(event);
             }
         } else {
             // 否则，调用玩家放置道具的事件

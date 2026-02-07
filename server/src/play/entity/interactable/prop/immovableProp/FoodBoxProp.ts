@@ -28,7 +28,7 @@ export class FoodBoxProp extends BaseImmovableProp {
         console.log('(Server) FoodBoxProp start with id ', config.id);
     }
 
-    public async onInteract(event: GameInteractEvent): Promise<void> {
+    public onInteract(event: GameInteractEvent): void {
         super.onInteract(event);
         const player = PlayerMgr.instance.getPlayer(event.entity.player.userId);
         if (player && player instanceof InGamePlayer && this.type) {

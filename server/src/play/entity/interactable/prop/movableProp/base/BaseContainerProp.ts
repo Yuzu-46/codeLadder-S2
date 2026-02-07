@@ -52,7 +52,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         super.start(config);
     }
 
-    public async onInteract(event: GameInteractEvent): Promise<void> {
+    public onInteract(event: GameInteractEvent): void {
         super.onInteract(event);
         if (!this._type) {
             throw new Error('PlateProp: type is null');

@@ -20,7 +20,7 @@ export class PlateProp extends BaseContainerProp {
         this._type = 'plate';
     }
 
-    public async onInteract(event: GameInteractEvent): Promise<void> {
+    public onInteract(event: GameInteractEvent): void {
         super.onInteract(event);
     }
 

@@ -59,6 +59,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         );
     }
 
+    public  onInteract(event: GameInteractEvent): void {
+        if()
+    }
+
     public wear(player: InGamePlayer): void {
         super.wear(player);
         if (this._type.length) {

@@ -68,7 +68,7 @@ export abstract class Interactable {
      * 处理交互事件
      * @param event 交互事件
      */
-    public async onInteract(event: GameInteractEvent): Promise<void> {
+    public onInteract(event: GameInteractEvent): void {
         console.log(`(Server) Interactable ${this.id} interact`);
     }
 
