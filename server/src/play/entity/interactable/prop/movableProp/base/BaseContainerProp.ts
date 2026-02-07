@@ -50,17 +50,6 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public start(config: IInteractableData): void {
         super.start(config);
-        // 获取关联的桌子
-        const containerId = ['table', 'stove']
-            .map(
-                (propType) =>
-                    `${propType}_${config.entityConfig?.position?.x}_${config.entityConfig?.position?.z}`
-            )
-            .find((propId) => InteractableMgr.instance.getInteractable(propId));
-        if (containerId) {
-            // 绑定关联的桌子
-            this.placeToContainer(containerId);
-        }
     }
 
     public async onInteract(event: GameInteractEvent): Promise<void> {
@@ -84,8 +73,10 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public destroy(): void {
         super.destroy();
-        const container = this.container as BaseImmovableProp;
-        container.removePlacedProp();
+        const { container } = this;
+        if (container) {
+            container.removePlacedProp();
+        }
         this.leaveContainer();
     }
 
