@@ -13,9 +13,15 @@ export const PropMeshConfig: IPropMeshConfig = {
         chopped: 'mesh/面包.vb',
         cooked: 'mesh/面包.vb',
     },
-    meat: {},
-    vegetable: {},
-    tomato: {},
+    meat: {
+        raw: 'mesh/牛肉.vb',
+    },
+    vegetable: {
+        raw: 'mesh/蔬菜.vb',
+    },
+    tomato: {
+        raw: 'mesh/番茄.vb',
+    },
     meatBurger: {},
     mixedBurger: {},
     nutritiousBurger: {},
