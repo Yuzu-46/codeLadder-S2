@@ -5,7 +5,7 @@ import type { IngredientState, IngredientType } from '../const/FoodConst';
  * 携带的道具数据 / Carrying prop data
  * @param T 状态类型 / State type
  */
-export interface ICarryingProp<T, S> {
+export interface IPropData<T, S> {
     /**
      * 道具类型 / Prop type
      */
@@ -23,10 +23,10 @@ export interface IPlayerCarryingPropData {
     /**
      * 容器数据 / Container data
      */
-    container: ICarryingProp<ContainerType, ContainerState> | null;
+    container: IPropData<ContainerType, ContainerState> | null;
 
     /**
      * 食材数据 / Food data
      */
-    foods: ICarryingProp<IngredientType, IngredientState>[];
+    foods: IPropData<IngredientType, IngredientState>[];
 }

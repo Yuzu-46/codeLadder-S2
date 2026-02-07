@@ -3,7 +3,7 @@ import { FactoryToken } from '../../../framework/common/factory/AbstractFactory'
 import { PlayerType } from '../../const/TokenConst';
 import { PlayerGameState } from '../../const/GamePlayerConst';
 import type {
-    ICarryingProp,
+    IPropData,
     IPlayerCarryingPropData,
 } from '../../data/GamePlayerData';
 import { InteractableMgr } from '../../mgr/InteractableMgr';
@@ -25,6 +25,7 @@ import type {
     IContainerPropConfig,
     IIngredientConfig,
 } from '../../data/InteractableData';
+import { PropMgr } from '../../mgr/PropMgr';
 
 /**
  * 玩家参与游戏
@@ -40,11 +41,6 @@ export class InGamePlayer extends BasePlayer {
         container: null,
         foods: [],
     };
-
-    /**
-     * 携带食材可合成配方的食物 / Carrying food that can be combined with
-     */
-    public creatableFood: FoodType | null = null;
 
     constructor() {
         super();
@@ -123,69 +119,13 @@ export class InGamePlayer extends BasePlayer {
         position: GameVector3,
         interactable?: BaseImmovableProp
     ): Promise<void> {
-        let container: BaseContainerProp | null = null;
-        if (this.carryingProp.container) {
-            const propData = this.carryingProp.container;
-            const config = MovablePropConfig.data[
-                propData.type
-            ] as IMovablePropData;
-            const mesh = PropMeshConfig[propData.type][propData.state];
-            container = InteractableMgr.instance.createInteractable({
-                ...config.interactableConfig,
-                entityConfig: {
-                    mesh,
-                    position,
-                    ...config.interactableConfig.entityConfig,
-                },
-                state: propData.state,
-            } as IContainerPropConfig) as BaseContainerProp;
-            if (interactable) {
-                container.placeToContainer(interactable.id);
-            }
-        }
-
-        if (this.carryingProp.foods.length) {
-            const propData = this.carryingProp.foods;
-            let config: IMovablePropData | null = null;
-            let mesh: GameModelAssets | undefined;
-            if (this.creatableFood) {
-                config = MovablePropConfig.data[
-                    this.creatableFood
-                ] as IMovablePropData;
-                mesh = PropMeshConfig[this.creatableFood][''];
-            } else {
-                config = MovablePropConfig.data[
-                    propData[0].type
-                ] as IMovablePropData;
-                mesh = PropMeshConfig[propData[0].type][propData[0].state];
-            }
-            const foods = InteractableMgr.instance.createInteractable({
-                ...config.interactableConfig,
-                entityConfig: {
-                    mesh,
-                    position,
-                    ...config.interactableConfig.entityConfig,
-                },
-                type: propData.map((food) => food.type),
-                state: propData.map((food) => food.state),
-            } as IIngredientConfig) as BaseFoodProp;
-            if (container) {
-                foods.placeToContainer(container.id);
-                container.placeFoods(foods.id);
-            } else if (interactable) {
-                foods.placeToContainer(interactable.id);
-                interactable.placeProp(foods.id);
-            }
-        }
+        PropMgr.instance.placeProp(this.carryingProp, position, interactable);
 
         this.carryingProp = {
             container: null,
             foods: [],
         };
-        this.creatableFood = null;
-        this.entity?.player
-            .wearables(GameBodyPart.TORSO)
-            .forEach((wearable) => wearable.remove());
+        this.clearPropWearable();
     }
 
     /**
@@ -217,10 +157,6 @@ export class InGamePlayer extends BasePlayer {
             '(Server) GamePlayer carryingProp:',
             JSON.stringify(this.carryingProp)
         );
-        console.log(
-            '(Server) GamePlayer creatableFood:',
-            this.creatableFood || 'None'
-        );
     }
 
     /**
@@ -248,7 +184,7 @@ export class InGamePlayer extends BasePlayer {
      */
     private canCreateRecipe(
         recipe: IRecipeConfig[],
-        carryingFoods: ICarryingProp<IngredientType, IngredientState>[]
+        carryingFoods: IPropData<IngredientType, IngredientState>[]
     ): boolean {
         // 创建食材需求统计
         const requiredIngredients = new Map<string, number>();
@@ -288,9 +224,9 @@ export class InGamePlayer extends BasePlayer {
      */
     private addPropWearable(
         propData:
-            | ICarryingProp<ContainerType, ContainerState>
-            | ICarryingProp<IngredientType, IngredientState>
-            | ICarryingProp<FoodType, ''>
+            | IPropData<ContainerType, ContainerState>
+            | IPropData<IngredientType, IngredientState>
+            | IPropData<FoodType, ''>
     ): void {
         const config = MovablePropConfig.data[propData.type].wearableConfig;
         const propMeshConfig = PropMeshConfig[propData.type];
@@ -324,16 +260,16 @@ export class InGamePlayer extends BasePlayer {
 
         // 添加食物/食材道具穿戴
         if (this.carryingProp.foods.length) {
-            const creatableFood = this.findCreatableRecipe();
+            const creatableFood = PropMgr.instance.findCreatableRecipe(
+                this.carryingProp.foods
+            );
             if (creatableFood) {
                 console.log(
                     `(Server) Found creatable recipe: ${creatableFood}`
                 );
                 this.addPropWearable({ type: creatableFood, state: '' });
-                this.creatableFood = creatableFood;
             } else {
                 this.addPropWearable(this.carryingProp.foods[0]);
-                this.creatableFood = null;
             }
         }
     }
