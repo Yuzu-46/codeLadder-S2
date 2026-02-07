@@ -21,7 +21,10 @@ import { PropMeshConfig } from '../../config/PropMeshConfig';
 import type { BaseContainerProp } from '../interactable/prop/movableProp/base/BaseContainerProp';
 import type { BaseFoodProp } from '../interactable/prop/movableProp/base/BaseFoodProp';
 import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
-import type { IIngredientConfig } from '../../data/InteractableData';
+import type {
+    IContainerPropConfig,
+    IIngredientConfig,
+} from '../../data/InteractableData';
 
 /**
  * 玩家参与游戏
@@ -134,7 +137,8 @@ export class InGamePlayer extends BasePlayer {
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
-            }) as BaseContainerProp;
+                state: propData.state,
+            } as IContainerPropConfig) as BaseContainerProp;
             if (interactable) {
                 container.placeToContainer(interactable.id);
             }

@@ -1,5 +1,6 @@
 import type { IngredientState, IngredientType } from '../const/FoodConst';
 import type { SceneType } from '../config/SceneConfig';
+import type { ContainerState } from '../const/ContainerConst';
 
 /**
  * 可交互对象数据接口 / Interactable object data interface
@@ -66,6 +67,16 @@ export interface IFoodBoxPropConfig extends IInteractableData {
      * 食材类型
      */
     foodType: IngredientType;
+}
+
+/**
+ * 容器配置接口 / Container configuration interface
+ */
+export interface IContainerPropConfig extends IInteractableData {
+    /**
+     * 容器状态 / Container state
+     */
+    state: ContainerState;
 }
 
 /**

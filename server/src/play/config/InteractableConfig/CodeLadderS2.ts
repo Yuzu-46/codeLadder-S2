@@ -1,9 +1,11 @@
 import type {
+    IContainerPropConfig,
     IFoodBoxPropConfig,
     IInteractableData,
 } from '../../data/InteractableData';
 import { InteractableType } from '../../const/TokenConst';
 import type { IngredientType } from '../../const/FoodConst';
+import { ContainerState } from '../../const/ContainerConst';
 
 /**
  * 桌子位置 / Table positions
@@ -169,7 +171,7 @@ const codeLadderS2: IInteractableData[] = [
             meshScale: new GameVector3(0.15, 0.15, 0.15),
         },
     },
-    ...platePositions.map<IInteractableData>((position) => ({
+    ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
         entityConfig: {
@@ -177,6 +179,7 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(position.x, 1.75, position.z),
             meshScale: new GameVector3(0.1, 0.1, 0.1),
         },
+        state: ContainerState.CLEAN,
     })),
 ];
 
