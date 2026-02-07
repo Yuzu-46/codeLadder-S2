@@ -21,6 +21,7 @@ import { PropMeshConfig } from '../../config/PropMeshConfig';
 import type { BaseContainerProp } from '../interactable/prop/movableProp/base/BaseContainerProp';
 import type { BaseFoodProp } from '../interactable/prop/movableProp/base/BaseFoodProp';
 import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
+import type { IIngredientConfig } from '../../data/InteractableData';
 
 /**
  * 玩家参与游戏
@@ -161,7 +162,9 @@ export class InGamePlayer extends BasePlayer {
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
-            }) as BaseFoodProp;
+                type: propData.map((food) => food.type),
+                state: propData.map((food) => food.state),
+            } as IIngredientConfig) as BaseFoodProp;
             if (container) {
                 foods.placeToContainer(container.id);
                 container.placeFoods(foods.id);
@@ -186,6 +189,9 @@ export class InGamePlayer extends BasePlayer {
      * @param propData 道具数据 / Prop data
      */
     public pickUpProp(propData: IPlayerCarryingPropData): void {
+        // 先清空玩家正在携带的道具
+        this.clearPropWearable();
+        // 拿起容器类道具的逻辑
         if (propData.container) {
             // 如果玩家正在携带容器道具且准备拿起容器道具，则抛出错误。否则拿起容器道具
             if (this.carryingProp.container) {
@@ -193,10 +199,15 @@ export class InGamePlayer extends BasePlayer {
                     'Cannot pick up a container while carrying a container'
                 );
             } else {
-                this.addPropWearable(propData.container);
                 this.carryingProp.container = propData.container;
             }
         }
+        // 如果有容器道具则穿戴上
+        if (this.carryingProp.container) {
+            this.addPropWearable(this.carryingProp.container);
+        }
+
+        // 拿起食物/食材类道具的逻辑
         if (propData.foods.length) {
             this.carryingProp.foods.push(...propData.foods);
 
@@ -209,7 +220,7 @@ export class InGamePlayer extends BasePlayer {
                 this.addPropWearable({ type: creatableFood, state: '' });
                 this.creatableFood = creatableFood;
             } else {
-                this.addPropWearable(propData.foods[0]);
+                this.addPropWearable(this.carryingProp.foods[0]);
                 this.creatableFood = null;
             }
         }
@@ -301,5 +312,14 @@ export class InGamePlayer extends BasePlayer {
             mesh: mesh,
             ...config,
         });
+    }
+
+    /**
+     * 清空道具穿戴 / Clear prop wearable
+     */
+    private clearPropWearable(): void {
+        this.entity?.player
+            .wearables(GameBodyPart.TORSO)
+            .forEach((wearable) => wearable.remove());
     }
 }
