@@ -17,13 +17,13 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
 
     /**
      * 添加道具绑定关系 / Add prop binding relationship
-     * @param bindingId 绑定关系ID / Binding relationship ID
      * @param bindingData 绑定数据 / Binding data
+     * @param bindingId 绑定关系ID / Binding relationship ID
      * @returns 是否添加成功 / Whether addition was successful
      */
     public addBinding(
-        bindingId: string,
-        bindingData: IPropBindingData
+        bindingData: IPropBindingData,
+        bindingId: string = `binding_${Date.now()}_${Math.floor(Math.random() * 100)}`
     ): boolean {
         if (this._bindingMap.has(bindingId)) {
             return false;
@@ -59,31 +59,31 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
      */
     public updateBinding(
         bindingId: string,
-        bindingData: IPropBindingData
+        bindingData: Partial<IPropBindingData>
     ): boolean {
         if (!this._bindingMap.has(bindingId)) {
             return false;
         }
 
-        if (!this.validateBindingData(bindingData)) {
+        if (
+            !this.validateBindingData({
+                staticContainerId: null,
+                dynamicContainerId: null,
+                foodId: null,
+                ...bindingData,
+            })
+        ) {
             return false;
         }
 
-        const oldBinding = this._bindingMap.get(bindingId)!;
-
         // 移除旧的反向索引
-        if (oldBinding.staticContainerId) {
-            this._bindingIds.delete(oldBinding.staticContainerId);
-        }
-        if (oldBinding.dynamicContainerId) {
-            this._bindingIds.delete(oldBinding.dynamicContainerId);
-        }
-        if (oldBinding.foodId) {
-            this._bindingIds.delete(oldBinding.foodId);
-        }
+        this.removeReverseIndex(bindingId);
 
         // 更新绑定数据
-        this._bindingMap.set(bindingId, bindingData);
+        this._bindingMap.set(bindingId, {
+            ...this._bindingMap.get(bindingId)!,
+            ...bindingData,
+        });
 
         // 建立新的反向索引
         this.buildReverseIndex(bindingId);
@@ -103,7 +103,7 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
         }
 
         // 移除反向索引
-        this.removeBinding(bindingId);
+        this.removeReverseIndex(bindingId);
 
         // 移除绑定数据
         this._bindingMap.delete(bindingId);
@@ -208,34 +208,31 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
         if (!bindingData) {
             return;
         }
-        if (bindingData.staticContainerId) {
-            this._bindingIds.set(bindingData.staticContainerId, bindingId);
-        }
-        if (bindingData.dynamicContainerId) {
-            this._bindingIds.set(bindingData.dynamicContainerId, bindingId);
-        }
-        if (bindingData.foodId) {
-            this._bindingIds.set(bindingData.foodId, bindingId);
-        }
+        Object.values(bindingData).forEach((propId) => {
+            if (propId !== null) {
+                if (!this._bindingIds.has(propId)) {
+                    throw new Error(
+                        `Prop ID ${propId} is already used by another binding relationship.`
+                    );
+                }
+                this._bindingIds.set(propId, bindingId);
+            }
+        });
     }
 
     /**
      * 移除反向索引 / Remove reverse index
      * @param bindingId 绑定关系ID / Binding ID
      */
-    public removeBindingId(bindingId: string): void {
+    private removeReverseIndex(bindingId: string): void {
         const bindingData = this._bindingMap.get(bindingId);
         if (!bindingData) {
             return;
         }
-        if (bindingData.staticContainerId) {
-            this._bindingIds.delete(bindingData.staticContainerId);
-        }
-        if (bindingData.dynamicContainerId) {
-            this._bindingIds.delete(bindingData.dynamicContainerId);
-        }
-        if (bindingData.foodId) {
-            this._bindingIds.delete(bindingData.foodId);
-        }
+        Object.values(bindingData).forEach((propId) => {
+            if (propId !== null) {
+                this._bindingIds.delete(propId);
+            }
+        });
     }
 }
