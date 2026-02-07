@@ -23,6 +23,7 @@ import type {
 import { FoodConfig } from '../../config/FoodConfig';
 import type { IRecipeConfig } from '../../data/FoodData';
 import type { IMovablePropData } from '../../data/MovablePropData';
+import { PropMeshConfig } from '../../config/PropMeshConfig';
 
 /**
  * 玩家参与游戏
@@ -119,13 +120,15 @@ export class InGamePlayer extends BasePlayer {
      */
     public async placeProp(position: GameVector3): Promise<void> {
         if (this.carryingProp.container) {
+            const propData = this.carryingProp.container;
             const config = MovablePropConfig.data[
-                this.carryingProp.container.type
+                propData.type
             ] as IMovablePropData;
+            const mesh = PropMeshConfig[propData.type][propData.state];
             InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
                 entityConfig: {
-                    mesh: config.mesh,
+                    mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
@@ -133,20 +136,24 @@ export class InGamePlayer extends BasePlayer {
         }
 
         if (this.carryingProp.foods.length) {
+            const propData = this.carryingProp.foods;
             let config: IMovablePropData | null = null;
+            let mesh: GameModelAssets | undefined;
             if (this.creatableFood) {
                 config = MovablePropConfig.data[
                     this.creatableFood
                 ] as IMovablePropData;
+                mesh = PropMeshConfig[this.creatableFood][''];
             } else {
                 config = MovablePropConfig.data[
-                    this.carryingProp.foods[0].type
+                    propData[0].type
                 ] as IMovablePropData;
+                mesh = PropMeshConfig[propData[0].type][propData[0].state];
             }
             InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
                 entityConfig: {
-                    mesh: config.mesh,
+                    mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
@@ -188,7 +195,7 @@ export class InGamePlayer extends BasePlayer {
                 console.log(
                     `(Server) Found creatable recipe: ${creatableFood}`
                 );
-                this.addPropWearable({ type: creatableFood });
+                this.addPropWearable({ type: creatableFood, state: '' });
                 this.creatableFood = creatableFood;
             } else {
                 this.addPropWearable(propData.foods[0]);
@@ -272,12 +279,16 @@ export class InGamePlayer extends BasePlayer {
         propData:
             | ICarryingProp<ContainerType, ContainerState>
             | ICarryingProp<IngredientType, IngredientState>
-            | { type: FoodType }
+            | ICarryingProp<FoodType, ''>
     ): void {
+        const config = MovablePropConfig.data[propData.type].wearableConfig;
+        const propMeshConfig = PropMeshConfig[propData.type];
+        const mesh =
+            propMeshConfig[propData.state as keyof typeof propMeshConfig];
         this.entity?.player.addWearable({
             bodyPart: GameBodyPart.TORSO,
-            mesh: MovablePropConfig.data[propData.type].mesh,
-            ...MovablePropConfig.data[propData.type].wearableConfig,
+            mesh: mesh,
+            ...config,
         });
     }
 }

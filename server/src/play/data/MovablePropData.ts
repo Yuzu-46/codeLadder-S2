@@ -11,10 +11,6 @@ import type { IInteractableData } from './InteractableData';
  */
 export interface IMovablePropData {
     /**
-     * 模型 / Model
-     */
-    mesh: GameModelAssets;
-    /**
      * 可交互实体配置 / Interactable entity config
      */
     interactableConfig: IInteractableData;
