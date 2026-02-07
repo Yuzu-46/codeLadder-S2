@@ -28,17 +28,85 @@ export const MovablePropConfig: IMovablePropConfig = {
             interactableConfig: {
                 id: () =>
                     `bread_${Date.now()}_${Math.floor(Math.random() * 100)}`,
-                token: InteractableType.FoodBoxProp,
-                entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                        Math.PI / 2
+                    ),
+                },
                 offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
+                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                    Math.PI / 2
+                ),
             },
         },
-        meat: null as unknown as IMovablePropData,
-        vegetable: null as unknown as IMovablePropData,
-        tomato: null as unknown as IMovablePropData,
+        meat: {
+            interactableConfig: {
+                id: () =>
+                    `meat_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                        Math.PI / 2
+                    ),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                    Math.PI / 2
+                ),
+            },
+        },
+        vegetable: {
+            interactableConfig: {
+                id: () =>
+                    `vegetable_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                        Math.PI / 2
+                    ),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                    Math.PI / 2
+                ),
+            },
+        },
+        tomato: {
+            interactableConfig: {
+                id: () =>
+                    `tomato_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                        Math.PI / 2
+                    ),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
+                    Math.PI / 2
+                ),
+            },
+        },
     },
 };
