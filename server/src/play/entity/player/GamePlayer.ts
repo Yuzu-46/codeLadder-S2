@@ -214,8 +214,9 @@ export class InGamePlayer extends BasePlayer {
         // 拿起食物/食材类道具的逻辑
         if (propData.foods.length) {
             this.carryingProp.foods.push(...propData.foods);
-
-            // 查找可以合成的配方
+        }
+        // 如果有食物/食材道具则穿戴上
+        if (this.carryingProp.foods.length) {
             const creatableFood = this.findCreatableRecipe();
             if (creatableFood) {
                 console.log(
@@ -228,6 +229,7 @@ export class InGamePlayer extends BasePlayer {
                 this.creatableFood = null;
             }
         }
+
         console.log(
             '(Server) GamePlayer carryingProp:',
             JSON.stringify(this.carryingProp)

@@ -6,7 +6,9 @@ import { IngredientState } from '../../../../../const/FoodConst';
 import { IFoodConfig } from '../../../../../data/FoodData';
 import type { IIngredientConfig } from '../../../../../data/InteractableData';
 import { IInteractableData } from '../../../../../data/InteractableData';
+import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
+import { BaseContainerProp } from './BaseContainerProp';
 import { BaseMovableProp } from './BaseMovableProp';
 
 /**
@@ -59,14 +61,27 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         );
     }
 
-    public  onInteract(event: GameInteractEvent): void {
-        if()
+    public onInteract(event: GameInteractEvent): void {
+        if (this.container && this.container instanceof BaseContainerProp) {
+            this.container.onInteract(event);
+            return;
+        }
+
+        const { entity } = event;
+        const player = PlayerMgr.instance.getPlayer(
+            entity.player.userId
+        ) as InGamePlayer;
+        if (player.carryingProp.foods.length) {
+            // 如果玩家拿着某道具
+            // more...
+        } else {
+            this.wear(player);
+        }
     }
 
     public wear(player: InGamePlayer): void {
         super.wear(player);
         if (this._type.length) {
-            console.log('(Server) BaseFoodProp wear');
             player.pickUpProp({
                 container: null,
                 foods: this._type.map((type, idx) => ({

@@ -1,12 +1,6 @@
-import type { BaseMovableProp } from '../base/BaseMovableProp';
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '../../../../../const/TokenConst';
-import { ContainerState } from '../../../../../const/ContainerConst';
 import type { IInteractableData } from '../../../../../data/InteractableData';
-import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
-import type { InGamePlayer } from '../../../../player/GamePlayer';
-import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
-import type { TableProp } from '../../immovableProp/TableProp';
 import { BaseContainerProp } from '../base/BaseContainerProp';
 
 /**
