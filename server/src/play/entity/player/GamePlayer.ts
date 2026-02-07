@@ -193,8 +193,6 @@ export class InGamePlayer extends BasePlayer {
      * @param propData 道具数据 / Prop data
      */
     public pickUpProp(propData: IPlayerCarryingPropData): void {
-        // 先清空玩家正在携带的道具
-        this.clearPropWearable();
         // 拿起容器类道具的逻辑
         if (propData.container) {
             // 如果玩家正在携带容器道具且准备拿起容器道具，则抛出错误。否则拿起容器道具
@@ -206,29 +204,14 @@ export class InGamePlayer extends BasePlayer {
                 this.carryingProp.container = propData.container;
             }
         }
-        // 如果有容器道具则穿戴上
-        if (this.carryingProp.container) {
-            this.addPropWearable(this.carryingProp.container);
-        }
 
         // 拿起食物/食材类道具的逻辑
         if (propData.foods.length) {
             this.carryingProp.foods.push(...propData.foods);
         }
-        // 如果有食物/食材道具则穿戴上
-        if (this.carryingProp.foods.length) {
-            const creatableFood = this.findCreatableRecipe();
-            if (creatableFood) {
-                console.log(
-                    `(Server) Found creatable recipe: ${creatableFood}`
-                );
-                this.addPropWearable({ type: creatableFood, state: '' });
-                this.creatableFood = creatableFood;
-            } else {
-                this.addPropWearable(this.carryingProp.foods[0]);
-                this.creatableFood = null;
-            }
-        }
+
+        // 更新玩家穿戴
+        this.updatePropWearable();
 
         console.log(
             '(Server) GamePlayer carryingProp:',
@@ -327,5 +310,31 @@ export class InGamePlayer extends BasePlayer {
         this.entity?.player
             .wearables(GameBodyPart.TORSO)
             .forEach((wearable) => wearable.remove());
+    }
+
+    /**
+     * 更新道具穿戴 / Update prop wearable
+     */
+    private updatePropWearable(): void {
+        this.clearPropWearable();
+        // 添加容器道具穿戴
+        if (this.carryingProp.container) {
+            this.addPropWearable(this.carryingProp.container);
+        }
+
+        // 添加食物/食材道具穿戴
+        if (this.carryingProp.foods.length) {
+            const creatableFood = this.findCreatableRecipe();
+            if (creatableFood) {
+                console.log(
+                    `(Server) Found creatable recipe: ${creatableFood}`
+                );
+                this.addPropWearable({ type: creatableFood, state: '' });
+                this.creatableFood = creatableFood;
+            } else {
+                this.addPropWearable(this.carryingProp.foods[0]);
+                this.creatableFood = null;
+            }
+        }
     }
 }
