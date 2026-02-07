@@ -62,7 +62,7 @@ export type IFoodConfig = {
             /**
              * 各个状态的配置映射 / State configuration mapping
              */
-            states: Record<IngredientState, IFoodStateConfig>;
+            states: Partial<Record<IngredientState, IFoodStateConfig>>;
         }
     >;
     /**
