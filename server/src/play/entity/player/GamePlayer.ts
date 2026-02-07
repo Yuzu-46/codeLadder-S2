@@ -2,12 +2,6 @@ import { BasePlayer } from './BasePlayer';
 import { FactoryToken } from '../../../framework/common/factory/AbstractFactory';
 import { PlayerType } from '../../const/TokenConst';
 import { PlayerGameState } from '../../const/GamePlayerConst';
-import { RemoteMgr } from '../../mgr/RemoteMgr';
-import { ClientEvents } from '../../../../../shares/App';
-import { EventEmitter } from '../../../framework/common/EventEmitter';
-import { Observer } from '../../../framework/common/Observer';
-import type { MessageData } from '@shares/data/Message';
-import i18n from '@root/i18n';
 import type {
     ICarryingProp,
     IPlayerCarryingPropData,
@@ -24,6 +18,9 @@ import { FoodConfig } from '../../config/FoodConfig';
 import type { IRecipeConfig } from '../../data/FoodData';
 import type { IMovablePropData } from '../../data/MovablePropData';
 import { PropMeshConfig } from '../../config/PropMeshConfig';
+import type { BaseContainerProp } from '../interactable/prop/movableProp/base/BaseContainerProp';
+import type { BaseFoodProp } from '../interactable/prop/movableProp/base/BaseFoodProp';
+import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
 
 /**
  * 玩家参与游戏
@@ -118,21 +115,28 @@ export class InGamePlayer extends BasePlayer {
      * 在指定位置放置道具 / Place a prop at the specified position
      * @param position 位置 / Position
      */
-    public async placeProp(position: GameVector3): Promise<void> {
+    public async placeProp(
+        position: GameVector3,
+        interactable?: BaseImmovableProp
+    ): Promise<void> {
+        let container: BaseContainerProp | null = null;
         if (this.carryingProp.container) {
             const propData = this.carryingProp.container;
             const config = MovablePropConfig.data[
                 propData.type
             ] as IMovablePropData;
             const mesh = PropMeshConfig[propData.type][propData.state];
-            InteractableMgr.instance.createInteractable({
+            container = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
                 entityConfig: {
                     mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
-            });
+            }) as BaseContainerProp;
+            if (interactable) {
+                container.placeToContainer(interactable.id);
+            }
         }
 
         if (this.carryingProp.foods.length) {
@@ -150,14 +154,21 @@ export class InGamePlayer extends BasePlayer {
                 ] as IMovablePropData;
                 mesh = PropMeshConfig[propData[0].type][propData[0].state];
             }
-            InteractableMgr.instance.createInteractable({
+            const foods = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
                 entityConfig: {
                     mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
-            });
+            }) as BaseFoodProp;
+            if (container) {
+                foods.placeToContainer(container.id);
+                container.placeFoods(foods.id);
+            } else if (interactable) {
+                foods.placeToContainer(interactable.id);
+                interactable.placeProp(foods.id);
+            }
         }
 
         this.carryingProp = {

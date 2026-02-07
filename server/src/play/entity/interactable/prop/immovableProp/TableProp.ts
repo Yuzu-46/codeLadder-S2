@@ -30,7 +30,7 @@ export class TableProp extends BaseImmovableProp {
                 event.entity.player.userId
             );
             if (player && player instanceof InGamePlayer) {
-                player.placeProp(this.entity!.position);
+                player.placeProp(this.entity!.position, this);
             }
         }
     }
