@@ -8,7 +8,7 @@ export abstract class Interactable {
     /**
      * 唯一标识
      */
-    protected id: string = '';
+    protected _id: string = '';
     /**
      * 实体
      */
@@ -23,7 +23,7 @@ export abstract class Interactable {
      * @param config 可交互对象配置
      */
     public start(config: IInteractableData): void {
-        this.id = typeof config.id === 'string' ? config.id : config.id();
+        this._id = typeof config.id === 'string' ? config.id : config.id();
         if (config.entity) {
             this.entity = config.entity;
         } else if (config.entityConfig) {
@@ -94,5 +94,12 @@ export abstract class Interactable {
             return null;
         }
         return InteractableMgr.instance.getInteractable(id) || null;
+    }
+
+    /**
+     * 可交互对象ID
+     */
+    public get id(): string {
+        return this._id;
     }
 }
