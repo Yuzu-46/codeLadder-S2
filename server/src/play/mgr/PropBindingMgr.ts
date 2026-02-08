@@ -92,6 +92,25 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
     }
 
     /**
+     * 通过道具ID更新绑定关系 / Update binding relationship by prop ID
+     * @param propId 道具ID / Prop ID
+     * @param bindingData 新的绑定关系数据 / New binding relationship data
+     * @return 是否更新成功 / Whether to update successfully
+     */
+    public updateBindingDataByPropId(
+        propId: string,
+        bindingData: Partial<IPropBindingData>
+    ): boolean {
+        const bindingId = this._bindingIds.get(propId);
+        if (!bindingId) {
+            return false;
+        }
+
+        // 更新绑定数据
+        return this.updateBinding(bindingId, bindingData);
+    }
+
+    /**
      * 删除绑定关系 / Remove binding relationship
      * @param bindingId 绑定关系ID / Binding relationship ID
      * @returns 是否删除成功 / Whether removal was successful

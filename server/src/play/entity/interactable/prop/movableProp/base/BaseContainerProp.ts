@@ -11,17 +11,13 @@ import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
 import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
+import { PropBindingManager } from '../../../../../mgr/PropBindingMgr';
 
 /**
  * 容器道具基类 / Container prop base class
  */
 export abstract class BaseContainerProp extends BaseMovableProp {
     protected _type: ContainerType | null = null;
-
-    /**
-     * 食材道具ID / Food prop ID
-     */
-    private _foodsId: string | null = null;
 
     /**
      * 有限状态机 / Finite state machine
@@ -66,49 +62,12 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             // 如果玩家拿着某道具
             // more...
         } else {
-            this.foods?.wear(player);
             this.wear(player);
         }
     }
 
     public destroy(): void {
         super.destroy();
-        const { container } = this;
-        if (container) {
-            container.removePlacedProp();
-        }
-        this.leaveContainer();
-    }
-
-    /**
-     * 食材道具 / Food prop
-     */
-    public get foods(): BaseMovableProp | null {
-        return this.getInteractable(this._foodsId) as BaseMovableProp | null;
-    }
-
-    /**
-     * 放置食材 / Place food
-     * @param foodsId 食材道具ID / Food prop ID
-     */
-    public placeFoods(foodsId: string): void {
-        this._foodsId = foodsId;
-    }
-
-    /**
-     * 移除食材 / Remove food
-     */
-    public removeFoods(): void {
-        this._foodsId = null;
-    }
-
-    public get container(): BaseImmovableProp | null {
-        return super.container as BaseImmovableProp | null;
-    }
-
-    public placeToContainer(containerId: string): void {
-        super.placeToContainer(containerId);
-        this.container?.placeProp(this.id);
     }
 
     public wear(player: InGamePlayer) {
@@ -122,8 +81,24 @@ export abstract class BaseContainerProp extends BaseMovableProp {
                 foods: [],
             });
         }
-        if (this.foods) {
-            this.foods.wear(player);
+
+        // 如果有绑定的食物/食材，那么也穿戴到玩家身上
+        this.food?.wear(player);
+        // 更新绑定数据
+        PropBindingManager.instance.updateBindingDataByPropId(this.id, {
+            dynamicContainerId: null,
+        });
+    }
+
+    /**
+     * 该容器中的食物 / food
+     */
+    private get food(): BaseMovableProp | undefined {
+        const foodId = PropBindingManager.instance.getBindingDataByPropId(
+            this.id
+        ).bindingData?.foodId;
+        if (foodId) {
+            return this.getInteractable(foodId) as BaseMovableProp;
         }
     }
 }
