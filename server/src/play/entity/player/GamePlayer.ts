@@ -160,6 +160,14 @@ export class InGamePlayer extends BasePlayer {
     }
 
     /**
+     * 丢弃食物/食材道具 / Drop food/ingredient prop
+     */
+    public dropFoodProp(): void {
+        this.carryingProp.foods = [];
+        this.updatePropWearable();
+    }
+
+    /**
      * 添加道具穿戴 / Add prop wearble
      * @param propData 道具数据 / Prop data
      */
