@@ -41,6 +41,31 @@ const codeLadderS2: ISceneData = {
             voxelId: 650,
         },
     ],
+    environmentEntities: [
+        // 切菜板
+        ...[
+            [16, 45],
+            [20, 45],
+            [24, 45],
+        ].map<Partial<GameEntityConfig>>((pos) => ({
+            id: 'choppingBoard_1',
+            mesh: 'mesh/砧板.vb',
+            position: new GameVector3(pos[0], 1.65, pos[1]),
+            meshScale: new GameVector3(0.09, 0.09, 0.09),
+        })),
+        // 菜刀
+        ...[
+            [15.5, 45],
+            [19.5, 45],
+            [23.5, 45],
+        ].map<Partial<GameEntityConfig>>((pos) => ({
+            id: 'knife_1',
+            mesh: 'mesh/菜刀.vb',
+            position: new GameVector3(pos[0], 2.1, pos[1]),
+            meshScale: new GameVector3(0.04, 0.04, 0.04),
+            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(-0.5),
+        })),
+    ],
 };
 
 export default codeLadderS2;

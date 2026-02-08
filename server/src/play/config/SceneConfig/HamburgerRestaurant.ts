@@ -41,6 +41,7 @@ const hamburgerRestaurant: ISceneData = {
             voxelId: 650,
         },
     ],
+    environmentEntities: [], // 暂时为空
 };
 
 export default hamburgerRestaurant;

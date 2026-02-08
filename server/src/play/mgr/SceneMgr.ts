@@ -1,6 +1,5 @@
 import { Singleton } from '../../framework/common/Singleton';
 import { SceneConfig, SceneType } from '../config/SceneConfig';
-import type { ISceneData } from '../data/SceneData';
 
 /**
  * 场景管理器
@@ -54,7 +53,6 @@ export class SceneMgr extends Singleton<SceneMgr>() {
             );
         }
 
-        const { terrainMap } = scene;
         scene.terrainMap.forEach((map) => {
             if (map.start[0] > map.end[0] || map.start[1] > map.end[1]) {
                 throw new Error(
@@ -67,6 +65,15 @@ export class SceneMgr extends Singleton<SceneMgr>() {
                     voxels.setVoxelId(x, 2, z, map.voxelId);
                 }
             }
+        });
+
+        scene.environmentEntities.forEach((entityConfig) => {
+            world.createEntity({
+                collides: false,
+                fixed: true,
+                gravity: false,
+                ...entityConfig,
+            });
         });
     }
 }
