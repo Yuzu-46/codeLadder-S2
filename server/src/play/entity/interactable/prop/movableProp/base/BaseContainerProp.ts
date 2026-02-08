@@ -7,8 +7,6 @@ import {
 import type { IInteractableData } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
-import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
-import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
@@ -60,11 +58,16 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         ) as InGamePlayer;
         if (player.carryingProp.container) {
             // 如果玩家拿着某道具
-            // more...
+            this.onInteractCarryingContainerProp(player);
         } else {
             this.wear(player);
         }
     }
+
+    /**
+     * 处理玩家携带容器道具的交互事件 / Handle player carrying container prop interaction event
+     */
+    private onInteractCarryingContainerProp(player: InGamePlayer): void {}
 
     public destroy(): void {
         super.destroy();
