@@ -17,8 +17,6 @@ export class TableProp extends BaseImmovableProp {
 
         PropBindingManager.instance.addBinding({
             staticContainerId: this.id,
-            dynamicContainerId: null,
-            foodId: null,
         });
     }
 
@@ -32,9 +30,9 @@ export class TableProp extends BaseImmovableProp {
         ) as InGamePlayer;
         if (bindingData && player) {
             if (bindingData.dynamicContainerId) {
-                this.getInteractable(bindingData.staticContainerId)?.onInteract(
-                    event
-                );
+                this.getInteractable(
+                    bindingData.dynamicContainerId
+                )?.onInteract(event);
             } else if (bindingData.foodId) {
                 this.getInteractable(bindingData.foodId)?.onInteract(event);
             } else {

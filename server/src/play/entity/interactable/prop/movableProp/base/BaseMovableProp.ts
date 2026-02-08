@@ -1,9 +1,9 @@
 import { Interactable } from '../../../base/Interactable';
 import type { IInteractableData } from '../../../../../data/InteractableData';
-import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import type { ContainerType } from '../../../../../const/ContainerConst';
 import type { IngredientType } from '../../../../../const/FoodConst';
+import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
 
 /**
  * 可移动道具基类 / Movable prop base class
@@ -24,6 +24,6 @@ export abstract class BaseMovableProp extends Interactable {
      */
     public wear(player: InGamePlayer): void {
         // 销毁道具
-        this.destroy();
+        InteractableMgr.instance.destroyInteractable(this.id);
     }
 }

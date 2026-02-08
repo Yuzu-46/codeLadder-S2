@@ -21,6 +21,7 @@ import type { BaseImmovableProp } from '../entity/interactable/prop/immovablePro
 import type { BaseContainerProp } from '../entity/interactable/prop/movableProp/base/BaseContainerProp';
 import type { BaseFoodProp } from '../entity/interactable/prop/movableProp/base/BaseFoodProp';
 import { InteractableMgr } from './InteractableMgr';
+import { PropBindingManager } from './PropBindingMgr';
 
 /**
  * 道具管理器 / Prop manager
@@ -53,7 +54,10 @@ export class PropMgr extends Singleton<PropMgr>() {
                 state: containerData.state,
             } as IContainerPropConfig) as BaseContainerProp;
             if (interactable) {
-                container.placeToContainer(interactable.id);
+                PropBindingManager.instance.updateBindingDataByPropId(
+                    interactable.id,
+                    { dynamicContainerId: container.id }
+                );
             }
         }
 
@@ -83,12 +87,13 @@ export class PropMgr extends Singleton<PropMgr>() {
                 type: foodData.map((food) => food.type),
                 state: foodData.map((food) => food.state),
             } as IIngredientConfig) as BaseFoodProp;
-            if (container) {
-                foods.placeToContainer(container.id);
-                container.placeFoods(foods.id);
-            } else if (interactable) {
-                foods.placeToContainer(interactable.id);
-                interactable.placeProp(foods.id);
+            if (interactable) {
+                PropBindingManager.instance.updateBindingDataByPropId(
+                    interactable.id,
+                    {
+                        foodId: foods.id,
+                    }
+                );
             }
         }
     }

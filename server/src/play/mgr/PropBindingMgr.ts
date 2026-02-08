@@ -22,7 +22,7 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
      * @returns 是否添加成功 / Whether addition was successful
      */
     public addBinding(
-        bindingData: IPropBindingData,
+        bindingData: Partial<IPropBindingData>,
         bindingId: string = `binding_${Date.now()}_${Math.floor(Math.random() * 100)}`
     ): boolean {
         if (this._bindingMap.has(bindingId)) {
@@ -34,7 +34,12 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
             return false;
         }
 
-        this._bindingMap.set(bindingId, bindingData);
+        this._bindingMap.set(bindingId, {
+            staticContainerId: null,
+            dynamicContainerId: null,
+            foodId: null,
+            ...bindingData,
+        });
 
         // 建立反向索引
         this.buildReverseIndex(bindingId);
@@ -65,14 +70,7 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
             return false;
         }
 
-        if (
-            !this.validateBindingData({
-                staticContainerId: null,
-                dynamicContainerId: null,
-                foodId: null,
-                ...bindingData,
-            })
-        ) {
+        if (!Object.values(bindingData).length) {
             return false;
         }
 
@@ -170,14 +168,16 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
      * @param bindingData 绑定数据 / Binding data
      * @returns 是否有效 / Whether valid
      */
-    private validateBindingData(bindingData: IPropBindingData): boolean {
+    private validateBindingData(
+        bindingData: Partial<IPropBindingData>
+    ): boolean {
         // 至少需要有一个有效的ID
         const hasValidId =
-            bindingData.staticContainerId !== null ||
-            bindingData.dynamicContainerId !== null ||
-            bindingData.foodId !== null;
+            bindingData.staticContainerId ||
+            bindingData.dynamicContainerId ||
+            bindingData.foodId;
 
-        return hasValidId;
+        return !!hasValidId;
     }
 
     /**
@@ -229,7 +229,7 @@ export class PropBindingManager extends Singleton<PropBindingManager>() {
         }
         Object.values(bindingData).forEach((propId) => {
             if (propId !== null) {
-                if (!this._bindingIds.has(propId)) {
+                if (this._bindingIds.has(propId)) {
                     throw new Error(
                         `Prop ID ${propId} is already used by another binding relationship.`
                     );
