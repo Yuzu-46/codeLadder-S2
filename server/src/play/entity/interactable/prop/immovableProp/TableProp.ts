@@ -4,7 +4,7 @@ import { InteractableType } from '@src/play/const/TokenConst';
 import type { IInteractableData } from '../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../mgr/PlayerMgr';
 import type { InGamePlayer } from '../../../player/GamePlayer';
-import { PropBindingManager } from '../../../../mgr/PropBindingMgr';
+import { PropBindingMgr } from '../../../../mgr/PropBindingMgr';
 
 /**
  * 桌子道具 / Table Prop
@@ -15,7 +15,7 @@ export class TableProp extends BaseImmovableProp {
         super.start(config);
         console.log('(Server) TableProp start with id ', config.id);
 
-        PropBindingManager.instance.addBinding({
+        PropBindingMgr.instance.addBinding({
             staticContainerId: this.id,
         });
     }
@@ -24,7 +24,7 @@ export class TableProp extends BaseImmovableProp {
         super.onInteract(event);
 
         const { bindingId, bindingData } =
-            PropBindingManager.instance.getBindingDataByPropId(this.id);
+            PropBindingMgr.instance.getBindingDataByPropId(this.id);
         const player = PlayerMgr.instance.getPlayer(
             event.entity.player.userId
         ) as InGamePlayer;

@@ -7,7 +7,7 @@ import { IFoodConfig } from '../../../../../data/FoodData';
 import type { IIngredientConfig } from '../../../../../data/InteractableData';
 import { IInteractableData } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
-import { PropBindingManager } from '../../../../../mgr/PropBindingMgr';
+import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import { BaseContainerProp } from './BaseContainerProp';
 import { BaseMovableProp } from './BaseMovableProp';
@@ -63,7 +63,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     }
 
     public onInteract(event: GameInteractEvent): void {
-        const containerId = PropBindingManager.instance.getBindingDataByPropId(
+        const containerId = PropBindingMgr.instance.getBindingDataByPropId(
             this.id
         ).bindingData?.dynamicContainerId;
         if (containerId) {
@@ -96,7 +96,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         }
 
         // 更新绑定数据
-        PropBindingManager.instance.updateBindingDataByPropId(this.id, {
+        PropBindingMgr.instance.updateBindingDataByPropId(this.id, {
             foodId: null,
         });
     }

@@ -11,7 +11,7 @@ import { InteractableMgr } from '../../../../../mgr/InteractableMgr';
 import type { BaseImmovableProp } from '../../immovableProp/BaseImmovableProp';
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
-import { PropBindingManager } from '../../../../../mgr/PropBindingMgr';
+import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 
 /**
  * 容器道具基类 / Container prop base class
@@ -85,7 +85,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         // 如果有绑定的食物/食材，那么也穿戴到玩家身上
         this.food?.wear(player);
         // 更新绑定数据
-        PropBindingManager.instance.updateBindingDataByPropId(this.id, {
+        PropBindingMgr.instance.updateBindingDataByPropId(this.id, {
             dynamicContainerId: null,
         });
     }
@@ -94,9 +94,8 @@ export abstract class BaseContainerProp extends BaseMovableProp {
      * 该容器中的食物 / food
      */
     private get food(): BaseMovableProp | undefined {
-        const foodId = PropBindingManager.instance.getBindingDataByPropId(
-            this.id
-        ).bindingData?.foodId;
+        const foodId = PropBindingMgr.instance.getBindingDataByPropId(this.id)
+            .bindingData?.foodId;
         if (foodId) {
             return this.getInteractable(foodId) as BaseMovableProp;
         }

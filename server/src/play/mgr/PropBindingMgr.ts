@@ -4,7 +4,7 @@ import type { IPropBindingData } from '../data/PropBindingData';
 /**
  * 道具绑定管理器 / Prop binding manager
  */
-export class PropBindingManager extends Singleton<PropBindingManager>() {
+export class PropBindingMgr extends Singleton<PropBindingMgr>() {
     /**
      * 绑定数据映射 / Binding data mapping
      */
