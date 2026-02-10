@@ -53,9 +53,8 @@ export abstract class Interactable {
             config;
         if (entity) {
             entity.enableInteract = true;
-            if (interactColor) {
-                entity.interactColor = interactColor;
-            }
+            entity.interactColor =
+                interactColor || new GameRGBColor(255, 255, 255);
             entity.interactHint = interactHint || '';
             entity.interactRadius = interactRadius || 2;
             if (interactSound) {
