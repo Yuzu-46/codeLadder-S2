@@ -9,9 +9,9 @@ export const PropMeshConfig: IPropMeshConfig = {
         dirty: 'mesh/盘子.vb',
     },
     bread: {
-        raw: 'mesh/面包.vb',
-        chopped: 'mesh/面包.vb',
-        cooked: 'mesh/面包.vb',
+        raw: 'mesh/面包_old.vb',
+        chopped: 'mesh/面包_old.vb',
+        cooked: 'mesh/面包_old.vb',
     },
     meat: {
         raw: 'mesh/牛肉.vb',
@@ -20,7 +20,7 @@ export const PropMeshConfig: IPropMeshConfig = {
         raw: 'mesh/蔬菜.vb',
     },
     tomato: {
-        raw: 'mesh/番茄.vb',
+        raw: 'mesh/番茄_old.vb',
     },
     meatBurger: {},
     mixedBurger: {},
