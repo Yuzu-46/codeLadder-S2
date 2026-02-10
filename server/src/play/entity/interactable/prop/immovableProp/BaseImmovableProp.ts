@@ -10,11 +10,20 @@ export abstract class BaseImmovableProp extends Interactable {
     public onInteract(event: GameInteractEvent): void {
         super.onInteract(event);
 
-        const { bindingId, bindingData } =
+        let { bindingId, bindingData } =
             PropBindingMgr.instance.getBindingDataByPropId(this.id);
+        if (!bindingId) {
+            PropBindingMgr.instance.addBinding({
+                staticContainerId: this.id,
+            });
+            ({ bindingId, bindingData } =
+                PropBindingMgr.instance.getBindingDataByPropId(this.id));
+        }
+
         const player = PlayerMgr.instance.getPlayer(
             event.entity.player.userId
         ) as InGamePlayer;
+
         if (bindingData && player) {
             // 如果有绑定的动态容器或食材，则触发动态容器或食材的交互事件（权重：动态容器 > 食材）
             // 否则，调用玩家放置道具的事件
