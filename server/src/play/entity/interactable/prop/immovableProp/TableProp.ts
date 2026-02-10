@@ -15,31 +15,29 @@ export class TableProp extends BaseImmovableProp {
         super.start(config);
         console.log('(Server) TableProp start with id ', config.id);
 
+        // 添加绑定关系
         PropBindingMgr.instance.addBinding({
             staticContainerId: this.id,
         });
     }
 
-    public onInteract(event: GameInteractEvent): void {
-        super.onInteract(event);
+    protected onInteractWithDynamicContainer(
+        dynamicContainerId: string,
+        event: GameInteractEvent
+    ): void {
+        this.getInteractable(dynamicContainerId)?.onInteract(event);
+    }
 
-        const { bindingId, bindingData } =
-            PropBindingMgr.instance.getBindingDataByPropId(this.id);
-        const player = PlayerMgr.instance.getPlayer(
-            event.entity.player.userId
-        ) as InGamePlayer;
-        if (bindingData && player) {
-            if (bindingData.dynamicContainerId) {
-                this.getInteractable(
-                    bindingData.dynamicContainerId
-                )?.onInteract(event);
-            } else if (bindingData.foodId) {
-                this.getInteractable(bindingData.foodId)?.onInteract(event);
-            } else {
-                if (this.entity) {
-                    player.placeProp(this.entity.position, this);
-                }
-            }
+    protected onInteractWithFood(
+        foodId: string,
+        event: GameInteractEvent
+    ): void {
+        this.getInteractable(foodId)?.onInteract(event);
+    }
+
+    protected onInteractWithoutBound(player: InGamePlayer): void {
+        if (this.entity) {
+            player.placeProp(this.entity.position, this);
         }
     }
 }

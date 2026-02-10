@@ -16,7 +16,6 @@ export class BinProp extends BaseImmovableProp {
     }
 
     public onInteract(event: GameInteractEvent): void {
-        super.onInteract(event);
         console.log('(Server) BinProp onInteract with id ', this.id);
 
         const player = PlayerMgr.instance.getPlayer(
