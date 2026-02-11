@@ -6,7 +6,6 @@ import type {
     IPropData,
     IPlayerCarryingPropData,
 } from '../../data/GamePlayerData';
-import { InteractableMgr } from '../../mgr/InteractableMgr';
 import { MovablePropConfig } from '../../config/MovablePropConfig';
 import type { ContainerState, ContainerType } from '../../const/ContainerConst';
 import type {
@@ -14,18 +13,12 @@ import type {
     IngredientState,
     IngredientType,
 } from '../../const/FoodConst';
-import { FoodConfig } from '../../config/FoodConfig';
-import type { IRecipeConfig } from '../../data/FoodData';
-import type { IMovablePropData } from '../../data/MovablePropData';
 import { PropMeshConfig } from '../../config/PropMeshConfig';
-import type { BaseContainerProp } from '../interactable/prop/movableProp/base/BaseContainerProp';
-import type { BaseFoodProp } from '../interactable/prop/movableProp/base/BaseFoodProp';
 import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
-import type {
-    IContainerPropConfig,
-    IIngredientConfig,
-} from '../../data/InteractableData';
 import { PropMgr } from '../../mgr/PropMgr';
+import { EventEmitter } from '../../../framework/common/EventEmitter';
+import { PlayerEvent } from '../../const/EventConst';
+import type { IPlayerEventData } from '../../data/EventData';
 
 /**
  * 玩家参与游戏
@@ -82,6 +75,13 @@ export class InGamePlayer extends BasePlayer {
     protected btnPressAction0(event: GameInputEvent): void {
         super.btnPressAction0(event);
         console.log('(Server) GamePlayer btnPressAction0');
+        EventEmitter.instance.emit<IPlayerEventData<GameInputEvent>>(
+            PlayerEvent.BtnPressAction0,
+            {
+                player: this,
+                event,
+            }
+        );
     }
 
     public onDie(event: GameDieEvent): void {
