@@ -25,6 +25,10 @@ export const enum InteractableType {
      */
     TableProp = 'TableProp',
     /**
+     * 带切菜板的桌子
+     */
+    TablePropWithChoppingBoard = 'TablePropWithChoppingBoard',
+    /**
      * 灶台
      */
     StoveProp = 'StoveProp',
