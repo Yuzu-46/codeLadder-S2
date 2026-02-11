@@ -109,6 +109,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         if (this._type.length > 1) {
             return;
         }
+
+        console.log(
+            `(FoodProp) ${this.id} onChop, current state: ${this._fsm[0].State}`
+        );
         // 触发切菜事件
         this._fsm[0].send(FoodEvent.CHOP);
     }

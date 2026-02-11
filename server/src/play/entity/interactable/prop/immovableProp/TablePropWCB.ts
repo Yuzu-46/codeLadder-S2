@@ -14,6 +14,13 @@ import { TableProp } from './TableProp';
  */
 @FactoryToken(InteractableType.TablePropWithChoppingBoard)
 export class TablePropWithChoppingBoard extends TableProp {
+    /**
+     * 玩家按下按钮"action0"事件处理函数 / Player press button "action0" event handler function
+     */
+    private _playerBtnPressAction0Handler:
+        | ((payload: IPlayerEventData<GameInputEvent> | undefined) => void)
+        | null = null;
+
     public start(config: IInteractableData): void {
         super.start(config);
         this.bindEvents();
@@ -23,9 +30,12 @@ export class TablePropWithChoppingBoard extends TableProp {
      * 绑定事件 / Bind events
      */
     private bindEvents(): void {
+        // 监听玩家按下按钮"action0"事件 / Listen for player press button "action0" event
+        this._playerBtnPressAction0Handler =
+            this.onPlayerBtnPressAction0.bind(this);
         EventEmitter.instance.on<IPlayerEventData<GameInputEvent>>(
             PlayerEvent.BtnPressAction0,
-            this.onPlayerBtnPressAction0
+            this._playerBtnPressAction0Handler
         );
     }
 
@@ -39,7 +49,7 @@ export class TablePropWithChoppingBoard extends TableProp {
             const { player } = payload;
             if (
                 player.entity &&
-                player.entity.position.distance(this.entity.position) <= 1
+                player.entity.position.distance(this.entity.position) <= 2
             ) {
                 const foodId = PropBindingMgr.instance.getBindingDataByPropId(
                     this.id
@@ -49,7 +59,8 @@ export class TablePropWithChoppingBoard extends TableProp {
                         | BaseFoodProp
                         | undefined;
                     if (food) {
-                        // 如果玩家正在与桌子交互，并且桌子上有食物，那么触发切菜事件
+                        // 如果桌子上有食物，那么触发切菜事件
+                        food.onChop();
                     }
                 }
             }
@@ -67,6 +78,18 @@ export class TablePropWithChoppingBoard extends TableProp {
         // 因为有切菜板的桌子不能放置动态容器类道具，所以只有当玩家没有携带任何容器时才允许与桌子进行交互
         if (!player.carryingProp.container) {
             super.onInteractWithoutBound(player);
+        }
+    }
+
+    public destroy(): void {
+        super.destroy();
+        // 解绑事件 / Unbind events
+        if (this._playerBtnPressAction0Handler) {
+            EventEmitter.instance.off(
+                PlayerEvent.BtnPressAction0,
+                this._playerBtnPressAction0Handler
+            );
+            this._playerBtnPressAction0Handler = null;
         }
     }
 }
