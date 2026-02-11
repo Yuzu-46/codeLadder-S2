@@ -2,9 +2,7 @@ import type {
     IMovablePropConfig,
     IMovablePropData,
 } from '../../data/MovablePropData';
-import { ContainerState } from '../../const/ContainerConst';
 import { InteractableType } from '../../const/TokenConst';
-import { IngredientState } from '../../const/FoodConst';
 
 /**
  * 可移动道具配置 / Movable prop configuration
@@ -12,6 +10,16 @@ import { IngredientState } from '../../const/FoodConst';
 export const MovablePropConfig: IMovablePropConfig = {
     data: {
         plate: {
+            states: {
+                clean: {
+                    mesh: 'mesh/盘子.vb',
+                    interactHint: '盘子（干净）',
+                },
+                dirty: {
+                    mesh: 'mesh/盘子.vb',
+                    interactHint: '盘子（脏）',
+                },
+            },
             interactableConfig: {
                 id: () =>
                     `plate_${Date.now()}_${Math.floor(Math.random() * 100)}`,
@@ -25,6 +33,20 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         bread: {
+            states: {
+                raw: {
+                    mesh: 'mesh/面包_old.vb',
+                    interactHint: '面包（生）',
+                },
+                chopped: {
+                    mesh: 'mesh/面包_old.vb',
+                    interactHint: '面包（已切）',
+                },
+                cooking: {
+                    mesh: 'mesh/面包_old.vb',
+                    interactHint: '面包（烹饪中）',
+                },
+            },
             interactableConfig: {
                 id: () =>
                     `bread_${Date.now()}_${Math.floor(Math.random() * 100)}`,
@@ -46,6 +68,20 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         meat: {
+            states: {
+                raw: {
+                    mesh: 'mesh/牛肉.vb',
+                    interactHint: '牛肉（生）',
+                },
+                chopped: {
+                    mesh: 'mesh/已切牛肉.vb',
+                    interactHint: '牛肉（已切）',
+                },
+                cooking: {
+                    mesh: 'mesh/牛肉.vb',
+                    interactHint: '牛肉（烹饪中）',
+                },
+            },
             interactableConfig: {
                 id: () =>
                     `meat_${Date.now()}_${Math.floor(Math.random() * 100)}`,
@@ -61,6 +97,20 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         vegetable: {
+            states: {
+                raw: {
+                    mesh: 'mesh/蔬菜.vb',
+                    interactHint: '蔬菜（生）',
+                },
+                chopped: {
+                    mesh: 'mesh/已切蔬菜.vb',
+                    interactHint: '蔬菜（已切）',
+                },
+                cooking: {
+                    mesh: 'mesh/蔬菜.vb',
+                    interactHint: '蔬菜（烹饪中）',
+                },
+            },
             interactableConfig: {
                 id: () =>
                     `vegetable_${Date.now()}_${Math.floor(Math.random() * 100)}`,
@@ -76,6 +126,20 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
         tomato: {
+            states: {
+                raw: {
+                    mesh: 'mesh/番茄_old.vb',
+                    interactHint: '番茄（生）',
+                },
+                chopped: {
+                    mesh: 'mesh/已切番茄.vb',
+                    interactHint: '番茄（已切）',
+                },
+                cooking: {
+                    mesh: 'mesh/番茄_old.vb',
+                    interactHint: '番茄（烹饪中）',
+                },
+            },
             interactableConfig: {
                 id: () =>
                     `tomato_${Date.now()}_${Math.floor(Math.random() * 100)}`,
@@ -96,5 +160,9 @@ export const MovablePropConfig: IMovablePropConfig = {
                 ),
             },
         },
+        meatBurger: {} as IMovablePropData<''>,
+        mixedBurger: {} as IMovablePropData<''>,
+        nutritiousBurger: {} as IMovablePropData<''>,
+        beefSoup: {} as IMovablePropData<''>,
     },
 };

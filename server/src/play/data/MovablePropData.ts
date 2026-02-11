@@ -9,7 +9,15 @@ import type { IInteractableData } from './InteractableData';
 /**
  * 可移动道具数据 / Movable prop data
  */
-export interface IMovablePropData {
+export interface IMovablePropData<
+    S extends ContainerState | IngredientState | '',
+> {
+    /**
+     * 状态配置 / State configuration
+     */
+    states: Partial<
+        Record<S, { mesh: GameModelAssets; interactHint?: string }>
+    >;
     /**
      * 可交互实体配置 / Interactable entity config
      */
@@ -28,5 +36,13 @@ export interface IMovablePropConfig {
     /**
      * 可移动道具数据列表 / Movable prop data list
      */
-    data: Record<ContainerType | IngredientType | FoodType, IMovablePropData>;
+    data: {
+        [K in ContainerType | IngredientType | FoodType]: IMovablePropData<
+            K extends ContainerType
+                ? ContainerState
+                : K extends IngredientType
+                  ? IngredientState
+                  : ''
+        >;
+    };
 }
