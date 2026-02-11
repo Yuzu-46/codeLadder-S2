@@ -3,13 +3,10 @@ import { FiniteStateMachine } from '../../../../../../framework/common/state/Fin
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
-import { IFoodConfig } from '../../../../../data/FoodData';
 import type { IIngredientConfig } from '../../../../../data/InteractableData';
-import { IInteractableData } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
-import { BaseContainerProp } from './BaseContainerProp';
 import { BaseMovableProp } from './BaseMovableProp';
 
 /**
@@ -28,7 +25,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         states: {
             [IngredientState.RAW]: {
                 on: {
-                    [FoodEvent.CHOPPED]: IngredientState.CHOPPED,
+                    [FoodEvent.CHOP]: IngredientState.CHOPPED,
                 },
             },
             [IngredientState.CHOPPED]: {
@@ -99,5 +96,20 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         PropBindingMgr.instance.updateBindingDataByPropId(this.id, {
             foodId: null,
         });
+    }
+
+    /**
+     * 处理切菜事件 / Handle chopping event
+     */
+    public onChop(): void {
+        if (this._type.length === 0) {
+            throw new Error('This food prop has no ingredient type defined.');
+        }
+        // 如果有多个食材则置之不理
+        if (this._type.length > 1) {
+            return;
+        }
+        // 触发切菜事件
+        this._fsm[0].send(FoodEvent.CHOP);
     }
 }

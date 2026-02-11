@@ -43,9 +43,9 @@ export const enum IngredientState {
  */
 export const enum FoodEvent {
     /**
-     * 切完
+     * 切
      */
-    CHOPPED = 'chopped',
+    CHOP = 'chop',
     /**
      * 开始烹饪
      */
