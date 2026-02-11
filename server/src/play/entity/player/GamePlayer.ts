@@ -79,7 +79,7 @@ export class InGamePlayer extends BasePlayer {
             PlayerEvent.BtnPressAction0,
             {
                 player: this,
-                event,
+                data: event,
             }
         );
     }

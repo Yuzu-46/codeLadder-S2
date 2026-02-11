@@ -11,5 +11,5 @@ export interface IPlayerEventData<T = unknown> {
     /**
      * 事件数据 / Event data
      */
-    event?: T;
+    data?: T;
 }
