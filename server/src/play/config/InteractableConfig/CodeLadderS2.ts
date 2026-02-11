@@ -19,13 +19,13 @@ const tablePositions: { x: number; z: number }[] = [
         z: 17,
     })),
 
-    // z=45的桌子，并排除在墙里的
+    // z=45的桌子，并排除在墙里或者其他道具重复的
     ...Array.from({ length: 19 })
         .map((_, i) => ({
             x: 12 + i * 2,
             z: 45,
         }))
-        .filter((_, i) => i !== 9),
+        .filter((_, i) => ![2, 4, 6, 9].includes(i)), // 2,4,6是带切菜板的桌子，9是是墙
 
     // x=12的桌子位置
     ...Array.from({ length: 8 }).map((_, i) => ({
@@ -63,6 +63,18 @@ const tablePositions: { x: number; z: number }[] = [
     { x: 30, z: 27 },
     { x: 30, z: 33 },
 ];
+
+/**
+ * 带切菜板的桌子位置 / Table with chopping board positions
+ * @property x - x坐标 / x coordinate
+ * @property z - z坐标 / z coordinate
+ */
+const tableWithChoppingBoardPositions: { x: number; z: number }[] = Array.from({
+    length: 3,
+}).map((_, i) => ({
+    x: 12 + [2, 4, 6][i] * 2,
+    z: 45,
+}));
 
 /**
  * 无限食材配置组 / Food Box Config Group
@@ -134,6 +146,15 @@ const codeLadderS2: IInteractableData[] = [
     ...tablePositions.map<IInteractableData>((position) => ({
         id: `table_${position.x}_${position.z}`,
         token: InteractableType.TableProp,
+        entityConfig: {
+            mesh: 'mesh/桌子1.vb',
+            position: new GameVector3(position.x, 1.5, position.z),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+        },
+    })),
+    ...tableWithChoppingBoardPositions.map<IInteractableData>((position) => ({
+        id: `tableWCB_${position.x}_${position.z}`,
+        token: InteractableType.TablePropWithChoppingBoard,
         entityConfig: {
             mesh: 'mesh/桌子1.vb',
             position: new GameVector3(position.x, 1.5, position.z),

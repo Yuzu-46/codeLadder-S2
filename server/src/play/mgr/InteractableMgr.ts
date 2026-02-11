@@ -11,6 +11,7 @@ import {
     FoodBoxProp,
     StoveProp,
     TableProp,
+    TablePropWithChoppingBoard,
 } from '../entity/interactable/prop/immovableProp';
 import { PlateProp, FoodProp } from '../entity/interactable/prop/movableProp';
 
@@ -59,6 +60,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
             {
                 singleton: false,
                 token: InteractableType.TableProp,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.TablePropWithChoppingBoard as string,
+            TablePropWithChoppingBoard,
+            {
+                singleton: false,
+                token: InteractableType.TablePropWithChoppingBoard,
             }
         );
 
