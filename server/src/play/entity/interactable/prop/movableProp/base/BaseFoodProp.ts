@@ -1,5 +1,6 @@
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
+import { PropMeshConfig } from '../../../../../config/PropMeshConfig';
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
@@ -25,7 +26,32 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         states: {
             [IngredientState.RAW]: {
                 on: {
-                    [FoodEvent.CHOP]: IngredientState.CHOPPED,
+                    [FoodEvent.CHOP]: {
+                        target: IngredientState.CHOPPED,
+                        guard: () => {
+                            if (this.entity && this._type.length === 1) {
+                                this.entity.hp =
+                                    (this.entity.hp % this.entity.maxHp) + 1;
+                                if (this.entity.hp === this.entity.maxHp) {
+                                    const mesh =
+                                        PropMeshConfig[this._type[0]]?.chopped;
+                                    if (mesh) {
+                                        this.entity.mesh = mesh;
+                                    }
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            return false;
+                        },
+                    },
+                },
+                onEnter: () => {
+                    if (this.entity && this._type.length === 1) {
+                        this.entity.maxHp = 3;
+                        this.entity.hp = 3;
+                    }
                 },
             },
             [IngredientState.CHOPPED]: {
@@ -57,6 +83,9 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                     initial: state,
                 })
         );
+        if (this.entity) {
+            this.entity.enableDamage = true;
+        }
     }
 
     public onInteract(event: GameInteractEvent): void {
