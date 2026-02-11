@@ -31,6 +31,7 @@ export class FiniteStateMachine<S extends string, E extends string> {
      * 销毁状态机 / Destroy the state machine
      */
     public destroy(): void {
+        this._fsm.unregister(this._entity);
         this._entity.destroy();
     }
 
