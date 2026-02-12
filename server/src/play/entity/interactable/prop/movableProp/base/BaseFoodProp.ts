@@ -1,6 +1,6 @@
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
-import { PropMeshConfig } from '../../../../../config/PropMeshConfig';
+import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
@@ -33,10 +33,14 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                                 this.entity.hp =
                                     (this.entity.hp % this.entity.maxHp) + 1;
                                 if (this.entity.hp === this.entity.maxHp) {
-                                    const mesh =
-                                        PropMeshConfig[this._type[0]]?.chopped;
+                                    const { mesh, interactHint } =
+                                        MovablePropConfig.data[this._type[0]]
+                                            ?.states.chopped || {};
                                     if (mesh) {
                                         this.entity.mesh = mesh;
+                                    }
+                                    if (interactHint) {
+                                        this.entity.interactHint = interactHint;
                                     }
                                     return true;
                                 } else {

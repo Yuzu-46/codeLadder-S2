@@ -10,7 +10,10 @@ import type { IInteractableData } from './InteractableData';
  * 可移动道具数据 / Movable prop data
  */
 export interface IMovablePropData<
-    S extends ContainerState | IngredientState | '',
+    S extends ContainerState | IngredientState | '' =
+        | ContainerState
+        | IngredientState
+        | '',
 > {
     /**
      * 状态配置 / State configuration

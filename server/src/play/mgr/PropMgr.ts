@@ -1,7 +1,6 @@
 import { Singleton } from '../../framework/common/Singleton';
 import { FoodConfig } from '../config/FoodConfig';
 import { MovablePropConfig } from '../config/MovablePropConfig';
-import { PropMeshConfig } from '../config/PropMeshConfig';
 import type {
     FoodType,
     IngredientState,
@@ -39,13 +38,14 @@ export class PropMgr extends Singleton<PropMgr>() {
         let container: BaseContainerProp | null = null;
         if (playerPropData.container) {
             const containerData = playerPropData.container;
-            const config = MovablePropConfig.data[
-                containerData.type
-            ] as IMovablePropData;
-            const mesh =
-                PropMeshConfig[containerData.type][containerData.state];
+            const config = MovablePropConfig.data[containerData.type];
+            const { mesh, interactHint } =
+                MovablePropConfig.data[containerData.type].states[
+                    containerData.state
+                ] || {};
             container = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
+                interactHint,
                 entityConfig: {
                     mesh,
                     position,
@@ -64,23 +64,20 @@ export class PropMgr extends Singleton<PropMgr>() {
         if (playerPropData.foods.length) {
             const foodData = playerPropData.foods;
             let config: IMovablePropData | null = null;
-            let mesh: GameModelAssets | undefined;
+            let state: { mesh: GameModelAssets; interactHint?: string } | null =
+                null;
             const createdFood = this.findCreatableRecipe(foodData);
             if (createdFood) {
-                config = MovablePropConfig.data[
-                    createdFood
-                ] as IMovablePropData;
-                mesh = PropMeshConfig[createdFood][''];
+                config = MovablePropConfig.data[createdFood];
+                state = config.states[''] || null;
             } else {
-                config = MovablePropConfig.data[
-                    foodData[0].type
-                ] as IMovablePropData;
-                mesh = PropMeshConfig[foodData[0].type][foodData[0].state];
+                config = MovablePropConfig.data[foodData[0].type];
+                state = config.states[foodData[0].state] || null;
             }
             const foods = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
                 entityConfig: {
-                    mesh,
+                    ...state,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },

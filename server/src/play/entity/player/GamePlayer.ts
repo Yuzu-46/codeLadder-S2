@@ -13,7 +13,6 @@ import type {
     IngredientState,
     IngredientType,
 } from '../../const/FoodConst';
-import { PropMeshConfig } from '../../config/PropMeshConfig';
 import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
 import { PropMgr } from '../../mgr/PropMgr';
 import { EventEmitter } from '../../../framework/common/EventEmitter';
@@ -178,9 +177,9 @@ export class InGamePlayer extends BasePlayer {
             | IPropData<FoodType, ''>
     ): void {
         const config = MovablePropConfig.data[propData.type].wearableConfig;
-        const propMeshConfig = PropMeshConfig[propData.type];
-        const mesh =
-            propMeshConfig[propData.state as keyof typeof propMeshConfig];
+        const statesConfig = MovablePropConfig.data[propData.type].states;
+        const { mesh } =
+            statesConfig[propData.state as keyof typeof statesConfig] || {};
         this.entity?.player.addWearable({
             bodyPart: GameBodyPart.TORSO,
             mesh: mesh,
