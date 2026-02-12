@@ -64,20 +64,22 @@ export class PropMgr extends Singleton<PropMgr>() {
         if (playerPropData.foods.length) {
             const foodData = playerPropData.foods;
             let config: IMovablePropData | null = null;
-            let state: { mesh: GameModelAssets; interactHint?: string } | null =
-                null;
+            let mesh: GameModelAssets | undefined;
+            let interactHint: string | undefined;
             const createdFood = this.findCreatableRecipe(foodData);
             if (createdFood) {
                 config = MovablePropConfig.data[createdFood];
-                state = config.states[''] || null;
+                ({ mesh, interactHint } = config.states[''] || {});
             } else {
                 config = MovablePropConfig.data[foodData[0].type];
-                state = config.states[foodData[0].state] || null;
+                ({ mesh, interactHint } =
+                    config.states[foodData[0].state] || {});
             }
             const foods = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
+                interactHint,
                 entityConfig: {
-                    ...state,
+                    mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
