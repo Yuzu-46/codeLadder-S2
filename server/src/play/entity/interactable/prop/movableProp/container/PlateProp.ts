@@ -1,17 +1,19 @@
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '../../../../../const/TokenConst';
-import type { IInteractableData } from '../../../../../data/InteractableData';
+import type { IContainerPropConfig } from '../../../../../data/InteractableData';
 import { BaseContainerProp } from '../base/BaseContainerProp';
+import type { ContainerType } from '../../../../../const/ContainerConst';
 
 /**
  * 盘子道具 / Plate prop
  */
 @FactoryToken(InteractableType.PlateProp)
 export class PlateProp extends BaseContainerProp {
-    public start(config: IInteractableData): void {
+    protected _type = 'plate' as ContainerType;
+
+    public start(config: IContainerPropConfig): void {
         super.start(config);
         console.log('(Server) PlateProp start with id ', config.id);
-        this._type = 'plate';
     }
 
     public onInteract(event: GameInteractEvent): void {

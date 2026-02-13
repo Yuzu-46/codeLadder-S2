@@ -39,15 +39,10 @@ export class PropMgr extends Singleton<PropMgr>() {
         if (playerPropData.container) {
             const containerData = playerPropData.container;
             const config = MovablePropConfig.data[containerData.type];
-            const { mesh, interactHint } =
-                MovablePropConfig.data[containerData.type].states[
-                    containerData.state
-                ] || {};
+            // 这里不再获取mesh 和 interactHint 了，因为容器基类会根据状态自行切换
             container = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
-                interactHint,
                 entityConfig: {
-                    mesh,
                     position,
                     ...config.interactableConfig.entityConfig,
                 },
@@ -64,7 +59,7 @@ export class PropMgr extends Singleton<PropMgr>() {
         if (playerPropData.foods.length) {
             const foodData = playerPropData.foods;
             let config: IMovablePropData | null = null;
-            // 这里不再获取mesh 何 interactHint 了，因为食物基类会根据状态自行切换
+            // 这里不再获取mesh 和 interactHint 了，因为食物基类会根据状态自行切换
             const createdFood = this.findCreatableRecipe(foodData);
             if (createdFood) {
                 config = MovablePropConfig.data[createdFood];
