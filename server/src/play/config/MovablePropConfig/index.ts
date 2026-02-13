@@ -32,6 +32,53 @@ export const MovablePropConfig: IMovablePropConfig = {
                 offset: new GameVector3(0, 0, 0.75),
             },
         },
+        pan: {
+            states: {
+                clean: {
+                    mesh: 'mesh/平底锅.vb',
+                    interactHint: '平底锅（干净）',
+                },
+                dirty: {
+                    mesh: 'mesh/平底锅.vb',
+                    interactHint: '平底锅（脏）',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `pan_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.PanProp,
+                entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        pot: {
+            states: {
+                clean: {
+                    mesh: 'mesh/锅.vb',
+                    interactHint: '锅（干净）',
+                },
+                dirty: {
+                    mesh: 'mesh/锅.vb',
+                    interactHint: '锅（脏）',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `pot_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+
+                token: InteractableType.PotProp,
+                entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
         bread: {
             states: {
                 raw: {

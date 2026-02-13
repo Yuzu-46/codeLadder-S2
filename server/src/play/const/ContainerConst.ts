@@ -1,7 +1,7 @@
 /**
  * 容器类型 / Container type
  */
-export type ContainerType = 'plate';
+export type ContainerType = 'plate' | 'pan' | 'pot';
 
 /**
  * 容器状态 / Container state
