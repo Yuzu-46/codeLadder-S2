@@ -1,4 +1,7 @@
-import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
+import type {
+    MachineConfig,
+    MachineOptions,
+} from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { IngredientType } from '../../../../../const/FoodConst';
@@ -21,6 +24,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      */
     protected _fsm: FiniteStateMachine<IngredientState, FoodEvent>[] = [];
 
+    /**
+     * 状态机配置 / State machine configuration
+     * - 由于不同食材的状态迁移逻辑相同，我们在此处定义一个通用配置，实例化时根据具体类型进行调整。
+     */
     private _machineConfig: MachineConfig<IngredientState, FoodEvent> = {
         initial: IngredientState.RAW,
         states: {
@@ -32,20 +39,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                             if (this.entity && this._type.length === 1) {
                                 this.entity.hp =
                                     (this.entity.hp % this.entity.maxHp) + 1;
-                                if (this.entity.hp === this.entity.maxHp) {
-                                    const { mesh, interactHint } =
-                                        MovablePropConfig.data[this._type[0]]
-                                            ?.states.chopped || {};
-                                    if (mesh) {
-                                        this.entity.mesh = mesh;
-                                    }
-                                    if (interactHint) {
-                                        this.entity.interactHint = interactHint;
-                                    }
-                                    return true;
-                                } else {
-                                    return false;
-                                }
+                                return this.entity.hp === this.entity.maxHp;
                             }
                             return false;
                         },
@@ -56,25 +50,47 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                         this.entity.maxHp = 3;
                         this.entity.hp = 3;
                     }
+                    this.onEnterState(IngredientState.RAW);
                 },
             },
             [IngredientState.CHOPPED]: {
                 on: {
                     [FoodEvent.COOK_START]: IngredientState.COOKING,
                 },
+                onEnter: () => {
+                    this.onEnterState(IngredientState.CHOPPED);
+                },
             },
             [IngredientState.COOKING]: {
                 on: {
                     [FoodEvent.COOK_END]: IngredientState.COOKED,
+                },
+                onEnter: () => {
+                    this.onEnterState(IngredientState.COOKING);
                 },
             },
             [IngredientState.COOKED]: {
                 on: {
                     [FoodEvent.BURNT]: IngredientState.BURNT,
                 },
+                onEnter: () => {
+                    this.onEnterState(IngredientState.COOKED);
+                },
             },
-            [IngredientState.BURNT]: {},
+            [IngredientState.BURNT]: {
+                onEnter: () => {
+                    this.onEnterState(IngredientState.BURNT);
+                },
+            },
         },
+    };
+
+    /**
+     * 状态机选项 / State machine options
+     * - 这里我们添加了一个全局的 onTransition 回调，用于日志记录或其他全局副作用处理。
+     */
+    private _machineOptions: MachineOptions<IngredientState, FoodEvent> = {
+        onTransition: undefined,
     };
 
     public start(config: IIngredientConfig): void {
@@ -82,10 +98,13 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         this._type = config.type;
         this._fsm = config.state.map(
             (state) =>
-                new FiniteStateMachine({
-                    ...this._machineConfig,
-                    initial: state,
-                })
+                new FiniteStateMachine(
+                    {
+                        ...this._machineConfig,
+                        initial: state,
+                    },
+                    this._machineOptions
+                )
         );
         if (this.entity) {
             this.entity.enableDamage = true;
@@ -110,6 +129,23 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             // more...
         } else {
             this.wear(player);
+        }
+    }
+
+    /**
+     * 进入状态时的处理逻辑 / Logic to handle when entering a state
+     * @param state 当前状态 / Current state
+     */
+    onEnterState(state: IngredientState): void {
+        if (this.entity && this._type.length === 1) {
+            const { mesh, interactHint } =
+                MovablePropConfig.data[this._type[0]]?.states[state] || {};
+            if (mesh) {
+                this.entity.mesh = mesh;
+            }
+            if (interactHint) {
+                this.entity.interactHint = interactHint;
+            }
         }
     }
 
