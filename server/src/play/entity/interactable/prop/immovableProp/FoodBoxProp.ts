@@ -1,10 +1,7 @@
 import { BaseImmovableProp } from './BaseImmovableProp';
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '../../../../const/TokenConst';
-import type {
-    IFoodBoxPropConfig,
-    IInteractableData,
-} from '../../../../data/InteractableData';
+import type { IFoodBoxPropConfig } from '../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../mgr/PlayerMgr';
 import { InGamePlayer } from '../../../player/GamePlayer';
 import {
@@ -32,15 +29,17 @@ export class FoodBoxProp extends BaseImmovableProp {
         console.log('(Server) FoodBoxProp onInteract with id ', this.id);
         const player = PlayerMgr.instance.getPlayer(event.entity.player.userId);
         if (player && player instanceof InGamePlayer && this.type) {
-            player.pickUpProp({
-                container: null,
-                foods: [
-                    {
-                        type: this.type,
-                        state: IngredientState.RAW,
-                    },
-                ],
-            });
+            if (!player.carryingProp.foods.length) {
+                player.pickUpProp({
+                    container: null,
+                    foods: [
+                        {
+                            type: this.type,
+                            state: IngredientState.RAW,
+                        },
+                    ],
+                });
+            }
         }
     }
 }

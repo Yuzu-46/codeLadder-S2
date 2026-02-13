@@ -79,6 +79,9 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         if (player.carryingProp.container) {
             // 如果玩家拿着某道具
             this.onInteractCarryingContainerProp(player);
+        } else if (player.carryingProp.foods.length) {
+            // 如果玩家拿着食物
+            // TODO: 处理把食物放到容器里的逻辑
         } else {
             this.wear(player);
         }
