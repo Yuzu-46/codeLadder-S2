@@ -32,7 +32,7 @@ export class FiniteStateMachine<S extends string, E extends string> {
      */
     public destroy(): void {
         this._fsm.unregister(this._entity);
-        this._entity.destroy();
+        // this._entity.destroy(); // 由于 entity 是全局唯一且无用的，我们选择不销毁它以避免潜在的副作用
     }
 
     /**
