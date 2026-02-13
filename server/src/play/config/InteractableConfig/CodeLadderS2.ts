@@ -201,6 +201,7 @@ const codeLadderS2: IInteractableData[] = [
             meshScale: new GameVector3(0.1, 0.1, 0.1),
         },
         state: ContainerState.CLEAN,
+        bindStaticContainerId: `table_${position.x}_${position.z}`,
     })),
 ];
 

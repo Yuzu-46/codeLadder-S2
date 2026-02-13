@@ -77,6 +77,11 @@ export interface IContainerPropConfig extends IInteractableData {
      * 容器状态 / Container state
      */
     state: ContainerState;
+    /**
+     * 要绑定的静态容器ID / Static container ID to bind
+     * @description 静态容器就是可以存放物品的不可移动道具，比如桌子
+     */
+    bindStaticContainerId?: string;
 }
 
 /**

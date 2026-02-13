@@ -55,6 +55,15 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             ...this._machineConfig,
             initial: config.state,
         });
+        if (config.bindStaticContainerId) {
+            // 如果有绑定的静态容器，那么把自己绑定到那个静态容器上
+            PropBindingMgr.instance.updateBindingDataByPropId(
+                config.bindStaticContainerId,
+                {
+                    dynamicContainerId: this.id,
+                }
+            );
+        }
     }
 
     public onInteract(event: GameInteractEvent): void {
