@@ -1,6 +1,9 @@
 import type { IFoodConfig } from '../../data/FoodData';
 import { IngredientState } from '../../const/FoodConst';
 
+/**
+ * 食物配置 / Food configuration
+ */
 export const FoodConfig: IFoodConfig = {
     ingredient: {
         bread: {
