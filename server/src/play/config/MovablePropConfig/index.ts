@@ -56,9 +56,11 @@ export const MovablePropConfig: IMovablePropConfig = {
                 offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
-                scale: new GameVector3(1, 1, 1),
-                offset: new GameVector3(0, 0, 0.75),
-                orientation: new GameQuaternion(0, 0, 0, 1),
+                scale: new GameVector3(0.8, 0.8, 0.8),
+                offset: new GameVector3(-0.1, 0, 0.46),
+                orientation: new GameQuaternion(0, 0, 0, 1).rotateY(
+                    -Math.PI / 6
+                ),
             },
         },
         pot: {

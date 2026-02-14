@@ -183,7 +183,7 @@ const codeLadderS2: IInteractableData[] = [
             ),
         },
     })),
-    ...stovePositions.slice(0, 2).map<IContainerPropConfig>((position) => ({
+    ...stovePositions.slice(0, 3).map<IContainerPropConfig>((position) => ({
         id: `pan_${position.x}_${position.z}`,
         token: InteractableType.PanProp,
         entityConfig: {
