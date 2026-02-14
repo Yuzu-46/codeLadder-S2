@@ -195,6 +195,17 @@ const codeLadderS2: IInteractableData[] = [
         state: ContainerState.CLEAN,
         bindStaticContainerId: `stove_${position.x}_${position.z}`,
     })),
+    ...stovePositions.slice(3, 5).map<IContainerPropConfig>((position) => ({
+        id: `pan_${position.x}_${position.z}`,
+        token: InteractableType.PotProp,
+        entityConfig: {
+            mesh: 'mesh/锅.vb',
+            position: new GameVector3(position.x, 1.75, position.z),
+            meshScale: new GameVector3(0.0625, 0.0625, 0.0625),
+        },
+        state: ContainerState.CLEAN,
+        bindStaticContainerId: `stove_${position.x}_${position.z}`,
+    })),
     {
         id: 'bin',
         token: InteractableType.BinProp,
