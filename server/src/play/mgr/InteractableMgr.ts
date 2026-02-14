@@ -16,6 +16,7 @@ import {
 import {
     PlateProp,
     PanProp,
+    PotProp,
     FoodProp,
 } from '../entity/interactable/prop/movableProp';
 
@@ -116,6 +117,11 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         factory.registerByToken(InteractableType.FoodProp as string, FoodProp, {
             singleton: false,
             token: InteractableType.FoodProp,
+        });
+
+        factory.registerByToken(InteractableType.PotProp as string, PotProp, {
+            singleton: false,
+            token: InteractableType.PotProp,
         });
     }
 
