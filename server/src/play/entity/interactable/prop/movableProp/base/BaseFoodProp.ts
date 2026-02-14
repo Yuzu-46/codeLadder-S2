@@ -36,7 +36,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                     [FoodEvent.CHOP]: {
                         target: IngredientState.CHOPPED,
                         guard: () => {
-                            if (this.entity && this._type.length === 1) {
+                            if (this.entity && this.type.length === 1) {
                                 this.entity.hp =
                                     (this.entity.hp % this.entity.maxHp) + 1;
                                 return this.entity.hp === this.entity.maxHp;
@@ -46,7 +46,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                     },
                 },
                 onEnter: () => {
-                    if (this.entity && this._type.length === 1) {
+                    if (this.entity && this.type.length === 1) {
                         this.entity.maxHp = 3;
                         this.entity.hp = 3;
                     }
@@ -137,9 +137,9 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * @param state 当前状态 / Current state
      */
     onEnterState(state: IngredientState): void {
-        if (this.entity && this._type.length === 1) {
+        if (this.entity && this.type.length === 1) {
             const { mesh, interactHint } =
-                MovablePropConfig.data[this._type[0]]?.states[state] || {};
+                MovablePropConfig.data[this.type[0]]?.states[state] || {};
             if (mesh) {
                 this.entity.mesh = mesh;
             }
@@ -151,10 +151,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
 
     public wear(player: InGamePlayer): void {
         super.wear(player);
-        if (this._type.length) {
+        if (this.type.length) {
             player.pickUpProp({
                 container: null,
-                foods: this._type.map((type, idx) => ({
+                foods: this.type.map((type, idx) => ({
                     type: type,
                     state: this._fsm[idx].State,
                 })),
@@ -171,11 +171,11 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * 处理切菜事件 / Handle chopping event
      */
     public onChop(): void {
-        if (this._type.length === 0) {
+        if (this.type.length === 0) {
             throw new Error('This food prop has no ingredient type defined.');
         }
         // 如果有多个食材则置之不理
-        if (this._type.length > 1) {
+        if (this.type.length > 1) {
             return;
         }
 
@@ -184,5 +184,19 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         );
         // 触发切菜事件
         this._fsm[0].send(FoodEvent.CHOP);
+    }
+
+    /**
+     * 食物类型 / Food type
+     */
+    public get type(): IngredientType[] {
+        return this._type;
+    }
+
+    /**
+     * 食物状态 / Food state
+     */
+    public get state(): IngredientState[] {
+        return this._fsm.map((fsm) => fsm.State);
     }
 }
