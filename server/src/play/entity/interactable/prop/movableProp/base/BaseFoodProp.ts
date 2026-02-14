@@ -194,9 +194,12 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     }
 
     /**
-     * 食物状态 / Food state
+     * 食物数据 / Food data
      */
-    public get state(): IngredientState[] {
-        return this._fsm.map((fsm) => fsm.State);
+    public get foodData(): { type: IngredientType; state: IngredientState }[] {
+        return this.type.map((type, idx) => ({
+            type,
+            state: this._fsm[idx].State,
+        }));
     }
 }

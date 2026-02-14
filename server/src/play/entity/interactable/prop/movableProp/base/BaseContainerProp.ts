@@ -11,6 +11,7 @@ import type { MachineConfig } from '../../../../../../framework/common/state/Fin
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
+import type { BaseFoodProp } from './BaseFoodProp';
 
 /**
  * 容器道具基类 / Container prop base class
@@ -77,11 +78,11 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             entity.player.userId
         ) as InGamePlayer;
         if (player.carryingProp.container) {
-            // 如果玩家拿着某道具
+            // 如果玩家拿着容器道具
             this.onInteractCarryingContainerProp(player);
         } else if (player.carryingProp.foods.length) {
             // 如果玩家拿着食物
-            // TODO: 处理把食物放到容器里的逻辑
+            this.onInteractCarryingFoodProp(player);
         } else {
             this.wear(player);
         }
@@ -108,7 +109,12 @@ export abstract class BaseContainerProp extends BaseMovableProp {
     /**
      * 处理玩家携带容器道具的交互事件 / Handle player carrying container prop interaction event
      */
-    private onInteractCarryingContainerProp(player: InGamePlayer): void {}
+    protected onInteractCarryingContainerProp(player: InGamePlayer): void {}
+
+    /**
+     * 处理玩家携带食物道具的交互事件 / Handle player carrying food prop interaction event
+     */
+    protected onInteractCarryingFoodProp(player: InGamePlayer): void {}
 
     public destroy(): void {
         super.destroy();
@@ -137,11 +143,11 @@ export abstract class BaseContainerProp extends BaseMovableProp {
     /**
      * 该容器中的食物 / food
      */
-    private get food(): BaseMovableProp | undefined {
+    protected get food(): BaseFoodProp | undefined {
         const foodId = PropBindingMgr.instance.getBindingDataByPropId(this.id)
             .bindingData?.foodId;
         if (foodId) {
-            return this.getInteractable(foodId) as BaseMovableProp;
+            return this.getInteractable(foodId) as BaseFoodProp;
         }
     }
 }
