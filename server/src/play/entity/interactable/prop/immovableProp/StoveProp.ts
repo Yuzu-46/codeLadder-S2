@@ -4,6 +4,7 @@ import { InteractableType } from '../../../../const/TokenConst';
 import type { IInteractableData } from '../../../../data/InteractableData';
 import { PropBindingMgr } from '../../../../mgr/PropBindingMgr';
 import type { InGamePlayer } from '../../../player/GamePlayer';
+import { ContainerConfig } from '../../../../config/ContainerConfig';
 
 /**
  * 灶台道具 / Stove Prop
@@ -37,6 +38,14 @@ export class StoveProp extends BaseImmovableProp {
     }
 
     protected onInteractWithoutBound(player: InGamePlayer): void {
-        // TODO: 可以考虑添加一些提示玩家放置锅的逻辑
+        if (
+            this.entity &&
+            player.carryingProp.container &&
+            ContainerConfig.data[player.carryingProp.container.type][
+                player.carryingProp.container.state
+            ].canBePlacedOnStove
+        ) {
+            player.placeProp(this.entity.position, this);
+        }
     }
 }
