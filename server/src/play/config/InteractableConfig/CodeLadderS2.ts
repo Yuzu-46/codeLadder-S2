@@ -183,6 +183,20 @@ const codeLadderS2: IInteractableData[] = [
             ),
         },
     })),
+    ...stovePositions.slice(0, 2).map<IContainerPropConfig>((position) => ({
+        id: `pan_${position.x}_${position.z}`,
+        token: InteractableType.PanProp,
+        entityConfig: {
+            mesh: 'mesh/平底锅.vb',
+            position: new GameVector3(position.x, 1.5, position.z),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
+                Math.PI / 2
+            ),
+        },
+        state: ContainerState.CLEAN,
+        bindStaticContainerId: `stove_${position.x}_${position.z}`,
+    })),
     {
         id: 'bin',
         token: InteractableType.BinProp,
