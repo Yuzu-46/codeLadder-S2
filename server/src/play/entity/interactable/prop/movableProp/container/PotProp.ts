@@ -5,15 +5,15 @@ import { BaseContainerProp } from '../base/BaseContainerProp';
 import type { ContainerType } from '../../../../../const/ContainerConst';
 
 /**
- * 煎锅道具 / Pan prop
+ * 煮锅道具 / Pot prop
  */
-@FactoryToken(InteractableType.PanProp)
-export class PanProp extends BaseContainerProp {
-    protected _type = 'pan' as ContainerType;
+@FactoryToken(InteractableType.PotProp)
+export class PotProp extends BaseContainerProp {
+    protected _type = 'pot' as ContainerType;
 
     public start(config: IContainerPropConfig): void {
         super.start(config);
-        console.log('(Server) PanProp start with id ', config.id);
+        console.log('(Server) PotProp start with id ', config.id);
     }
 
     public onInteract(event: GameInteractEvent): void {
