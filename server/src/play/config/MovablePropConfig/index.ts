@@ -88,15 +88,15 @@ export const MovablePropConfig: IMovablePropConfig = {
         bread: {
             states: {
                 raw: {
-                    mesh: 'mesh/面包_old.vb',
+                    mesh: 'mesh/面包.vb',
                     interactHint: '面包（生）',
                 },
                 chopped: {
-                    mesh: 'mesh/面包_old.vb',
+                    mesh: 'mesh/面包.vb',
                     interactHint: '面包（已切）',
                 },
                 cooking: {
-                    mesh: 'mesh/面包_old.vb',
+                    mesh: 'mesh/面包.vb',
                     interactHint: '面包（烹饪中）',
                 },
             },
@@ -106,18 +106,12 @@ export const MovablePropConfig: IMovablePropConfig = {
                 token: InteractableType.FoodProp,
                 entityConfig: {
                     meshScale: new GameVector3(0.1, 0.1, 0.1),
-                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
-                        Math.PI / 2
-                    ),
                 },
                 offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
-                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
-                    Math.PI / 2
-                ),
             },
         },
         meat: {
@@ -181,7 +175,7 @@ export const MovablePropConfig: IMovablePropConfig = {
         tomato: {
             states: {
                 raw: {
-                    mesh: 'mesh/番茄_old.vb',
+                    mesh: 'mesh/番茄.vb',
                     interactHint: '番茄（生）',
                 },
                 chopped: {
@@ -189,7 +183,7 @@ export const MovablePropConfig: IMovablePropConfig = {
                     interactHint: '番茄（已切）',
                 },
                 cooking: {
-                    mesh: 'mesh/番茄_old.vb',
+                    mesh: 'mesh/番茄.vb',
                     interactHint: '番茄（烹饪中）',
                 },
             },
@@ -199,18 +193,12 @@ export const MovablePropConfig: IMovablePropConfig = {
                 token: InteractableType.FoodProp,
                 entityConfig: {
                     meshScale: new GameVector3(0.1, 0.1, 0.1),
-                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
-                        Math.PI / 2
-                    ),
                 },
                 offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
-                orientation: new GameQuaternion(0, 0, 0, 1).rotateZ(
-                    Math.PI / 2
-                ),
             },
         },
         meatBurger: {} as IMovablePropData<''>,
