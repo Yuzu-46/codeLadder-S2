@@ -188,11 +188,9 @@ const codeLadderS2: IInteractableData[] = [
         token: InteractableType.PanProp,
         entityConfig: {
             mesh: 'mesh/平底锅.vb',
-            position: new GameVector3(position.x, 1.5, position.z),
-            meshScale: new GameVector3(0.125, 0.125, 0.125),
-            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
-                Math.PI / 2
-            ),
+            position: new GameVector3(position.x, 1.75, position.z),
+            meshScale: new GameVector3(0.0625, 0.0625, 0.0625),
+            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(Math.PI),
         },
         state: ContainerState.CLEAN,
         bindStaticContainerId: `stove_${position.x}_${position.z}`,

@@ -47,12 +47,18 @@ export const MovablePropConfig: IMovablePropConfig = {
                 id: () =>
                     `pan_${Date.now()}_${Math.floor(Math.random() * 100)}`,
                 token: InteractableType.PanProp,
-                entityConfig: { meshScale: new GameVector3(0.1, 0.1, 0.1) },
+                entityConfig: {
+                    meshScale: new GameVector3(0.0625, 0.0625, 0.0625),
+                    meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
+                        Math.PI
+                    ),
+                },
                 offset: new GameVector3(0, 0.25, 0),
             },
             wearableConfig: {
                 scale: new GameVector3(1, 1, 1),
                 offset: new GameVector3(0, 0, 0.75),
+                orientation: new GameQuaternion(0, 0, 0, 1),
             },
         },
         pot: {
