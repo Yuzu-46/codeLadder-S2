@@ -140,6 +140,10 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         });
     }
 
+    public canWear(player: InGamePlayer): boolean {
+        return super.canWear(player);
+    }
+
     /**
      * 该容器中的食物 / food
      */

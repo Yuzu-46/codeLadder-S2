@@ -26,4 +26,13 @@ export abstract class BaseMovableProp extends Interactable {
         // 销毁道具
         InteractableMgr.instance.destroyInteractable(this.id);
     }
+
+    /**
+     * 是否可以穿戴到玩家上 / Can wear on player
+     * @param player 玩家对象 / Player object
+     * @returns 是否可以穿戴 / Can wear
+     */
+    public canWear(player: InGamePlayer): boolean {
+        return true;
+    }
 }

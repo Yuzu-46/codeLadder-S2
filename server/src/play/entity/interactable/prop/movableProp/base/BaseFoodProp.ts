@@ -3,13 +3,16 @@ import type {
     MachineOptions,
 } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
+import { FoodConfig } from '../../../../../config/FoodConfig';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
+import type { IPropData } from '../../../../../data/GamePlayerData';
 import type { IIngredientConfig } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
+import { PropMgr } from '../../../../../mgr/PropMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import { BaseMovableProp } from './BaseMovableProp';
 
@@ -167,6 +170,22 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         });
     }
 
+    public canWear(player: InGamePlayer): boolean {
+        const food = [...this.foodData, ...player.carryingProp.foods];
+
+        // 检查是否只有一个食物且其状态无效
+        const isSingleInvalidFood =
+            food.length === 1 &&
+            !FoodConfig.ingredient[food[0].type].states[food[0].state];
+
+        // 检查是否存在可合成的配方
+        const hasCreatableRecipe =
+            food.length > 0 && PropMgr.instance.findCreatableRecipe(food);
+
+        // 返回是否可以穿戴：既不是单个无效食物，也不存在可合成配方
+        return !(isSingleInvalidFood || hasCreatableRecipe);
+    }
+
     /**
      * 处理切菜事件 / Handle chopping event
      */
@@ -196,7 +215,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     /**
      * 食物数据 / Food data
      */
-    public get foodData(): { type: IngredientType; state: IngredientState }[] {
+    public get foodData(): IPropData<IngredientType, IngredientState>[] {
         return this.type.map((type, idx) => ({
             type,
             state: this._fsm[idx].State,
