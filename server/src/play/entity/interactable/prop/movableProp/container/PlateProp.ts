@@ -36,17 +36,17 @@ export class PlateProp extends BaseContainerProp {
                 })) ||
                 !this.food)
         ) {
-            // 如果盘子上有食物，并且玩家携带的食物可以和盘子上的食物组合成菜谱，那么就把玩家携带的食物放到盘子上
-            this.wear(player);
-
             // 如果有绑定的食物/食材，那么也穿戴到玩家身上
             this.food?.wear(player);
+
+            this.wear(player);
         }
     }
 
     protected onInteractNotCarryingProp(player: InGamePlayer): void {
-        this.wear(player);
         // 如果有绑定的食物/食材，那么也穿戴到玩家身上
         this.food?.wear(player);
+
+        this.wear(player);
     }
 }
