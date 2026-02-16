@@ -127,10 +127,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         const player = PlayerMgr.instance.getPlayer(
             entity.player.userId
         ) as InGamePlayer;
-        if (player.carryingProp.foods.length) {
-            // 如果玩家拿着某道具
-            // more...
-        } else {
+        if (this.canWear(player)) {
             this.wear(player);
         }
     }
@@ -173,17 +170,24 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     public canWear(player: InGamePlayer): boolean {
         const food = [...this.foodData, ...player.carryingProp.foods];
 
-        // 检查是否只有一个食物且其状态无效
-        const isSingleInvalidFood =
-            food.length === 1 &&
-            !FoodConfig.ingredient[food[0].type].states[food[0].state];
+        // 单个食物的逻辑
+        if (food.length === 1) {
+            const config =
+                FoodConfig.ingredient[food[0].type]?.states[food[0].state];
+            if (!config) {
+                throw new Error(
+                    `Food config not found for type ${food[0].type} and state ${food[0].state}`
+                );
+            }
 
-        // 检查是否存在可合成的配方
-        const hasCreatableRecipe =
-            food.length > 0 && PropMgr.instance.findCreatableRecipe(food);
+            return !(
+                (!config.canBePlated && player.carryingProp.container) ||
+                (config.mustBePlated && !player.carryingProp.container)
+            );
+        }
 
-        // 返回是否可以穿戴：既不是单个无效食物，也不存在可合成配方
-        return !(isSingleInvalidFood || hasCreatableRecipe);
+        // 多个食物的逻辑
+        return !!PropMgr.instance.findCreatableRecipe(food);
     }
 
     /**
