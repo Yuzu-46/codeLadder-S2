@@ -12,6 +12,10 @@ import { FiniteStateMachine } from '../../../../../../framework/common/state/Fin
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
 import type { BaseFoodProp } from './BaseFoodProp';
+import type {
+    IPlayerCarryingPropData,
+    IPropData,
+} from '../../../../../data/GamePlayerData';
 
 /**
  * 容器道具基类 / Container prop base class
@@ -22,7 +26,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
     /**
      * 有限状态机 / Finite state machine
      */
-    private _fsm: FiniteStateMachine<ContainerState, ContainerEvent> | null =
+    protected _fsm: FiniteStateMachine<ContainerState, ContainerEvent> | null =
         null;
 
     private _machineConfig: MachineConfig<ContainerState, ContainerEvent> = {
@@ -84,7 +88,8 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             // 如果玩家拿着食物
             this.onInteractCarryingFoodProp(player);
         } else {
-            this.wear(player);
+            // 如果玩家没有拿着任何道具
+            this.onInteractNotCarryingProp(player);
         }
     }
 
@@ -116,6 +121,11 @@ export abstract class BaseContainerProp extends BaseMovableProp {
      */
     protected onInteractCarryingFoodProp(player: InGamePlayer): void {}
 
+    /**
+     * 处理玩家不携带道具的交互事件 / Handle player not carrying prop interaction event
+     */
+    protected onInteractNotCarryingProp(player: InGamePlayer): void {}
+
     public destroy(): void {
         super.destroy();
     }
@@ -132,16 +142,14 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             });
         }
 
-        // 如果有绑定的食物/食材，那么也穿戴到玩家身上
-        this.food?.wear(player);
         // 更新绑定数据
         PropBindingMgr.instance.updateBindingDataByPropId(this.id, {
             dynamicContainerId: null,
         });
     }
 
-    public canWear(player: InGamePlayer): boolean {
-        return super.canWear(player);
+    public canWear(playerCarryingPropData: IPlayerCarryingPropData): boolean {
+        return super.canWear(playerCarryingPropData);
     }
 
     /**
@@ -153,5 +161,17 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         if (foodId) {
             return this.getInteractable(foodId) as BaseFoodProp;
         }
+    }
+
+    /**
+     * 容器数据 / container data
+     */
+    public get data(): IPropData<ContainerType, ContainerState> | null {
+        return this._type && this._fsm
+            ? {
+                  type: this._type,
+                  state: this._fsm.State,
+              }
+            : null;
     }
 }

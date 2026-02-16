@@ -3,12 +3,17 @@ import type {
     MachineOptions,
 } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
+import { ContainerConfig } from '../../../../../config/ContainerConfig';
 import { FoodConfig } from '../../../../../config/FoodConfig';
 import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
+import type { ContainerState } from '../../../../../const/ContainerConst';
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
-import type { IPropData } from '../../../../../data/GamePlayerData';
+import type {
+    IPlayerCarryingPropData,
+    IPropData,
+} from '../../../../../data/GamePlayerData';
 import type { IIngredientConfig } from '../../../../../data/InteractableData';
 import { PlayerMgr } from '../../../../../mgr/PlayerMgr';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
@@ -127,7 +132,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         const player = PlayerMgr.instance.getPlayer(
             entity.player.userId
         ) as InGamePlayer;
-        if (this.canWear(player)) {
+        if (this.canWear(player.carryingProp)) {
             this.wear(player);
         }
     }
@@ -167,8 +172,19 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         });
     }
 
-    public canWear(player: InGamePlayer): boolean {
-        const food = [...this.foodData, ...player.carryingProp.foods];
+    public canWear(playerCarryingPropData: IPlayerCarryingPropData): boolean {
+        const food = [...this.data, ...playerCarryingPropData.foods];
+
+        // 如果玩家携带的容器道具无法放食物，则不能穿戴
+        if (
+            food.length &&
+            playerCarryingPropData.container &&
+            !ContainerConfig.data[playerCarryingPropData.container.type][
+                playerCarryingPropData.container.state
+            ].canHoldFood
+        ) {
+            return false;
+        }
 
         // 单个食物的逻辑
         if (food.length === 1) {
@@ -181,8 +197,8 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             }
 
             return !(
-                (!config.canBePlated && player.carryingProp.container) ||
-                (config.mustBePlated && !player.carryingProp.container)
+                (!config.canBePlated && playerCarryingPropData.container) ||
+                (config.mustBePlated && !playerCarryingPropData.container)
             );
         }
 
@@ -219,7 +235,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     /**
      * 食物数据 / Food data
      */
-    public get foodData(): IPropData<IngredientType, IngredientState>[] {
+    public get data(): IPropData<IngredientType, IngredientState>[] {
         return this.type.map((type, idx) => ({
             type,
             state: this._fsm[idx].State,

@@ -4,7 +4,6 @@ import type { IContainerPropConfig } from '../../../../../data/InteractableData'
 import { BaseContainerProp } from '../base/BaseContainerProp';
 import type { ContainerType } from '../../../../../const/ContainerConst';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
-import { PropMgr } from '../../../../../mgr/PropMgr';
 
 /**
  * 盘子道具 / Plate prop
@@ -29,17 +28,25 @@ export class PlateProp extends BaseContainerProp {
     protected onInteractCarryingFoodProp(player: InGamePlayer): void {
         // 此时玩家不携带容器道具且携带食物道具
         if (
-            this.food &&
-            PropMgr.instance.findCreatableRecipe([
-                ...this.food.foodData,
-                ...player.carryingProp.foods,
-            ])
+            this.canWear(player.carryingProp) &&
+            ((this.food &&
+                this.food.canWear({
+                    ...player.carryingProp,
+                    container: this.data,
+                })) ||
+                !this.food)
         ) {
             // 如果盘子上有食物，并且玩家携带的食物可以和盘子上的食物组合成菜谱，那么就把玩家携带的食物放到盘子上
             this.wear(player);
-        } else if (!this.food) {
-            // 如果盘子上没有食物，则无需考虑直接穿戴到玩家
-            this.wear(player);
+
+            // 如果有绑定的食物/食材，那么也穿戴到玩家身上
+            this.food?.wear(player);
         }
+    }
+
+    protected onInteractNotCarryingProp(player: InGamePlayer): void {
+        this.wear(player);
+        // 如果有绑定的食物/食材，那么也穿戴到玩家身上
+        this.food?.wear(player);
     }
 }
