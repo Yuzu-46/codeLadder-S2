@@ -1,5 +1,5 @@
 import type { ISceneConfig, ISceneData } from '../../data/SceneData';
-import { SceneType } from '../../const/SceneConst';
+import type { SceneType } from '../../const/SceneConst';
 import codeLadderS2 from './CodeLadderS2';
 import hamburgerRestaurant from './HamburgerRestaurant';
 
@@ -20,4 +20,3 @@ export const SceneConfig: ISceneConfig<SceneType> = {
 export const SceneList = Object.values(SceneConfig.data).filter(
     (scene) => !!scene
 );
-export { SceneType };

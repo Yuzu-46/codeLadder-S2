@@ -1,5 +1,5 @@
 import type { IngredientState, IngredientType } from '../const/FoodConst';
-import type { SceneType } from '../config/SceneConfig';
+import type { SceneType } from '../const/SceneConst';
 import type { ContainerState } from '../const/ContainerConst';
 
 /**
