@@ -6,7 +6,7 @@ import type {
     IPropData,
     IPlayerCarryingPropData,
 } from '../../data/GamePlayerData';
-import { MovablePropConfig } from '../../config/MovablePropConfig';
+import { ConfigMgr } from '../../mgr/ConfigMgr';
 import type { ContainerState, ContainerType } from '../../const/ContainerConst';
 import type {
     FoodType,
@@ -176,8 +176,8 @@ export class InGamePlayer extends BasePlayer {
             | IPropData<IngredientType, IngredientState>
             | IPropData<FoodType, ''>
     ): void {
-        const config = MovablePropConfig.data[propData.type].wearableConfig;
-        const statesConfig = MovablePropConfig.data[propData.type].states;
+        const { wearableConfig: config, states: statesConfig } =
+            ConfigMgr.instance.getMovablePropConfig(propData.type)!;
         const { mesh } =
             statesConfig[propData.state as keyof typeof statesConfig] || {};
         this.entity?.player.addWearable({

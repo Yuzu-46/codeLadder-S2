@@ -2,9 +2,9 @@ import { factory } from '../../framework/common/factory/AbstractFactory';
 import { Singleton } from '../../framework/common/Singleton';
 import { InteractableType } from '../const/TokenConst';
 import type { IInteractableData } from '../data/InteractableData';
-import { InteractableConfig } from '../config/InteractableConfig';
+import { ConfigMgr } from './ConfigMgr';
 import type { Interactable } from '../entity/interactable/base/Interactable';
-import type { SceneType } from '../config/SceneConfig';
+import type { SceneType } from '../const/SceneConst';
 import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
 import {
     BinProp,
@@ -37,9 +37,11 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
     public start(mapId: string): void {
         this.registerInteractables();
         try {
-            InteractableConfig.data[mapId as SceneType].forEach((config) => {
-                this.createInteractable(config);
-            });
+            ConfigMgr.instance
+                .getInteractableConfig(mapId as SceneType)
+                .forEach((config) => {
+                    this.createInteractable(config);
+                });
         } catch (e) {
             console.warn(`(Server) InteractableMgr ${e}, mapId:${mapId}`);
         }

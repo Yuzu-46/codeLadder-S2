@@ -1,6 +1,5 @@
 import { Singleton } from '../../framework/common/Singleton';
-import { FoodConfig } from '../config/FoodConfig';
-import { MovablePropConfig } from '../config/MovablePropConfig';
+import { ConfigMgr } from './ConfigMgr';
 import type {
     FoodType,
     IngredientState,
@@ -21,11 +20,16 @@ import type { BaseContainerProp } from '../entity/interactable/prop/movableProp/
 import type { BaseFoodProp } from '../entity/interactable/prop/movableProp/base/BaseFoodProp';
 import { InteractableMgr } from './InteractableMgr';
 import { PropBindingMgr } from './PropBindingMgr';
+import { FoodConfig } from '../config/FoodConfig';
 
 /**
  * 道具管理器 / Prop manager
  */
 export class PropMgr extends Singleton<PropMgr>() {
+    /**
+     * 配置管理器 / Config manager
+     */
+    private _configMgr = ConfigMgr.instance;
     /**
      * 在指定位置放置道具 / Place a prop at the specified position
      * @param position 位置 / Position
@@ -38,7 +42,9 @@ export class PropMgr extends Singleton<PropMgr>() {
         let container: BaseContainerProp | null = null;
         if (playerPropData.container) {
             const containerData = playerPropData.container;
-            const config = MovablePropConfig.data[containerData.type];
+            const config = this._configMgr.getMovablePropConfig(
+                containerData.type
+            )!;
             // 这里不再获取mesh 和 interactHint 了，因为容器基类会根据状态自行切换
             container = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
@@ -62,9 +68,11 @@ export class PropMgr extends Singleton<PropMgr>() {
             // 这里不再获取mesh 和 interactHint 了，因为食物基类会根据状态自行切换
             const createdFood = this.findCreatableRecipe(foodData);
             if (createdFood) {
-                config = MovablePropConfig.data[createdFood];
+                config = this._configMgr.getMovablePropConfig(createdFood)!;
             } else {
-                config = MovablePropConfig.data[foodData[0].type];
+                config = this._configMgr.getMovablePropConfig(
+                    foodData[0].type
+                )!;
             }
             const foods = InteractableMgr.instance.createInteractable({
                 ...config.interactableConfig,
@@ -95,6 +103,7 @@ export class PropMgr extends Singleton<PropMgr>() {
     ): FoodType | null {
         // 遍历所有配方
         for (const [foodType, { recipe }] of Object.entries(FoodConfig.food)) {
+            //TODO: 优化
             if (this.canCreateRecipe(recipe, ingredients)) {
                 return foodType as FoodType;
             }

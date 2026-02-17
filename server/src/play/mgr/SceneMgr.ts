@@ -1,5 +1,6 @@
 import { Singleton } from '../../framework/common/Singleton';
-import { SceneConfig, SceneType } from '../config/SceneConfig';
+import { SceneType } from '../const/SceneConst';
+import { ConfigMgr } from './ConfigMgr';
 
 /**
  * 场景管理器
@@ -46,7 +47,7 @@ export class SceneMgr extends Singleton<SceneMgr>() {
      * @param type 创建场景类型 / Create scene type
      */
     private createScene(type: SceneType): void {
-        const scene = SceneConfig.data[type];
+        const scene = ConfigMgr.instance.getSceneConfig(type);
         if (!scene) {
             throw new Error(
                 `(Server) SceneMgr createScene error: scene ${type} not found`

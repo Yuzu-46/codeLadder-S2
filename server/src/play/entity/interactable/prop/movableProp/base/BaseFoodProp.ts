@@ -3,10 +3,7 @@ import type {
     MachineOptions,
 } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
-import { ContainerConfig } from '../../../../../config/ContainerConfig';
-import { FoodConfig } from '../../../../../config/FoodConfig';
-import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
-import type { ContainerState } from '../../../../../const/ContainerConst';
+import { ConfigMgr } from '../../../../../mgr/ConfigMgr';
 import type { IngredientType } from '../../../../../const/FoodConst';
 import { FoodEvent } from '../../../../../const/FoodConst';
 import { IngredientState } from '../../../../../const/FoodConst';
@@ -144,7 +141,9 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     onEnterState(state: IngredientState): void {
         if (this.entity && this.type.length === 1) {
             const { mesh, interactHint } =
-                MovablePropConfig.data[this.type[0]]?.states[state] || {};
+                ConfigMgr.instance.getMovablePropConfig(this.type[0])?.states[
+                    state
+                ] || {};
             if (mesh) {
                 this.entity.mesh = mesh;
             }
@@ -179,17 +178,20 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         if (
             food.length &&
             playerCarryingPropData.container &&
-            !ContainerConfig.data[playerCarryingPropData.container.type][
+            !ConfigMgr.instance.getContainerConfig(
+                playerCarryingPropData.container.type,
                 playerCarryingPropData.container.state
-            ].canHoldFood
+            )?.canHoldFood
         ) {
             return false;
         }
 
         // 单个食物的逻辑
         if (food.length === 1) {
-            const config =
-                FoodConfig.ingredient[food[0].type]?.states[food[0].state];
+            const config = ConfigMgr.instance.getIngredientConfig(
+                food[0].type,
+                food[0].state
+            );
             if (!config) {
                 throw new Error(
                     `Food config not found for type ${food[0].type} and state ${food[0].state}`

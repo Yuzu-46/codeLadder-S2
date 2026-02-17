@@ -4,7 +4,7 @@ import { InteractableType } from '../../../../const/TokenConst';
 import type { IInteractableData } from '../../../../data/InteractableData';
 import { PropBindingMgr } from '../../../../mgr/PropBindingMgr';
 import type { InGamePlayer } from '../../../player/GamePlayer';
-import { ContainerConfig } from '../../../../config/ContainerConfig';
+import { ConfigMgr } from '../../../../mgr/ConfigMgr';
 
 /**
  * 灶台道具 / Stove Prop
@@ -41,9 +41,10 @@ export class StoveProp extends BaseImmovableProp {
         if (
             this.entity &&
             player.carryingProp.container &&
-            ContainerConfig.data[player.carryingProp.container.type][
+            ConfigMgr.instance.getContainerConfig(
+                player.carryingProp.container.type,
                 player.carryingProp.container.state
-            ].canBePlacedOnStove
+            )?.canBePlacedOnStove
         ) {
             player.placeProp(this.entity.position, this);
         }

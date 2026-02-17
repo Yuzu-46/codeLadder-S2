@@ -10,7 +10,7 @@ import type { InGamePlayer } from '../../../../player/GamePlayer';
 import type { MachineConfig } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { FiniteStateMachine } from '../../../../../../framework/common/state/FiniteStateMachine';
 import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
-import { MovablePropConfig } from '../../../../../config/MovablePropConfig';
+import { ConfigMgr } from '../../../../../mgr/ConfigMgr';
 import type { BaseFoodProp } from './BaseFoodProp';
 import type {
     IPlayerCarryingPropData,
@@ -101,7 +101,9 @@ export abstract class BaseContainerProp extends BaseMovableProp {
         // 根据状态切换模型等表现
         if (this.entity && this._type) {
             const { mesh, interactHint } =
-                MovablePropConfig.data[this._type].states[state] || {};
+                ConfigMgr.instance.getMovablePropConfig(this._type)?.states[
+                    state
+                ] || {};
             if (mesh) {
                 this.entity.mesh = mesh;
             }
