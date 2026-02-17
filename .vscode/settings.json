@@ -5,13 +5,11 @@
     "GameAPI.d.ts": "GameEntity.d.ts, GamePlayer.d.ts",
     ".env": "env.d.ts"
   },
-
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
@@ -24,30 +22,24 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
   },
-
   "eslint.format.enable": true,
-
   "files.associations": {
     "*.mjs": "javascript",
     "*.cjs": "javascript"
   },
-
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
     "**/.log": true,
     "**/.git": true
   },
-
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": false
   },
-
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.updateImportsOnFileMove.enabled": "always",
-
   "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.linkedEditing": true,
@@ -59,12 +51,16 @@
     "editorError.foreground": "#ff0000",
     "editorWarning.foreground": "#ffa500"
   },
-
   "explorer.autoReveal": true,
   "i18n-ally.sourceLanguage": "zh-CN",
-  "i18n-ally.localesPaths": ["i18n/res"],
+  "i18n-ally.localesPaths": [
+    "i18n/res"
+  ],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "cSpell.words": [
+    "interactable"
+  ]
   // "files.autoSave": "afterDelay",
   // "files.autoSaveDelay": 1000
 }
