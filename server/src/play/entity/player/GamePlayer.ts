@@ -13,11 +13,11 @@ import type {
     IngredientState,
     IngredientType,
 } from '../../const/FoodConst';
-import type { BaseImmovableProp } from '../interactable/prop/immovableProp/BaseImmovableProp';
 import { PropMgr } from '../../mgr/PropMgr';
 import { EventEmitter } from '../../../framework/common/EventEmitter';
 import { PlayerEvent } from '../../const/EventConst';
 import type { IPlayerEventData } from '../../data/EventData';
+import type { Interactable } from '../interactable/base/Interactable';
 
 /**
  * 玩家参与游戏
@@ -116,7 +116,7 @@ export class InGamePlayer extends BasePlayer {
      */
     public async placeProp(
         position: GameVector3,
-        interactable?: BaseImmovableProp
+        interactable?: Interactable
     ): Promise<void> {
         PropMgr.instance.placeProp(this.carryingProp, position, interactable);
 

@@ -15,12 +15,12 @@ import type {
     IIngredientConfig,
 } from '../data/InteractableData';
 import type { IMovablePropData } from '../data/MovablePropData';
-import type { BaseImmovableProp } from '../entity/interactable/prop/immovableProp/BaseImmovableProp';
 import type { BaseContainerProp } from '../entity/interactable/prop/movableProp/base/BaseContainerProp';
 import type { BaseFoodProp } from '../entity/interactable/prop/movableProp/base/BaseFoodProp';
 import { InteractableMgr } from './InteractableMgr';
 import { PropBindingMgr } from './PropBindingMgr';
 import { FoodConfig } from '../config/FoodConfig';
+import type { Interactable } from '../entity/interactable/base/Interactable';
 
 /**
  * 道具管理器 / Prop manager
@@ -37,7 +37,7 @@ export class PropMgr extends Singleton<PropMgr>() {
     public async placeProp(
         playerPropData: IPlayerCarryingPropData,
         position: GameVector3,
-        interactable?: BaseImmovableProp
+        interactable?: Interactable
     ): Promise<void> {
         let container: BaseContainerProp | null = null;
         if (playerPropData.container) {
