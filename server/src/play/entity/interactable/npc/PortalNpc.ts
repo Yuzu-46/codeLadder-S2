@@ -39,6 +39,11 @@ export class PortalNpc extends Interactable {
         }
     }
 
+    /**
+     * 传送 / Teleport
+     * @param entity 玩家实体 / Player entity
+     * @param link  / 传送链接 / Teleport link
+     */
     private teleport(entity: GamePlayerEntity, link: IMapLink) {
         const { url } = entity.player;
 
