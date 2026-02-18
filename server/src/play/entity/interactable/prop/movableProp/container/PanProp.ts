@@ -67,4 +67,13 @@ export class PanProp extends BaseContainerProp {
             player.placeProp(this.entity?.position, this);
         }
     }
+
+    protected onInteractNotCarryingProp(player: InGamePlayer): void {
+        if (this.food?.canWear(player.carryingProp) || !this.food) {
+            // 如果有绑定的食物/食材，那么也穿戴到玩家身上
+            this.food?.wear(player);
+
+            this.wear(player);
+        }
+    }
 }
