@@ -138,7 +138,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * 进入状态时的处理逻辑 / Logic to handle when entering a state
      * @param state 当前状态 / Current state
      */
-    onEnterState(state: IngredientState): void {
+    private onEnterState(state: IngredientState): void {
         if (this.entity && this.type.length === 1) {
             const { mesh, interactHint } =
                 ConfigMgr.instance.getMovablePropConfig(this.type[0])?.states[
