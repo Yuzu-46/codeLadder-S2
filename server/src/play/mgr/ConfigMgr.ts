@@ -65,7 +65,10 @@ export class ConfigMgr extends Singleton<ConfigMgr>() {
      */
     public load(): void {
         Object.values(SceneConfig.data).forEach((sceneData) => {
-            this._sceneConfigs.set(sceneData.id as SceneType, sceneData);
+            if (sceneData) {
+                // if过滤掉没有配置的场景
+                this._sceneConfigs.set(sceneData.id as SceneType, sceneData);
+            }
         });
 
         Object.keys(InteractableConfig.data).forEach((key) => {
