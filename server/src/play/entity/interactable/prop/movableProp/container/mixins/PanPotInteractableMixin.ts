@@ -3,15 +3,18 @@ import type { InGamePlayer } from '../../../../../player/GamePlayer';
 import { ConfigMgr } from '../../../../../../mgr/ConfigMgr';
 import type { BaseContainerProp } from '../../base/BaseContainerProp';
 
+type Constructor<T> = new (...args: any[]) => T;
+type AbstractConstructor<T> = abstract new (...args: any[]) => T;
+
 /**
  * 锅具交互Mixin (Pot/Pan Interactable Mixin)
  * @param Base - 基类 / Base class
  * @returns 混入后的类 / Mixin class
  */
 export function PanPotInteractableMixin<
-    TBase extends new (...args: any[]) => BaseContainerProp,
+    TBase extends AbstractConstructor<BaseContainerProp>,
 >(Base: TBase): TBase {
-    return class extends Base {
+    abstract class Mixin extends Base {
         protected onInteractCarryingContainerProp(player: InGamePlayer): void {
             if (this.food?.canWear(player.carryingProp)) {
                 this.food.wear(player);
@@ -64,5 +67,7 @@ export function PanPotInteractableMixin<
                 this.wear(player);
             }
         }
-    };
+    }
+
+    return Mixin;
 }
