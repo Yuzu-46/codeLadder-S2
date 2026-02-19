@@ -1,4 +1,7 @@
+import { EventEmitter } from '../../framework/common/EventEmitter';
 import { Singleton } from '../../framework/common/Singleton';
+import { PropEvent } from '../const/EventConst';
+import type { IPropBindingEventData } from '../data/EventData';
 import type { IPropBindingData } from '../data/PropBindingData';
 
 /**
@@ -262,6 +265,12 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
      */
     private set(id: string, data: IPropBindingData) {
         this._bindingMap.set(id, data);
+        EventEmitter.instance.emit<IPropBindingEventData>(
+            PropEvent.BindingUpdate,
+            {
+                data,
+            }
+        );
     }
 
     /**
@@ -269,6 +278,12 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
      * @param id 绑定 ID / Binding ID
      */
     private delete(id: string) {
+        EventEmitter.instance.emit<IPropBindingEventData>(
+            PropEvent.BindingDelete,
+            {
+                data: this._bindingMap.get(id)!,
+            }
+        );
         this._bindingMap.delete(id);
     }
 }
