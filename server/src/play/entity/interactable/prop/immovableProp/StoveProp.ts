@@ -14,12 +14,19 @@ import { PropEvent } from '../../../../const/EventConst';
  */
 @FactoryToken(InteractableType.StoveProp)
 export class StoveProp extends BaseImmovableProp {
+    /** 绑定数据更新处理函数 */
     private _bindingUpdateHandler:
         | ((payload?: IPropBindingEventData) => void)
         | null = null;
+    /** 绑定数据删除处理函数 */
     private _bindingDeleteHandler:
         | ((payload?: IPropBindingEventData) => void)
         | null = null;
+
+    /**
+     * 灶台上锅的ID / ID of the pan pot on the stove
+     */
+    private _panPotId: string | null = null;
 
     public start(config: IInteractableData): void {
         super.start(config);
@@ -107,11 +114,19 @@ export class StoveProp extends BaseImmovableProp {
      * 绑定更新 / Binding update
      * @param event 事件数据 / Event data
      */
-    private onPropBindingUpdate(event?: IPropBindingEventData): void {}
+    private onPropBindingUpdate(event?: IPropBindingEventData): void {
+        if (event && event.data.staticContainerId === this.id) {
+            this._panPotId = event.data.dynamicContainerId;
+        }
+    }
 
     /**
      * 绑定删除 / Binding delete
      * @param event 事件数据 / Event data
      */
-    private onPropBindingDelete(event?: IPropBindingEventData): void {}
+    private onPropBindingDelete(event?: IPropBindingEventData): void {
+        if (event && event.data.staticContainerId === this.id) {
+            this._panPotId = null;
+        }
+    }
 }
