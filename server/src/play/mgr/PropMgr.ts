@@ -166,10 +166,6 @@ export class PropMgr extends Singleton<PropMgr>() {
         ingredients: IPropData<IngredientType, IngredientState>[],
         container?: IPropData<ContainerType, ContainerState>
     ): boolean {
-        if (ingredients.length === 0) {
-            return false;
-        }
-
         // 如果有食材且容器存在，则检查容器状态和配置
         if (
             ingredients.length &&
