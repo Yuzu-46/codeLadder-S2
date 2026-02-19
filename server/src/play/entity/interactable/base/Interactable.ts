@@ -101,4 +101,10 @@ export abstract class Interactable {
     public get id(): string {
         return this._id;
     }
+
+    /**
+     * 更新可交互对象 / Update interactable
+     * @param delta 时间增量 / Delta time
+     */
+    public update(delta: number): void {}
 }

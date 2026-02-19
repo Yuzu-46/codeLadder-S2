@@ -197,4 +197,14 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
     public getInteractable(id: string): Interactable | undefined {
         return this._interactableMap.get(id);
     }
+
+    /**
+     * 更新所有可交互对象 / Update all interactables
+     * @param tick 游戏时间戳 / Game timestamp
+     */
+    public update(tick: number): void {
+        for (const interactable of this._interactableMap.values()) {
+            interactable.update(tick);
+        }
+    }
 }
