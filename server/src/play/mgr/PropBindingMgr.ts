@@ -34,7 +34,7 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
             return false;
         }
 
-        this._bindingMap.set(bindingId, {
+        this.set(bindingId, {
             staticContainerId: null,
             dynamicContainerId: null,
             foodId: null,
@@ -78,7 +78,7 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
         this.removeReverseIndex(bindingId);
 
         // 更新绑定数据
-        this._bindingMap.set(bindingId, {
+        this.set(bindingId, {
             ...this._bindingMap.get(bindingId)!,
             ...bindingData,
         });
@@ -123,7 +123,7 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
         this.removeReverseIndex(bindingId);
 
         // 移除绑定数据
-        this._bindingMap.delete(bindingId);
+        this.delete(bindingId);
         return true;
     }
 
@@ -253,5 +253,22 @@ export class PropBindingMgr extends Singleton<PropBindingMgr>() {
                 this._bindingIds.delete(propId);
             }
         });
+    }
+
+    /**
+     * 设置绑定数据 / Set binding data
+     * @param id 绑定 ID / Binding ID
+     * @param data 绑定数据 / Binding data
+     */
+    private set(id: string, data: IPropBindingData) {
+        this._bindingMap.set(id, data);
+    }
+
+    /**
+     * 删除绑定数据 / Delete binding data
+     * @param id 绑定 ID / Binding ID
+     */
+    private delete(id: string) {
+        this._bindingMap.delete(id);
     }
 }
