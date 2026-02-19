@@ -35,5 +35,11 @@ export class App extends Singleton<App>() {
         this._remoteMgr.start();
         this._interactableMgr.start(id);
         this._sceneMgr.start(id);
+
+        setInterval(() => {
+            const tick = Date.now();
+            this._playerMgr.update(tick);
+            this._interactableMgr.update(tick);
+        }, 1000 / 60); // 60 FPS
     }
 }
