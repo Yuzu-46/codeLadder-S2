@@ -1,5 +1,6 @@
 import { Singleton } from '../../framework/common/Singleton';
 import { ConfigMgr } from './ConfigMgr';
+import type { ContainerState, ContainerType } from '../const/ContainerConst';
 import type {
     FoodType,
     IngredientState,
@@ -153,5 +154,47 @@ export class PropMgr extends Singleton<PropMgr>() {
         }
 
         return true;
+    }
+
+    /**
+     * 检查食材和容器是否可以堆叠 / Check if ingredients and container can stack
+     * @param ingredients 食材 / Ingredients
+     * @param container 容器 / Container
+     * @returns 是否可以堆叠 / Can stack
+     */
+    public can(
+        ingredients: IPropData<IngredientType, IngredientState>[],
+        container?: IPropData<ContainerType, ContainerState>
+    ): boolean {
+        // 如果有食材且容器存在，则检查容器状态和配置
+        if (
+            ingredients.length &&
+            container &&
+            !this._configMgr.getContainerConfig(container.type, container.state)
+                ?.canHoldFood
+        ) {
+            return false;
+        }
+
+        // 如果有食材且只有一个，则检查食材状态和配置
+        if (ingredients.length === 1) {
+            const config = this._configMgr.getIngredientConfig(
+                ingredients[0].type,
+                ingredients[0].state
+            );
+            if (!config) {
+                throw new Error(
+                    `Food config not found for type ${ingredients[0].type} and state ${ingredients[0].state}`
+                );
+            }
+
+            return !(
+                (!config.canBePlated && container) ||
+                (config.mustBePlated && !container)
+            );
+        }
+
+        // 如果食材有多个，则判断是否可以制作
+        return !!this.findCreatableRecipe(ingredients);
     }
 }

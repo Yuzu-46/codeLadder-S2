@@ -172,40 +172,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
     }
 
     public canWear(playerCarryingPropData: IPlayerCarryingPropData): boolean {
-        const food = [...this.data, ...playerCarryingPropData.foods];
-
-        // 如果玩家携带的容器道具无法放食物，则不能穿戴
-        if (
-            food.length &&
-            playerCarryingPropData.container &&
-            !ConfigMgr.instance.getContainerConfig(
-                playerCarryingPropData.container.type,
-                playerCarryingPropData.container.state
-            )?.canHoldFood
-        ) {
-            return false;
-        }
-
-        // 单个食物的逻辑
-        if (food.length === 1) {
-            const config = ConfigMgr.instance.getIngredientConfig(
-                food[0].type,
-                food[0].state
-            );
-            if (!config) {
-                throw new Error(
-                    `Food config not found for type ${food[0].type} and state ${food[0].state}`
-                );
-            }
-
-            return !(
-                (!config.canBePlated && playerCarryingPropData.container) ||
-                (config.mustBePlated && !playerCarryingPropData.container)
-            );
-        }
-
-        // 多个食物的逻辑
-        return !!PropMgr.instance.findCreatableRecipe(food);
+        return PropMgr.instance.can(
+            [...this.data, ...playerCarryingPropData.foods],
+            playerCarryingPropData.container || undefined
+        );
     }
 
     /**
