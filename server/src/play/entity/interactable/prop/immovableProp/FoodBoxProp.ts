@@ -29,7 +29,10 @@ export class FoodBoxProp extends BaseImmovableProp {
         console.log('(Server) FoodBoxProp onInteract with id ', this.id);
         const player = PlayerMgr.instance.getPlayer(event.entity.player.userId);
         if (player && player instanceof InGamePlayer && this.type) {
-            if (!player.carryingProp.foods.length) {
+            if (
+                !player.carryingProp.foods.length &&
+                !player.carryingProp.container
+            ) {
                 player.pickUpProp({
                     container: null,
                     foods: [
