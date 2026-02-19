@@ -59,6 +59,7 @@
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
   "i18n-ally.keystyle": "nested",
   "cSpell.words": [
+    "arenapro",
     "interactable"
   ]
   // "files.autoSave": "afterDelay",
