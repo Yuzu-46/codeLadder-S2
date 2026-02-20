@@ -16,4 +16,9 @@ export class PotProp extends PanPotInteractableMixin(BaseContainerProp) {
         super.start(config);
         console.log('(Server) PotProp start with id ', config.id);
     }
+
+    /**
+     * 烹饪 / Cook
+     */
+    public cook(): void {}
 }

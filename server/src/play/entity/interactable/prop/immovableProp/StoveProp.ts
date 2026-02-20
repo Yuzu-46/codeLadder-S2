@@ -8,6 +8,7 @@ import { ConfigMgr } from '../../../../mgr/ConfigMgr';
 import { EventEmitter } from '../../../../../framework/common/EventEmitter';
 import type { IPropBindingEventData } from '../../../../data/EventData';
 import { PropEvent } from '../../../../const/EventConst';
+import type { PanProp, PotProp } from '../movableProp';
 
 /**
  * 灶台道具 / Stove Prop
@@ -127,6 +128,13 @@ export class StoveProp extends BaseImmovableProp {
     private onPropBindingDelete(event?: IPropBindingEventData): void {
         if (event && event.data.staticContainerId === this.id) {
             this._panPotId = null;
+        }
+    }
+
+    public update(delta: number): void {
+        super.update(delta);
+        if (this._panPotId) {
+            (this.getInteractable(this._panPotId) as PanProp | PotProp).cook();
         }
     }
 }
