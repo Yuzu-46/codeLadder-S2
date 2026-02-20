@@ -20,5 +20,7 @@ export class PanProp extends PanPotInteractableMixin(BaseContainerProp) {
     /**
      * 烹饪 / Cook
      */
-    public cook(): void {}
+    public cook(): void {
+        this.food?.onCook();
+    }
 }

@@ -47,13 +47,13 @@ export const enum FoodEvent {
      */
     CHOP = 'chop',
     /**
-     * 开始烹饪
+     * 烹饪
      */
-    COOK_START = 'cook_start',
+    COOK = 'cook',
     /**
      * 烹饪完成
      */
-    COOK_END = 'cook_end',
+    COOK_FINISH = 'cook_finish',
     /**
      * 糊
      */

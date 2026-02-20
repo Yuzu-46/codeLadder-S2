@@ -60,7 +60,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             },
             [IngredientState.CHOPPED]: {
                 on: {
-                    [FoodEvent.COOK_START]: IngredientState.COOKING,
+                    [FoodEvent.COOK]: IngredientState.COOKING,
                 },
                 onEnter: () => {
                     this.onEnterState(IngredientState.CHOPPED);
@@ -68,9 +68,23 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             },
             [IngredientState.COOKING]: {
                 on: {
-                    [FoodEvent.COOK_END]: IngredientState.COOKED,
+                    [FoodEvent.COOK]: {
+                        target: IngredientState.COOKED,
+                        guard: () => {
+                            if (this.entity && this.type.length === 1) {
+                                this.entity.hp += 1;
+                                return this.entity.hp === this.entity.maxHp;
+                            }
+                            return false;
+                        },
+                    },
+                    [FoodEvent.COOK_FINISH]: IngredientState.COOKED,
                 },
                 onEnter: () => {
+                    if (this.entity && this.type.length === 1) {
+                        this.entity.maxHp = 100;
+                        this.entity.hp = 0;
+                    }
                     this.onEnterState(IngredientState.COOKING);
                 },
             },
@@ -79,6 +93,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                     [FoodEvent.BURNT]: IngredientState.BURNT,
                 },
                 onEnter: () => {
+                    if (this.entity && this.type.length === 1) {
+                        this.entity.maxHp = 100;
+                        this.entity.hp = 100;
+                    }
                     this.onEnterState(IngredientState.COOKED);
                 },
             },
@@ -195,6 +213,25 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         );
         // 触发切菜事件
         this._fsm[0].send(FoodEvent.CHOP);
+    }
+
+    /**
+     * 处理烹饪事件 / Handle cooking event
+     */
+    public onCook(): void {
+        if (this.type.length === 0) {
+            throw new Error('This food prop has no ingredient type defined.');
+        }
+        // 如果有多个食材则置之不理
+        if (this.type.length > 1) {
+            return;
+        }
+
+        this._fsm[0].send(FoodEvent.COOK);
+
+        console.log(
+            `(FoodProp) ${this.id} onCook, current state: ${this._fsm[0].State}`
+        );
     }
 
     /**
