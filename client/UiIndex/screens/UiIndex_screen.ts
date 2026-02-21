@@ -1,6 +1,6 @@
 // 本文件由ArenaPro生成的UI索引工具，UiIndex文件夹均为自动生成，请勿手动修改
 // 屏幕: screen
-// 生成时间: 2026年2月14日星期六 GMT+8 18:03:32
+// 生成时间: 2026年2月21日星期六 GMT+8 19:02:47
 
 import ClientUIWindow from '../ClientUIWindow';
 

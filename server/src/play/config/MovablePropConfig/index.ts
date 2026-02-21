@@ -36,11 +36,11 @@ export const MovablePropConfig: IMovablePropConfig = {
             states: {
                 clean: {
                     mesh: 'mesh/平底锅.vb',
-                    interactHint: '平底锅（干净）',
+                    interactHint: '煎锅（干净）',
                 },
                 dirty: {
                     mesh: 'mesh/平底锅.vb',
-                    interactHint: '平底锅（脏）',
+                    interactHint: '煎锅（脏）',
                 },
             },
             interactableConfig: {
@@ -67,11 +67,11 @@ export const MovablePropConfig: IMovablePropConfig = {
             states: {
                 clean: {
                     mesh: 'mesh/锅.vb',
-                    interactHint: '锅（干净）',
+                    interactHint: '煮锅（干净）',
                 },
                 dirty: {
                     mesh: 'mesh/锅.vb',
-                    interactHint: '锅（脏）',
+                    interactHint: '煮锅（脏）',
                 },
             },
             interactableConfig: {
@@ -132,6 +132,14 @@ export const MovablePropConfig: IMovablePropConfig = {
                     mesh: 'mesh/牛肉.vb',
                     interactHint: '牛肉（烹饪中）',
                 },
+                cooked: {
+                    mesh: 'mesh/牛肉.vb',
+                    interactHint: '牛肉（已熟）',
+                },
+                burnt: {
+                    mesh: 'mesh/牛肉.vb',
+                    interactHint: '牛肉（已糊）',
+                },
             },
             interactableConfig: {
                 id: () =>
@@ -160,6 +168,14 @@ export const MovablePropConfig: IMovablePropConfig = {
                 cooking: {
                     mesh: 'mesh/蔬菜.vb',
                     interactHint: '蔬菜（烹饪中）',
+                },
+                cooked: {
+                    mesh: 'mesh/蔬菜.vb',
+                    interactHint: '蔬菜（已熟）',
+                },
+                burnt: {
+                    mesh: 'mesh/蔬菜.vb',
+                    interactHint: '蔬菜（已糊）',
                 },
             },
             interactableConfig: {
@@ -190,6 +206,14 @@ export const MovablePropConfig: IMovablePropConfig = {
                     mesh: 'mesh/番茄.vb',
                     interactHint: '番茄（烹饪中）',
                 },
+                cooked: {
+                    mesh: 'mesh/番茄.vb',
+                    interactHint: '番茄（已熟）',
+                },
+                burnt: {
+                    mesh: 'mesh/番茄.vb',
+                    interactHint: '番茄（已糊）',
+                },
             },
             interactableConfig: {
                 id: () =>
@@ -205,9 +229,88 @@ export const MovablePropConfig: IMovablePropConfig = {
                 offset: new GameVector3(0, 0, 0.75),
             },
         },
-        meatBurger: {} as IMovablePropData<''>,
-        mixedBurger: {} as IMovablePropData<''>,
-        nutritiousBurger: {} as IMovablePropData<''>,
-        beefSoup: {} as IMovablePropData<''>,
+        meatBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/荤汉堡.vb',
+                    interactHint: '荤汉堡',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `meatBurger_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        mixedBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/荤素汉堡.vb',
+                    interactHint: '荤素汉堡',
+                },
+            },
+
+            interactableConfig: {
+                id: () =>
+                    `mixedBurger_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        nutritiousBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/营养汉堡.vb',
+                    interactHint: '营养汉堡',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `nutritiousBurger_${Date.now()}_${Math.floor(
+                        Math.random() * 100
+                    )}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        beefSoup: {
+            states: {
+                '': {
+                    mesh: 'mesh/牛肉汤.vb',
+                    interactHint: '牛肉汤',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `beefSoup_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+        },
     },
 };
