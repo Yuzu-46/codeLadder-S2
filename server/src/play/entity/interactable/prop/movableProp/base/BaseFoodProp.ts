@@ -44,7 +44,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                             if (this.entity && this.type.length === 1) {
                                 this.entity.hp =
                                     (this.entity.hp % this.entity.maxHp) + 1;
-                                return this.entity.hp === this.entity.maxHp;
+                                return this.entity.hp >= this.entity.maxHp;
                             }
                             return false;
                         },
@@ -73,7 +73,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                         guard: () => {
                             if (this.entity && this.type.length === 1) {
                                 this.entity.hp += 1;
-                                return this.entity.hp === this.entity.maxHp;
+                                return this.entity.hp >= this.entity.maxHp;
                             }
                             return false;
                         },
@@ -82,7 +82,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
                 },
                 onEnter: () => {
                     if (this.entity && this.type.length === 1) {
-                        this.entity.maxHp = 100;
+                        this.entity.maxHp = 84;
                         this.entity.hp = 0;
                     }
                     this.onEnterState(IngredientState.COOKING);
@@ -90,12 +90,22 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             },
             [IngredientState.COOKED]: {
                 on: {
-                    [FoodEvent.BURNT]: IngredientState.BURNT,
+                    [FoodEvent.BURNT]: {
+                        target: IngredientState.BURNT,
+                        guard: () => {
+                            if (this.entity && this.type.length === 1) {
+                                this.entity.hp -= 1;
+                                return this.entity.hp <= 0;
+                            }
+                            return false;
+                        },
+                    },
+                    [FoodEvent.BURNT_DIRECTLY]: IngredientState.BURNT,
                 },
                 onEnter: () => {
                     if (this.entity && this.type.length === 1) {
-                        this.entity.maxHp = 100;
-                        this.entity.hp = 100;
+                        this.entity.maxHp = 72;
+                        this.entity.hp = 72;
                     }
                     this.onEnterState(IngredientState.COOKED);
                 },
@@ -217,8 +227,9 @@ export abstract class BaseFoodProp extends BaseMovableProp {
 
     /**
      * 处理烹饪事件 / Handle cooking event
+     * @param event 事件类型 / Event type
      */
-    public onCook(): void {
+    public onCook(event: FoodEvent = FoodEvent.COOK): void {
         if (this.type.length === 0) {
             throw new Error('This food prop has no ingredient type defined.');
         }
@@ -227,7 +238,11 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             return;
         }
 
-        this._fsm[0].send(FoodEvent.COOK);
+        if (this._fsm[0].State === IngredientState.COOKED) {
+            event = FoodEvent.BURNT;
+        }
+
+        this._fsm[0].send(event);
 
         console.log(
             `(FoodProp) ${this.id} onCook, current state: ${this._fsm[0].State}`

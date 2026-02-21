@@ -58,4 +58,8 @@ export const enum FoodEvent {
      * 糊
      */
     BURNT = 'burnt',
+    /**
+     * 直接糊
+     */
+    BURNT_DIRECTLY = 'burnt_directly',
 }
