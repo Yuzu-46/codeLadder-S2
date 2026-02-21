@@ -19,8 +19,12 @@ export class PotProp extends PanPotInteractableMixin(BaseContainerProp) {
 
     /**
      * 烹饪 / Cook
+     * @param tick
      */
-    public cook(): void {
-        this.food?.onCook();
+    public cook(tick: number): void {
+        if (tick % 5 === 0) {
+            // 每五帧执行一次
+            this.food?.onCook();
+        }
     }
 }

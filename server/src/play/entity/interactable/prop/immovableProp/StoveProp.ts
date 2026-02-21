@@ -134,7 +134,9 @@ export class StoveProp extends BaseImmovableProp {
     public update(delta: number): void {
         super.update(delta);
         if (this._panPotId) {
-            (this.getInteractable(this._panPotId) as PanProp | PotProp).cook();
+            (this.getInteractable(this._panPotId) as PanProp | PotProp).cook(
+                delta
+            );
         }
     }
 }
