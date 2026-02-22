@@ -27,12 +27,14 @@ export function PanPotInteractableMixin<
                 ...(this.food?.data || []),
                 ...player.carryingProp.foods,
             ];
+            const ingredientConfig = ConfigMgr.instance.getIngredientConfig(
+                ingredients[0].type,
+                ingredients[0].state
+            );
             if (
                 ingredients.length === 1 && // 仅一个食材
-                ConfigMgr.instance.getIngredientConfig(
-                    ingredients[0].type,
-                    ingredients[0].state
-                )?.canBeCooked && // 可被烹饪
+                ingredientConfig?.canBeCooked && // 可被烹饪
+                ingredientConfig?.canPlateContainers.includes(this._type!) && // 可以放置的容器类型
                 this.data && // 容器有数据
                 ConfigMgr.instance.getContainerConfig(
                     this.data.type,

@@ -194,8 +194,9 @@ export class PropMgr extends Singleton<PropMgr>() {
             }
 
             return !(
-                (!config.canBePlated && container) ||
-                (config.mustBePlated && !container)
+                (container &&
+                    !config.canPlateContainers.includes(container.type)) ||
+                (!container && config.mustBePlated)
             );
         }
 
