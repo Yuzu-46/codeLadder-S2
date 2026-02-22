@@ -17,6 +17,7 @@ import { PropBindingMgr } from '../../../../../mgr/PropBindingMgr';
 import { PropMgr } from '../../../../../mgr/PropMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import { BaseMovableProp } from './BaseMovableProp';
+import type { BaseContainerProp } from './BaseContainerProp';
 
 /**
  * 食材道具基类 / Base food prop
@@ -167,18 +168,33 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * @param state 当前状态 / Current state
      */
     private onEnterState(state: IngredientState): void {
-        if (this.entity && this.type.length === 1) {
-            const { mesh, interactHint } =
-                ConfigMgr.instance.getMovablePropConfig(this.type[0])?.states[
-                    state
-                ] || {};
-            if (mesh) {
-                this.entity.mesh = mesh;
+        setTimeout(() => {
+            if (this.entity && this.type.length) {
+                let mesh: GameModelAssets | undefined,
+                    interactHint: string | undefined;
+
+                const createdFood = PropMgr.instance.findCreatableRecipe(
+                    this.data
+                );
+                if (createdFood && this.container?.data?.type === 'plate') {
+                    // 只有盘子才能呈现食物
+                    ({ mesh, interactHint } =
+                        ConfigMgr.instance.getMovablePropConfig(createdFood!)
+                            ?.states[''] || {});
+                } else {
+                    ({ mesh, interactHint } =
+                        ConfigMgr.instance.getMovablePropConfig(this.type[0])
+                            ?.states[state] || {});
+                }
+
+                if (mesh) {
+                    this.entity.mesh = mesh;
+                }
+                if (interactHint) {
+                    this.entity.interactHint = interactHint;
+                }
             }
-            if (interactHint) {
-                this.entity.interactHint = interactHint;
-            }
-        }
+        }, 1);
     }
 
     public wear(player: InGamePlayer): void {
@@ -264,5 +280,17 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             type,
             state: this._fsm[idx].State,
         }));
+    }
+
+    /**
+     * 所在容器 / container
+     */
+    public get container(): BaseContainerProp | null {
+        const containerId = PropBindingMgr.instance.getBindingDataByPropId(
+            this.id
+        ).bindingData?.dynamicContainerId;
+        return containerId
+            ? (this.getInteractable(containerId) as BaseContainerProp)
+            : null;
     }
 }

@@ -211,7 +211,10 @@ export class InGamePlayer extends BasePlayer {
             const creatableFood = PropMgr.instance.findCreatableRecipe(
                 this.carryingProp.foods
             );
-            if (creatableFood) {
+            if (
+                creatableFood &&
+                !(this.carryingProp.container?.type !== 'plate')
+            ) {
                 console.log(
                     `(Server) Found creatable recipe: ${creatableFood}`
                 );
