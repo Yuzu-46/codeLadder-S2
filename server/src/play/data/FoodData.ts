@@ -1,3 +1,4 @@
+import type { ContainerType } from '../const/ContainerConst';
 import type {
     IngredientType,
     IngredientState,
@@ -19,9 +20,9 @@ export interface IFoodStateConfig {
     canBeCooked: boolean;
 
     /**
-     * 是否可以被装盘 / Can be plated
+     * 可以装盘的容器类型 / Container types that can plate
      */
-    canBePlated: boolean;
+    canPlateContainers: ContainerType[];
 
     /**
      * 是否必须装盘 / Must be plated
