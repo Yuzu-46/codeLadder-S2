@@ -121,7 +121,6 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             },
             [IngredientState.BURNT]: {
                 onEnter: () => {
-                    this.onBurnt();
                     this.onEnterState(IngredientState.BURNT);
                 },
             },
@@ -176,6 +175,32 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         super.destroy();
         this._state?.removeAllListeners();
         this._state = null;
+    }
+
+    /**
+     * 添加状态监听器
+     * @param listener 状态变化监听回调
+     * @returns 移除监听器的函数
+     */
+    public addStateListener(listener: (state?: unknown) => void): () => void {
+        if (!this._state) {
+            throw new Error('State observer not initialized');
+        }
+
+        this._state.addListener(listener);
+
+        // 返回取消订阅的函数
+        return () => {
+            this._state?.removeListener(listener);
+        };
+    }
+
+    /**
+     * 移除状态监听器
+     * @param listener 要移除的监听器
+     */
+    public removeStateListener(listener: (state?: unknown) => void): void {
+        this._state?.removeListener(listener);
     }
 
     /**
