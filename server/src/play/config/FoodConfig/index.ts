@@ -143,7 +143,7 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'vegetable',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
             ],
@@ -157,7 +157,7 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'tomato',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
             ],
@@ -176,7 +176,7 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'vegetable',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
             ],
@@ -191,12 +191,12 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'vegetable',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
                 {
                     type: 'tomato',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
             ],
@@ -215,12 +215,12 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'vegetable',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
                 {
                     type: 'tomato',
-                    state: IngredientState.COOKED,
+                    state: IngredientState.CHOPPED,
                     count: 1,
                 },
             ],
