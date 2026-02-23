@@ -134,6 +134,34 @@ export const FoodConfig: IFoodConfig = {
                 },
             ],
         },
+        vegetableBurger: {
+            recipe: [
+                {
+                    type: 'bread',
+                    state: IngredientState.RAW,
+                    count: 1,
+                },
+                {
+                    type: 'vegetable',
+                    state: IngredientState.COOKED,
+                    count: 1,
+                },
+            ],
+        },
+        tomatoBurger: {
+            recipe: [
+                {
+                    type: 'bread',
+                    state: IngredientState.RAW,
+                    count: 1,
+                },
+                {
+                    type: 'tomato',
+                    state: IngredientState.COOKED,
+                    count: 1,
+                },
+            ],
+        },
         mixedBurger: {
             recipe: [
                 {
@@ -148,6 +176,26 @@ export const FoodConfig: IFoodConfig = {
                 },
                 {
                     type: 'vegetable',
+                    state: IngredientState.COOKED,
+                    count: 1,
+                },
+            ],
+        },
+
+        vegetableTomatoBurger: {
+            recipe: [
+                {
+                    type: 'bread',
+                    state: IngredientState.RAW,
+                    count: 1,
+                },
+                {
+                    type: 'vegetable',
+                    state: IngredientState.COOKED,
+                    count: 1,
+                },
+                {
+                    type: 'tomato',
                     state: IngredientState.COOKED,
                     count: 1,
                 },
