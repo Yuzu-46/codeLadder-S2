@@ -250,6 +250,52 @@ export const MovablePropConfig: IMovablePropConfig = {
                 offset: new GameVector3(0, 0, 0.75),
             },
         },
+        vegetableBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/荤汉堡.vb', // TODO: 暂时使用荤素汉堡的模型
+                    interactHint: '素汉堡',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `vegetableBurger_${Date.now()}_${Math.floor(
+                        Math.random() * 100
+                    )}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        tomatoBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/荤汉堡.vb', // TODO: 暂时使用荤汉堡的模型
+                    interactHint: '番茄汉堡',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `tomatoBurger_${Date.now()}_${Math.floor(
+                        Math.random() * 100
+                    )}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
         mixedBurger: {
             states: {
                 '': {
@@ -261,6 +307,29 @@ export const MovablePropConfig: IMovablePropConfig = {
             interactableConfig: {
                 id: () =>
                     `mixedBurger_${Date.now()}_${Math.floor(Math.random() * 100)}`,
+                token: InteractableType.FoodProp,
+                entityConfig: {
+                    meshScale: new GameVector3(0.1, 0.1, 0.1),
+                },
+                offset: new GameVector3(0, 0.25, 0),
+            },
+            wearableConfig: {
+                scale: new GameVector3(1, 1, 1),
+                offset: new GameVector3(0, 0, 0.75),
+            },
+        },
+        vegetableTomatoBurger: {
+            states: {
+                '': {
+                    mesh: 'mesh/荤素汉堡.vb', // TODO: 暂时使用荤素汉堡的模型
+                    interactHint: '素番茄汉堡',
+                },
+            },
+            interactableConfig: {
+                id: () =>
+                    `vegetableTomatoBurger_${Date.now()}_${Math.floor(
+                        Math.random() * 100
+                    )}`,
                 token: InteractableType.FoodProp,
                 entityConfig: {
                     meshScale: new GameVector3(0.1, 0.1, 0.1),
