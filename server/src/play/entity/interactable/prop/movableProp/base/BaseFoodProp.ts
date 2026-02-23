@@ -18,6 +18,7 @@ import { PropMgr } from '../../../../../mgr/PropMgr';
 import type { InGamePlayer } from '../../../../player/GamePlayer';
 import { BaseMovableProp } from './BaseMovableProp';
 import type { BaseContainerProp } from './BaseContainerProp';
+import { Observer } from '../../../../../../framework/common/Observer';
 
 /**
  * 食材道具基类 / Base food prop
@@ -29,6 +30,13 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * 有限状态机 / Finite state machine
      */
     protected _fsm: FiniteStateMachine<IngredientState, FoodEvent>[] = [];
+
+    /**
+     * 状态观察者 / State observer
+     */
+    protected _state: Observer<IngredientState | null> | null = new Observer(
+        null
+    );
 
     /**
      * 状态机配置 / State machine configuration
@@ -164,11 +172,22 @@ export abstract class BaseFoodProp extends BaseMovableProp {
         }
     }
 
+    public destroy(): void {
+        super.destroy();
+        this._state?.removeAllListeners();
+        this._state = null;
+    }
+
     /**
      * 进入状态时的处理逻辑 / Logic to handle when entering a state
      * @param state 当前状态 / Current state
      */
     private onEnterState(state: IngredientState): void {
+        if (this.type.length === 1) {
+            this._state?.setSubject(state);
+        } else {
+            this._state?.setSubject(null);
+        }
         setTimeout(() => {
             if (this.entity && this.type.length) {
                 let mesh: GameModelAssets | undefined,
