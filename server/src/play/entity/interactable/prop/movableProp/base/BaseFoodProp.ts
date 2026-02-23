@@ -113,6 +113,7 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             },
             [IngredientState.BURNT]: {
                 onEnter: () => {
+                    this.onBurnt();
                     this.onEnterState(IngredientState.BURNT);
                 },
             },
@@ -264,6 +265,11 @@ export abstract class BaseFoodProp extends BaseMovableProp {
             `(FoodProp) ${this.id} onCook, current state: ${this._fsm[0].State}`
         );
     }
+
+    /**
+     * 处理烧糊事件 / Handle burnt event
+     */
+    public onBurnt(): void {}
 
     /**
      * 食物类型 / Food type
