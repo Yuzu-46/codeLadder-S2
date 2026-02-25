@@ -4,7 +4,7 @@ import { IngredientState } from '../../const/FoodConst';
 /**
  * 食物配置 / Food configuration
  */
-export const FoodConfig: IFoodConfig = {
+export default {
     ingredient: {
         bread: {
             states: {
@@ -235,4 +235,4 @@ export const FoodConfig: IFoodConfig = {
             ],
         },
     },
-};
+} as IFoodConfig;

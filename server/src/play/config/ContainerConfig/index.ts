@@ -3,7 +3,7 @@ import type { IContainerConfig } from '../../data/ContainerData';
 /**
  * 容器配置 / Container configuration
  */
-export const ContainerConfig: IContainerConfig = {
+export default {
     data: {
         plate: {
             clean: {
@@ -48,4 +48,4 @@ export const ContainerConfig: IContainerConfig = {
             },
         },
     },
-};
+} as IContainerConfig;
