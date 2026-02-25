@@ -16,12 +16,20 @@ import type {
     IPlayerCarryingPropData,
     IPropData,
 } from '../../../../../data/GamePlayerData';
+import { IngredientState } from '../../../../../const/FoodConst';
 
 /**
  * 容器道具基类 / Container prop base class
  */
 export abstract class BaseContainerProp extends BaseMovableProp {
     protected _type: ContainerType | null = null;
+
+    /**
+     * 食物道具状态监听器
+     */
+    private _foodStateListener:
+        | ((state?: IngredientState | null) => void)
+        | null = null;
 
     /**
      * 有限状态机 / Finite state machine
@@ -69,6 +77,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
                 }
             );
         }
+        this.bindEvents();
     }
 
     public onInteract(event: GameInteractEvent): void {
@@ -91,6 +100,19 @@ export abstract class BaseContainerProp extends BaseMovableProp {
             // 如果玩家没有拿着任何道具
             this.onInteractNotCarryingProp(player);
         }
+    }
+
+    /**
+     * 绑定事件 / Bind events
+     */
+    private bindEvents(): void {
+        // 监听食物道具的状态变化，如果食物道具被烧焦了，则发送污染事件给容器道具状态机
+        this._foodStateListener = (state) => {
+            if (state && state === IngredientState.BURNT) {
+                this._fsm?.send(ContainerEvent.POLLUTE);
+            }
+        };
+        this.food?.addStateListener(this._foodStateListener!);
     }
 
     /**
@@ -130,6 +152,8 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public destroy(): void {
         super.destroy();
+        this.food?.removeStateListener(this._foodStateListener!);
+        this._foodStateListener = null;
     }
 
     public wear(player: InGamePlayer) {

@@ -182,16 +182,18 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * @param listener 状态变化监听回调
      * @returns 移除监听器的函数
      */
-    public addStateListener(listener: (state?: unknown) => void): () => void {
+    public addStateListener(
+        listener: (state?: IngredientState | null) => void
+    ): () => void {
         if (!this._state) {
             throw new Error('State observer not initialized');
         }
 
-        this._state.addListener(listener);
+        this._state.addListener(listener as (state?: unknown) => void);
 
         // 返回取消订阅的函数
         return () => {
-            this._state?.removeListener(listener);
+            this._state?.removeListener(listener as (state?: unknown) => void);
         };
     }
 
@@ -199,8 +201,10 @@ export abstract class BaseFoodProp extends BaseMovableProp {
      * 移除状态监听器
      * @param listener 要移除的监听器
      */
-    public removeStateListener(listener: (state?: unknown) => void): void {
-        this._state?.removeListener(listener);
+    public removeStateListener(
+        listener: (state?: IngredientState | null) => void
+    ): void {
+        this._state?.removeListener(listener as (state?: unknown) => void);
     }
 
     /**
