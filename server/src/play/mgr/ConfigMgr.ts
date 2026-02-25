@@ -15,9 +15,9 @@ import type {
 import type { IMovablePropData } from '../data/MovablePropData';
 import type { IContainerStateConfig } from '../data/ContainerData';
 import type { IFoodStateConfig, IRecipeConfig } from '../data/FoodData';
-import { SceneConfig } from '../config/SceneConfig';
-import { InteractableConfig } from '../config/InteractableConfig';
-import { MovablePropConfig } from '../config/MovablePropConfig';
+import SceneConfig from '../config/SceneConfig';
+import InteractableConfig from '../config/InteractableConfig';
+import MovablePropConfig from '../config/MovablePropConfig';
 import ContainerConfig from '../config/ContainerConfig';
 import FoodConfig from '../config/FoodConfig';
 

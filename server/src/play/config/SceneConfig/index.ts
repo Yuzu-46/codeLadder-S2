@@ -6,7 +6,7 @@ import hamburgerRestaurant from './HamburgerRestaurant';
 /**
  * 场景配置 / Scene configuration
  */
-export const SceneConfig: ISceneConfig<SceneType> = {
+const SceneConfig: ISceneConfig<SceneType> = {
     data: {
         main: null as unknown as ISceneData,
         codeLadderS2,
@@ -20,3 +20,5 @@ export const SceneConfig: ISceneConfig<SceneType> = {
 export const SceneList = Object.values(SceneConfig.data).filter(
     (scene) => !!scene
 );
+
+export default SceneConfig;

@@ -5,10 +5,10 @@ import codeLadderS2 from './CodeLadderS2';
 /**
  * 可交互对象配置 / Interactable object configuration
  */
-export const InteractableConfig: IInteractableConfig = {
+export default {
     data: {
         main,
         codeLadderS2,
         hamburgerRestaurant: [],
     },
-};
+} as IInteractableConfig;

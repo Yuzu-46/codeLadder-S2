@@ -7,7 +7,7 @@ import { InteractableType } from '../../const/TokenConst';
 /**
  * 可移动道具配置 / Movable prop configuration
  */
-export const MovablePropConfig: IMovablePropConfig = {
+export default {
     data: {
         plate: {
             states: {
@@ -382,4 +382,4 @@ export const MovablePropConfig: IMovablePropConfig = {
             },
         },
     },
-};
+} as IMovablePropConfig;
