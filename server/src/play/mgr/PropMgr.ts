@@ -20,7 +20,6 @@ import type { BaseContainerProp } from '../entity/interactable/prop/movableProp/
 import type { BaseFoodProp } from '../entity/interactable/prop/movableProp/base/BaseFoodProp';
 import { InteractableMgr } from './InteractableMgr';
 import { PropBindingMgr } from './PropBindingMgr';
-import { FoodConfig } from '../config/FoodConfig';
 import type { Interactable } from '../entity/interactable/base/Interactable';
 
 /**
@@ -103,7 +102,7 @@ export class PropMgr extends Singleton<PropMgr>() {
         ingredients: IPropData<IngredientType, IngredientState>[]
     ): FoodType | null {
         // 遍历所有配方
-        for (const [foodType, { recipe }] of Object.entries(FoodConfig.food)) {
+        for (const [foodType, recipe] of this._configMgr.getAllFoodConfig()) {
             //TODO: 优化
             if (this.canCreateRecipe(recipe, ingredients)) {
                 return foodType as FoodType;

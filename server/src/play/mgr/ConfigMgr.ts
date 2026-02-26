@@ -191,4 +191,11 @@ export class ConfigMgr extends Singleton<ConfigMgr>() {
     public getFoodConfig(type: FoodType): IRecipeConfig[] | undefined {
         return this._foodConfigs.get(type);
     }
+
+    /**
+     * 获取所有食物配置 / Get all food configurations
+     */
+    public getAllFoodConfig(): [FoodType, IRecipeConfig[]][] {
+        return [...this._foodConfigs];
+    }
 }
