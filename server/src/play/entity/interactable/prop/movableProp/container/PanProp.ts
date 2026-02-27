@@ -4,6 +4,7 @@ import type { IContainerPropConfig } from '../../../../../data/InteractableData'
 import { BaseContainerProp } from '../base/BaseContainerProp';
 import type { ContainerType } from '../../../../../const/ContainerConst';
 import { PanPotInteractableMixin } from './mixins/PanPotInteractableMixin';
+import { ConfigMgr } from '../../../../../mgr/ConfigMgr';
 
 /**
  * 煎锅道具 / Pan prop
@@ -22,7 +23,12 @@ export class PanProp extends PanPotInteractableMixin(BaseContainerProp) {
      * @param tick
      */
     public cook(tick: number): void {
-        if (tick % 5 === 0) {
+        if (
+            tick % 5 === 0 &&
+            this._fsm &&
+            ConfigMgr.instance.getContainerConfig(this._type, this._fsm?.State)
+                ?.canCook
+        ) {
             // 每五帧执行一次
             this.food?.onCook();
         }
