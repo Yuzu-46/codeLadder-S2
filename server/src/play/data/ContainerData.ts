@@ -16,6 +16,7 @@ export interface IContainerStateConfig {
 
     /**
      * 是否可以放在桌子上 / Can be placed on table
+     * @deprecated 暂时无用
      */
     canBePlacedOnTable: boolean;
 
@@ -23,6 +24,11 @@ export interface IContainerStateConfig {
      * 是否可以放在灶台上 / Can be placed on stove
      */
     canBePlacedOnStove: boolean;
+
+    /**
+     * 是否可以烹饪 / Can cook
+     */
+    canCook: boolean;
 }
 
 /**
