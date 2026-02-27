@@ -17,6 +17,9 @@ import type {
     IPropData,
 } from '../../../../../data/GamePlayerData';
 import { IngredientState } from '../../../../../const/FoodConst';
+import type { IPropBindingEventData } from '../../../../../data/EventData';
+import { EventEmitter } from '../../../../../../framework/common/EventEmitter';
+import { PropEvent } from '../../../../../const/EventConst';
 
 /**
  * 容器道具基类 / Container prop base class
@@ -24,12 +27,14 @@ import { IngredientState } from '../../../../../const/FoodConst';
 export abstract class BaseContainerProp extends BaseMovableProp {
     protected _type: ContainerType | null = null;
 
-    /**
-     * 食物道具状态监听器
-     */
-    private _foodStateListener:
-        | ((state?: IngredientState | null) => void)
+    /** 绑定数据更新处理函数 */
+    private _bindingUpdateHandler:
+        | ((payload?: IPropBindingEventData) => void)
         | null = null;
+    /**
+     * 移除食物状态监听器
+     */
+    private _removeFoodStateListener?: () => void;
 
     /**
      * 有限状态机 / Finite state machine
@@ -106,13 +111,43 @@ export abstract class BaseContainerProp extends BaseMovableProp {
      * 绑定事件 / Bind events
      */
     private bindEvents(): void {
-        // 监听食物道具的状态变化，如果食物道具被烧焦了，则发送污染事件给容器道具状态机
-        this._foodStateListener = (state) => {
-            if (state && state === IngredientState.BURNT) {
-                this._fsm?.send(ContainerEvent.POLLUTE);
-            }
-        };
-        this.food?.addStateListener(this._foodStateListener!);
+        // 监听绑定数据更新事件
+        this._bindingUpdateHandler = this.onPropBindingUpdate.bind(this);
+        EventEmitter.instance.on<IPropBindingEventData>(
+            PropEvent.BindingUpdate,
+            this._bindingUpdateHandler
+        );
+    }
+
+    /**
+     * 处理道具绑定数据更新事件 / Handle prop binding data update event
+     * @param payload - 道具绑定数据更新事件参数 / Prop binding data update event payload
+     */
+    private onPropBindingUpdate(payload?: IPropBindingEventData): void {
+        if (payload && payload.data.dynamicContainerId === this.id) {
+            this._removeFoodStateListener?.();
+            // 监听食物道具的状态变化，如果食物道具被烧焦了，则发送污染事件给容器道具状态机
+            const food = payload.data.foodId
+                ? (this.getInteractable(payload.data.foodId) as BaseFoodProp) ||
+                  null
+                : null;
+            this._removeFoodStateListener = food?.addStateListener((state) => {
+                if (state && state === IngredientState.BURNT) {
+                    this._fsm?.send(ContainerEvent.POLLUTE);
+                }
+            });
+        }
+    }
+
+    private unbindEvents(): void {
+        if (this._bindingUpdateHandler) {
+            EventEmitter.instance.off<IPropBindingEventData>(
+                PropEvent.BindingUpdate,
+                this._bindingUpdateHandler
+            );
+        }
+
+        this._removeFoodStateListener?.();
     }
 
     /**
@@ -152,8 +187,7 @@ export abstract class BaseContainerProp extends BaseMovableProp {
 
     public destroy(): void {
         super.destroy();
-        this.food?.removeStateListener(this._foodStateListener!);
-        this._foodStateListener = null;
+        this.unbindEvents();
     }
 
     public wear(player: InGamePlayer) {
