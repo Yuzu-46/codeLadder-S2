@@ -1,6 +1,7 @@
 import type { IngredientState, IngredientType } from '../const/FoodConst';
 import type { SceneType } from '../const/SceneConst';
 import type { ContainerState } from '../const/ContainerConst';
+import type { InteractableType } from '../const/TokenConst';
 
 /**
  * 可交互对象数据接口 / Interactable object data interface
@@ -13,7 +14,7 @@ export interface IInteractableData {
     /**
      * 工厂标识
      */
-    token: string;
+    token: InteractableType;
     /**
      * 实体配置
      */
@@ -67,6 +68,21 @@ export interface IFoodBoxPropConfig extends IInteractableData {
      * 食材类型
      */
     foodType: IngredientType;
+}
+
+/**
+ * 洗碗池配置接口 / Sink prop configuration interface
+ */
+export interface ISinkPropConfig extends IInteractableData {
+    /**
+     * 洗涤位置 / Washing position
+     */
+    washPosition: GameVector3;
+
+    /**
+     * 干净餐具位置 / Clean dish position
+     */
+    cleanPosition: GameVector3;
 }
 
 /**
