@@ -22,7 +22,7 @@ export class BinProp extends BaseImmovableProp {
             event.entity.player.userId
         ) as InGamePlayer | undefined;
         if (player) {
-            player.dropFoodProp();
+            player.removeFoodProp();
         }
     }
 }

@@ -7,6 +7,8 @@ import { ContainerState } from '../../../../const/ContainerConst';
 import { ConfigMgr } from '../../../../mgr/ConfigMgr';
 import type { IMovablePropData } from '../../../../data/MovablePropData';
 import { PropMgr } from '../../../../mgr/PropMgr';
+import { PlayerMgr } from '../../../../mgr/PlayerMgr';
+import type { InGamePlayer } from '../../../player/GamePlayer';
 
 /**
  * 洗碗池道具 / Sink Prop
@@ -46,6 +48,7 @@ export class SinkProp extends BaseImmovableProp {
      * @param position 容器位置 / Container position
      */
     private createContainerEntity(type: ContainerType, position: GameVector3) {
+        this._washingContainerType = type;
         const propConfig = ConfigMgr.instance.getMovablePropConfig(
             type
         ) as IMovablePropData<ContainerState>;
@@ -63,6 +66,7 @@ export class SinkProp extends BaseImmovableProp {
      * 销毁容器实体 / Destroy container entity
      */
     private destroyContainerEntity() {
+        this._washingContainerType = null;
         this.entity?.destroy();
         this.entity = null;
     }
@@ -83,5 +87,26 @@ export class SinkProp extends BaseImmovableProp {
             },
             position
         );
+    }
+
+    public onInteract(event: GameInteractEvent): void {
+        const player = PlayerMgr.instance.getPlayer(
+            event.entity.player.userId
+        ) as InGamePlayer | undefined;
+        if (player) {
+            const propData = player.carryingProp;
+            if (
+                propData.container?.state === ContainerState.DIRTY &&
+                propData.foods.length === 0 &&
+                !this.entity &&
+                this._washPosition
+            ) {
+                player.removeContainerProp();
+                this.createContainerEntity(
+                    propData.container.type,
+                    this._washPosition!
+                );
+            }
+        }
     }
 }
