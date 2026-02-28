@@ -2,7 +2,6 @@ import { BaseImmovableProp } from './BaseImmovableProp';
 import { FactoryToken } from '@src/framework/common/factory/AbstractFactory';
 import { InteractableType } from '@src/play/const/TokenConst';
 import type { IInteractableData } from '../../../../data/InteractableData';
-import { PlayerMgr } from '../../../../mgr/PlayerMgr';
 import type { InGamePlayer } from '../../../player/GamePlayer';
 import { PropBindingMgr } from '../../../../mgr/PropBindingMgr';
 
