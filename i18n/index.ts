@@ -7,40 +7,41 @@
  * @link https://www.i18next.com/
  */
 import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import en_Translation from './res/en/translation.json';
 import zhCN_Translation from './res/zh-CN/translation.json';
 
 const getNavigatorLanguage = () => {
-  if (
-    // @ts-ignore
-    typeof navigator !== 'undefined' &&
-    // @ts-ignore
-    typeof navigator.language === 'string' &&
-    // @ts-ignore
-    navigator.language
-  ) {
-    // @ts-ignore
-    return navigator.language;
-  }
-  return 'zh-CN';
+    if (
+        // @ts-ignore
+        typeof navigator !== 'undefined' &&
+        // @ts-ignore
+        typeof navigator.language === 'string' &&
+        // @ts-ignore
+        navigator.language
+    ) {
+        // @ts-ignore
+        return navigator.language;
+    }
+    return 'zh-CN';
 };
 
-i18n.init({
-  lng: getNavigatorLanguage(),
-  fallbackLng: 'zh-CN',
-  debug: false,
-  defaultNS: 'translation',
-  resources: {
-    en: {
-      translation: en_Translation,
+i18n.use(initReactI18next).init({
+    lng: getNavigatorLanguage(),
+    fallbackLng: 'zh-CN',
+    debug: false,
+    defaultNS: 'translation',
+    resources: {
+        en: {
+            translation: en_Translation,
+        },
+        'zh-CN': {
+            translation: zhCN_Translation,
+        },
     },
-    'zh-CN': {
-      translation: zhCN_Translation,
+    interpolation: {
+        escapeValue: false,
     },
-  },
-  interpolation: {
-    escapeValue: false,
-  },
 });
 
 /**
