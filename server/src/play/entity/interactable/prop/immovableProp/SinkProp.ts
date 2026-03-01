@@ -106,6 +106,16 @@ export class SinkProp extends BaseImmovableProp {
                     propData.container.type,
                     this._washPosition!
                 );
+
+                setTimeout(() => {
+                    if (this._cleanPosition && this._washingContainerType) {
+                        this.createWashedProp(
+                            this._washingContainerType,
+                            this._cleanPosition
+                        );
+                        this.destroyContainerEntity();
+                    }
+                }, 5000);
             }
         }
     }
