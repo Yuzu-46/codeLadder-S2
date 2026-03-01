@@ -2,8 +2,24 @@ import { factory } from '../../framework/common/factory/AbstractFactory';
 import { Singleton } from '../../framework/common/Singleton';
 import { InteractableType } from '../const/TokenConst';
 import type { IInteractableData } from '../data/InteractableData';
-import { InteractableConfig } from '../const/InteractableConst';
+import { ConfigMgr } from './ConfigMgr';
 import type { Interactable } from '../entity/interactable/base/Interactable';
+import type { SceneType } from '../const/SceneConst';
+import { PortalNpc } from '../entity/interactable/npc/PortalNpc';
+import {
+    BinProp,
+    FoodBoxProp,
+    StoveProp,
+    TableProp,
+    TablePropWithChoppingBoard,
+    SinkProp,
+} from '../entity/interactable/prop/immovableProp';
+import {
+    PlateProp,
+    PanProp,
+    PotProp,
+    FoodProp,
+} from '../entity/interactable/prop/movableProp';
 
 /**
  * 可交互对象管理器 / Interactable manager
@@ -19,12 +35,16 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
      * 启动 / Start
      * @param id 地图ID / Map ID
      */
-    public start(id: number | string): void {
+    public start(mapId: string): void {
         this.registerInteractables();
-        if (id === 'main') {
-            InteractableConfig.data.forEach((config) => {
-                this.createInteractable(config);
-            });
+        try {
+            ConfigMgr.instance
+                .getInteractableConfig(mapId as SceneType)
+                .forEach((config) => {
+                    this.createInteractable(config);
+                });
+        } catch (e) {
+            console.warn(`(Server) InteractableMgr ${e}, mapId:${mapId}`);
         }
         this.bindInteractEvents();
     }
@@ -32,7 +52,86 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
     /**
      * 注册可交互对象 / Register interactable objects
      */
-    public registerInteractables(): void {}
+    public registerInteractables(): void {
+        factory.registerByToken(
+            InteractableType.PortalNpc as string,
+            PortalNpc,
+            {
+                singleton: false,
+                token: InteractableType.PortalNpc,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.TableProp as string,
+            TableProp,
+            {
+                singleton: false,
+                token: InteractableType.TableProp,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.TablePropWithChoppingBoard as string,
+            TablePropWithChoppingBoard,
+            {
+                singleton: false,
+                token: InteractableType.TablePropWithChoppingBoard,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.StoveProp as string,
+            StoveProp,
+            {
+                singleton: false,
+                token: InteractableType.StoveProp,
+            }
+        );
+
+        factory.registerByToken(
+            InteractableType.FoodBoxProp as string,
+            FoodBoxProp,
+            {
+                singleton: false,
+                token: InteractableType.FoodBoxProp,
+            }
+        );
+
+        factory.registerByToken(InteractableType.BinProp as string, BinProp, {
+            singleton: false,
+            token: InteractableType.BinProp,
+        });
+
+        factory.registerByToken(InteractableType.SinkProp as string, SinkProp, {
+            singleton: false,
+            token: InteractableType.SinkProp,
+        });
+
+        factory.registerByToken(
+            InteractableType.PlateProp as string,
+            PlateProp,
+            {
+                singleton: false,
+                token: InteractableType.PlateProp,
+            }
+        );
+
+        factory.registerByToken(InteractableType.PanProp as string, PanProp, {
+            singleton: false,
+            token: InteractableType.PanProp,
+        });
+
+        factory.registerByToken(InteractableType.FoodProp as string, FoodProp, {
+            singleton: false,
+            token: InteractableType.FoodProp,
+        });
+
+        factory.registerByToken(InteractableType.PotProp as string, PotProp, {
+            singleton: false,
+            token: InteractableType.PotProp,
+        });
+    }
 
     /**
      * 绑定交互事件 / Bind interact events
@@ -47,6 +146,8 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         const interactable = this._interactableMap.get(event.targetEntity.id);
         if (interactable) {
             interactable.onInteract(event);
+        } else {
+            console.warn('(Server) InteractableMgr no interactable found');
         }
     }
 
@@ -75,8 +176,10 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         const interactable = factory.createByToken(
             config.token
         ) as Interactable;
-        this.addInteractable(config.id, interactable);
-        interactable.start(config);
+        const id: string =
+            typeof config.id === 'string' ? config.id : config.id();
+        this.addInteractable(id, interactable);
+        interactable.start({ ...config, id });
         return interactable;
     }
 
@@ -99,5 +202,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
      */
     public getInteractable(id: string): Interactable | undefined {
         return this._interactableMap.get(id);
+    }
+
+    /**
+     * 更新所有可交互对象 / Update all interactables
+     * @param tick 游戏时间戳 / Game timestamp
+     */
+    public update(tick: number): void {
+        for (const interactable of this._interactableMap.values()) {
+            interactable.update(tick);
+        }
     }
 }

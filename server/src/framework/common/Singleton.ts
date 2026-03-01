@@ -4,7 +4,6 @@
  * @param T
  * @returns
  */
-
 export function Singleton<T>() {
     class Singleton {
         protected constructor() {}

@@ -135,7 +135,7 @@ export class BasePlayer implements IBasePlayer {
     /**
      * 玩家状态 / Player state
      */
-    public _gameState: PlayerGameState = PlayerGameState.SUSPECTED_AFK;
+    private _gameState: PlayerGameState = PlayerGameState.SUSPECTED_AFK;
 
     /**
      * 按钮点击事件映射 / Button click event mapping

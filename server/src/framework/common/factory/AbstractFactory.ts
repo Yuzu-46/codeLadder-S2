@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import 'reflect-metadata';
+import 'reflect-metadata';
 
 // 元数据键定义 / Metadata key definitions
 const METADATA_KEYS = {
