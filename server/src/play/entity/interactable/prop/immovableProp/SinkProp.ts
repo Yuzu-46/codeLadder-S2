@@ -59,6 +59,7 @@ export class SinkProp extends BaseImmovableProp {
             ...config.entityConfig,
             mesh: mesh,
             position: config.offset?.add(position) || position,
+            fixed: true,
         });
     }
 

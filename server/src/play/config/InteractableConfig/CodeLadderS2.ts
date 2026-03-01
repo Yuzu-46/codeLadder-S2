@@ -224,8 +224,8 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(19, 1.35, 17),
             meshScale: new GameVector3(0.125, 0.125, 0.125),
         },
-        washPosition: new GameVector3(19, 1.35, 16),
-        cleanPosition: new GameVector3(19, 1.35, 18),
+        washPosition: new GameVector3(18, 1.35, 17),
+        cleanPosition: new GameVector3(20, 1.35, 17),
     } as ISinkPropConfig,
     ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
