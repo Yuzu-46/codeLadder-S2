@@ -12,6 +12,7 @@ import {
     StoveProp,
     TableProp,
     TablePropWithChoppingBoard,
+    SinkProp,
 } from '../entity/interactable/prop/immovableProp';
 import {
     PlateProp,
@@ -100,6 +101,11 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         factory.registerByToken(InteractableType.BinProp as string, BinProp, {
             singleton: false,
             token: InteractableType.BinProp,
+        });
+
+        factory.registerByToken(InteractableType.SinkProp as string, SinkProp, {
+            singleton: false,
+            token: InteractableType.SinkProp,
         });
 
         factory.registerByToken(

@@ -215,6 +215,15 @@ const codeLadderS2: IInteractableData[] = [
             meshScale: new GameVector3(0.15, 0.15, 0.15),
         },
     },
+    {
+        id: 'sink',
+        token: InteractableType.SinkProp,
+        entityConfig: {
+            mesh: 'mesh/洗碗池.vb',
+            position: new GameVector3(19, 1.35, 17),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+        },
+    },
     ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
