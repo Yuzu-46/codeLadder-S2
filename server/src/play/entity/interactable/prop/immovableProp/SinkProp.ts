@@ -55,7 +55,7 @@ export class SinkProp extends BaseImmovableProp {
         const config = propConfig.interactableConfig;
         const { mesh } = propConfig.states[ContainerState.DIRTY] || {};
 
-        this.entity = world.createEntity({
+        this._propInSink = world.createEntity({
             ...config.entityConfig,
             mesh: mesh,
             position: config.offset?.add(position) || position,
@@ -67,8 +67,8 @@ export class SinkProp extends BaseImmovableProp {
      */
     private destroyContainerEntity() {
         this._washingContainerType = null;
-        this.entity?.destroy();
-        this.entity = null;
+        this._propInSink?.destroy();
+        this._propInSink = null;
     }
 
     /**
@@ -90,6 +90,7 @@ export class SinkProp extends BaseImmovableProp {
     }
 
     public onInteract(event: GameInteractEvent): void {
+        console.log(`(Server) Interactable ${this.id} interact`);
         const player = PlayerMgr.instance.getPlayer(
             event.entity.player.userId
         ) as InGamePlayer | undefined;
@@ -98,14 +99,14 @@ export class SinkProp extends BaseImmovableProp {
             if (
                 propData.container?.state === ContainerState.DIRTY &&
                 propData.foods.length === 0 &&
-                !this.entity &&
+                !this._propInSink &&
                 this._washPosition
             ) {
-                player.removeContainerProp();
                 this.createContainerEntity(
                     propData.container.type,
-                    this._washPosition!
+                    this._washPosition
                 );
+                player.removeContainerProp();
 
                 setTimeout(() => {
                     if (this._cleanPosition && this._washingContainerType) {

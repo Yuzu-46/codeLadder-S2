@@ -2,6 +2,7 @@ import type {
     IContainerPropConfig,
     IFoodBoxPropConfig,
     IInteractableData,
+    ISinkPropConfig,
 } from '../../data/InteractableData';
 import { InteractableType } from '../../const/TokenConst';
 import type { IngredientType } from '../../const/FoodConst';
@@ -223,7 +224,9 @@ const codeLadderS2: IInteractableData[] = [
             position: new GameVector3(19, 1.35, 17),
             meshScale: new GameVector3(0.125, 0.125, 0.125),
         },
-    },
+        washPosition: new GameVector3(19, 1.35, 16),
+        cleanPosition: new GameVector3(19, 1.35, 18),
+    } as ISinkPropConfig,
     ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
