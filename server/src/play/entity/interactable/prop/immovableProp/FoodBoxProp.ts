@@ -10,7 +10,7 @@ import {
 } from '../../../../const/FoodConst';
 
 /**
- * 无限食材箱 / Food Box Prop
+ * 无限食材箱道具 / Food Box Prop
  */
 @FactoryToken(InteractableType.FoodBoxProp)
 export class FoodBoxProp extends BaseImmovableProp {

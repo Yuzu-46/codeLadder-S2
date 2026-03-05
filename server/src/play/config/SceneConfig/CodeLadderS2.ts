@@ -34,7 +34,7 @@ const codeLadderS2: ISceneData = {
             end: [32, 47],
             voxelId: 137,
         },
-        // 出餐口
+        // 送餐口
         {
             start: [51, 30],
             end: [51, 35],
