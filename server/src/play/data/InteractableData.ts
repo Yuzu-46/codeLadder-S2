@@ -86,6 +86,16 @@ export interface ISinkPropConfig extends IInteractableData {
 }
 
 /**
+ * 送餐口配置接口 / Delivery window configuration interface
+ */
+export interface IDeliveryWindowPropConfig extends IInteractableData {
+    /**
+     * 返回盘子位置 / Return plate position
+     */
+    returnPlatePosition: GameVector3;
+}
+
+/**
  * 容器配置接口 / Container configuration interface
  */
 export interface IContainerPropConfig extends IInteractableData {
