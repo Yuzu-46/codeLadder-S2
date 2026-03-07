@@ -23,12 +23,12 @@ export class DeliveryWindowProp extends BaseImmovableProp {
     }
 
     public onInteract(event: GameInteractEvent): void {
+        console.log('(Server) DeliveryWindowProp interact with id ', this.id);
         const player = PlayerMgr.instance.getPlayer(event.entity.player.userId);
         if (player && player instanceof InGamePlayer) {
             if (
                 this._returnPlatePosition &&
-                player.carryingProp.container?.type === 'plate' &&
-                player.carryingProp.container.state === 'clean'
+                player.carryingProp.container?.type === 'plate'
             ) {
                 player.removeContainerProp();
                 player.removeFoodProp();
