@@ -1,5 +1,6 @@
 import type {
     IContainerPropConfig,
+    IDeliveryWindowPropConfig,
     IFoodBoxPropConfig,
     IInteractableData,
     ISinkPropConfig,
@@ -184,6 +185,39 @@ const codeLadderS2: IInteractableData[] = [
             ),
         },
     })),
+    {
+        id: 'bin',
+        token: InteractableType.BinProp,
+        entityConfig: {
+            mesh: 'mesh/垃圾桶.vb',
+            position: new GameVector3(14, 1.8, 45),
+            meshScale: new GameVector3(0.15, 0.15, 0.15),
+        },
+    },
+    {
+        id: 'sink',
+        token: InteractableType.SinkProp,
+        entityConfig: {
+            mesh: 'mesh/洗碗池.vb',
+            position: new GameVector3(21, 1.35, 19),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+        },
+        washPosition: new GameVector3(20, 1.35, 19),
+        cleanPosition: new GameVector3(22, 1.35, 19),
+    } as ISinkPropConfig,
+    {
+        id: 'deliveryWindow',
+        token: InteractableType.DeliveryWindowProp,
+        entityConfig: {
+            mesh: 'mesh/传送带.vb',
+            position: new GameVector3(51, -1.5, 32),
+            meshScale: new GameVector3(0.15, 0.15, 0.15),
+            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
+                Math.PI / 2
+            ),
+        },
+        returnPlatePosition: new GameVector3(51, 1.5, 32),
+    } as IDeliveryWindowPropConfig,
     ...stovePositions.slice(0, 3).map<IContainerPropConfig>((position) => ({
         id: `pan_${position.x}_${position.z}`,
         token: InteractableType.PanProp,
@@ -207,26 +241,6 @@ const codeLadderS2: IInteractableData[] = [
         state: ContainerState.CLEAN,
         bindStaticContainerId: `stove_${position.x}_${position.z}`,
     })),
-    {
-        id: 'bin',
-        token: InteractableType.BinProp,
-        entityConfig: {
-            mesh: 'mesh/垃圾桶.vb',
-            position: new GameVector3(14, 1.8, 45),
-            meshScale: new GameVector3(0.15, 0.15, 0.15),
-        },
-    },
-    {
-        id: 'sink',
-        token: InteractableType.SinkProp,
-        entityConfig: {
-            mesh: 'mesh/洗碗池.vb',
-            position: new GameVector3(21, 1.35, 19),
-            meshScale: new GameVector3(0.125, 0.125, 0.125),
-        },
-        washPosition: new GameVector3(20, 1.35, 19),
-        cleanPosition: new GameVector3(22, 1.35, 19),
-    } as ISinkPropConfig,
     ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
