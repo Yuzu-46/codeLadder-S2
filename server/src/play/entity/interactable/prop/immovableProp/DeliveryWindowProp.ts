@@ -16,10 +16,15 @@ export class DeliveryWindowProp extends BaseImmovableProp {
      * 返回盘子位置 / Return plate position
      */
     private _returnPlatePosition: GameVector3 | null = null;
+    /**
+     * 返回盘子是否变脏 / Return plate whether dirty
+     */
+    private _isReturnPlateDirty: boolean = false;
 
     public start(config: IDeliveryWindowPropConfig): void {
         super.start(config);
         this._returnPlatePosition = config.returnPlatePosition;
+        this._isReturnPlateDirty = config.isReturnPlateDirty;
     }
 
     public onInteract(event: GameInteractEvent): void {
@@ -37,7 +42,9 @@ export class DeliveryWindowProp extends BaseImmovableProp {
                         {
                             container: {
                                 type: 'plate',
-                                state: ContainerState.CLEAN,
+                                state: this._isReturnPlateDirty
+                                    ? ContainerState.DIRTY
+                                    : ContainerState.CLEAN,
                             },
                             foods: [],
                         },

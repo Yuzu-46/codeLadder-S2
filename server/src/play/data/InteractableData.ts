@@ -93,6 +93,10 @@ export interface IDeliveryWindowPropConfig extends IInteractableData {
      * 返回盘子位置 / Return plate position
      */
     returnPlatePosition: GameVector3;
+    /**
+     * 返回盘子是否变脏 / Return plate whether dirty
+     */
+    isReturnPlateDirty: boolean;
 }
 
 /**
