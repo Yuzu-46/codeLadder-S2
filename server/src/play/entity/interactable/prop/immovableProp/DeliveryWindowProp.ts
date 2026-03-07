@@ -2,6 +2,10 @@ import { BaseImmovableProp } from './BaseImmovableProp';
 import { FactoryToken } from '../../../../../framework/common/factory/AbstractFactory';
 import { InteractableType } from '../../../../const/TokenConst';
 import type { IDeliveryWindowPropConfig } from '../../../../data/InteractableData';
+import { PlayerMgr } from '../../../../mgr/PlayerMgr';
+import { InGamePlayer } from '../../../player/GamePlayer';
+import { PropMgr } from '../../../../mgr/PropMgr';
+import { ContainerState } from '../../../../const/ContainerConst';
 
 /**
  * 送餐口道具 / Delivery window prop
@@ -16,5 +20,31 @@ export class DeliveryWindowProp extends BaseImmovableProp {
     public start(config: IDeliveryWindowPropConfig): void {
         super.start(config);
         this._returnPlatePosition = config.returnPlatePosition;
+    }
+
+    public onInteract(event: GameInteractEvent): void {
+        const player = PlayerMgr.instance.getPlayer(event.entity.player.userId);
+        if (player && player instanceof InGamePlayer) {
+            if (
+                this._returnPlatePosition &&
+                player.carryingProp.container?.type === 'plate' &&
+                player.carryingProp.container.state === 'clean'
+            ) {
+                player.removeContainerProp();
+                player.removeFoodProp();
+                setTimeout(() => {
+                    PropMgr.instance.placeProp(
+                        {
+                            container: {
+                                type: 'plate',
+                                state: ContainerState.CLEAN,
+                            },
+                            foods: [],
+                        },
+                        this._returnPlatePosition!
+                    );
+                }, 5000);
+            }
+        }
     }
 }
