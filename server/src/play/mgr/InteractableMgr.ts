@@ -13,6 +13,7 @@ import {
     TableProp,
     TablePropWithChoppingBoard,
     SinkProp,
+    DeliveryWindowProp,
 } from '../entity/interactable/prop/immovableProp';
 import {
     PlateProp,
@@ -109,6 +110,15 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
         });
 
         factory.registerByToken(
+            InteractableType.DeliveryWindowProp as string,
+            DeliveryWindowProp,
+            {
+                singleton: false,
+                token: InteractableType.DeliveryWindowProp,
+            }
+        );
+
+        factory.registerByToken(
             InteractableType.PlateProp as string,
             PlateProp,
             {
@@ -122,14 +132,14 @@ export class InteractableMgr extends Singleton<InteractableMgr>() {
             token: InteractableType.PanProp,
         });
 
-        factory.registerByToken(InteractableType.FoodProp as string, FoodProp, {
-            singleton: false,
-            token: InteractableType.FoodProp,
-        });
-
         factory.registerByToken(InteractableType.PotProp as string, PotProp, {
             singleton: false,
             token: InteractableType.PotProp,
+        });
+
+        factory.registerByToken(InteractableType.FoodProp as string, FoodProp, {
+            singleton: false,
+            token: InteractableType.FoodProp,
         });
     }
 
