@@ -216,7 +216,7 @@ const codeLadderS2: IInteractableData[] = [
                 Math.PI / 2
             ),
         },
-        returnPlatePosition: new GameVector3(51, 1.5, 32),
+        returnPlatePosition: new GameVector3(50, 1.5, 35),
     } as IDeliveryWindowPropConfig,
     ...stovePositions.slice(0, 3).map<IContainerPropConfig>((position) => ({
         id: `pan_${position.x}_${position.z}`,
