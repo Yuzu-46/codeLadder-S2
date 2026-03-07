@@ -37,7 +37,7 @@ const codeLadderS2: ISceneData = {
         // 送餐口
         {
             start: [51, 30],
-            end: [51, 35],
+            end: [51, 33],
             voxelId: 650,
         },
     ],
@@ -65,6 +65,14 @@ const codeLadderS2: ISceneData = {
             meshScale: new GameVector3(0.04, 0.04, 0.04),
             meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(-0.5),
         })),
+        // 不交互的桌子
+        {
+            id: 'table_1',
+            mesh: 'mesh/桌子1.vb',
+            position: new GameVector3(50, 1.5, 35),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+            collides: true,
+        },
     ],
 };
 
