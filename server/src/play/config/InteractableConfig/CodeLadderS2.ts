@@ -210,12 +210,13 @@ const codeLadderS2: IInteractableData[] = [
         token: InteractableType.DeliveryWindowProp,
         entityConfig: {
             mesh: 'mesh/传送带.vb',
-            position: new GameVector3(51, -1.5, 32),
+            position: new GameVector3(51, 1.1, 32),
             meshScale: new GameVector3(0.15, 0.15, 0.15),
             meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
                 Math.PI / 2
             ),
         },
+        interactRadius: 3,
         returnPlatePosition: new GameVector3(50, 1.5, 35),
     } as IDeliveryWindowPropConfig,
     ...stovePositions.slice(0, 3).map<IContainerPropConfig>((position) => ({
