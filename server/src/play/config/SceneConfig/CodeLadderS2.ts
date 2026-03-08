@@ -15,38 +15,38 @@ const codeLadderS2: ISceneData = {
     terrainMap: [
         // 围墙
         {
-            start: [10, 15],
-            end: [49, 46],
+            start: [12, 17],
+            end: [51, 48],
             voxelId: 137,
         },
         {
-            start: [11, 16],
-            end: [48, 45],
+            start: [13, 18],
+            end: [50, 47],
             voxelId: 0,
         },
         {
-            start: [29, 16],
-            end: [30, 25],
+            start: [31, 18],
+            end: [32, 27],
             voxelId: 137,
         },
         {
-            start: [29, 34],
-            end: [30, 45],
+            start: [31, 36],
+            end: [32, 47],
             voxelId: 137,
         },
-        // 出餐口
+        // 送餐口
         {
-            start: [49, 28],
-            end: [49, 33],
+            start: [51, 30],
+            end: [51, 33],
             voxelId: 650,
         },
     ],
     environmentEntities: [
         // 切菜板
         ...[
-            [16, 45],
-            [20, 45],
-            [24, 45],
+            [18, 47],
+            [22, 47],
+            [26, 47],
         ].map<Partial<GameEntityConfig>>((pos) => ({
             id: 'choppingBoard_1',
             mesh: 'mesh/砧板.vb',
@@ -55,9 +55,9 @@ const codeLadderS2: ISceneData = {
         })),
         // 菜刀
         ...[
-            [15.5, 45],
-            [19.5, 45],
-            [23.5, 45],
+            [17.5, 47],
+            [21.5, 47],
+            [25.5, 47],
         ].map<Partial<GameEntityConfig>>((pos) => ({
             id: 'knife_1',
             mesh: 'mesh/菜刀.vb',
@@ -65,6 +65,14 @@ const codeLadderS2: ISceneData = {
             meshScale: new GameVector3(0.04, 0.04, 0.04),
             meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateZ(-0.5),
         })),
+        // 不交互的桌子
+        {
+            id: 'table_1',
+            mesh: 'mesh/桌子1.vb',
+            position: new GameVector3(50, 1.5, 35),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+            collides: true,
+        },
     ],
 };
 

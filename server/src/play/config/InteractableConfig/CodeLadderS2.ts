@@ -1,5 +1,6 @@
 import type {
     IContainerPropConfig,
+    IDeliveryWindowPropConfig,
     IFoodBoxPropConfig,
     IInteractableData,
     ISinkPropConfig,
@@ -14,55 +15,55 @@ import { ContainerState } from '../../const/ContainerConst';
  * @property z - z坐标 / z coordinate
  */
 const tablePositions: { x: number; z: number }[] = [
-    // z=17的桌子位置，并排除在墙里或者和其他道具重复的
+    // z=19的桌子位置，并排除在墙里或者和其他道具重复的
     ...[0, 1, 2, 5, 6, 7, 8, 10, 16, 17, 18].map((i) => ({
-        x: 12 + i * 2,
-        z: 17,
+        x: 14 + i * 2,
+        z: 19,
     })),
 
-    // z=45的桌子，并排除在墙里或者其他道具重复的
+    // z=47的桌子，并排除在墙里或者其他道具重复的
     ...Array.from({ length: 19 })
         .map((_, i) => ({
-            x: 12 + i * 2,
-            z: 45,
+            x: 14 + i * 2,
+            z: 47,
         }))
         .filter((_, i) => ![2, 4, 6, 9].includes(i)), // 2,4,6是带切菜板的桌子，9是是墙
 
-    // x=12的桌子位置
+    // x=14的桌子位置
     ...Array.from({ length: 8 }).map((_, i) => ({
-        x: 12,
-        z: 27 + i * 2,
+        x: 14,
+        z: 29 + i * 2,
     })),
 
-    // x=48的桌子位置，并排除出餐口占用的的
+    // x=50的桌子位置，并排除出餐口占用的的
     ...Array.from({ length: 13 })
-        .map((_, i) => ({ x: 48, z: 19 + i * 2 }))
+        .map((_, i) => ({ x: 50, z: 21 + i * 2 }))
         .filter((_, i) => i < 5 || i > 7), // 5~7是出窗口
 
     ...Array.from({ length: 5 }).flatMap((_, i) => [
         {
-            x: 28,
-            z: 19 + i * 2,
+            x: 30,
+            z: 21 + i * 2,
         },
         {
-            x: 32,
-            z: 19 + i * 2,
+            x: 34,
+            z: 21 + i * 2,
         },
     ]),
 
     ...Array.from({ length: 6 }).flatMap((_, i) => [
         {
-            x: 28,
-            z: 43 - i * 2,
+            x: 30,
+            z: 45 - i * 2,
         },
         {
-            x: 32,
-            z: 43 - i * 2,
+            x: 34,
+            z: 45 - i * 2,
         },
     ]),
 
-    { x: 30, z: 27 },
-    { x: 30, z: 33 },
+    { x: 32, z: 29 },
+    { x: 32, z: 35 },
 ];
 
 /**
@@ -73,8 +74,8 @@ const tablePositions: { x: number; z: number }[] = [
 const tableWithChoppingBoardPositions: { x: number; z: number }[] = Array.from({
     length: 3,
 }).map((_, i) => ({
-    x: 12 + [2, 4, 6][i] * 2,
-    z: 45,
+    x: 14 + [2, 4, 6][i] * 2,
+    z: 47,
 }));
 
 /**
@@ -91,26 +92,26 @@ const foodBoxConfigs: {
     foodType: IngredientType;
 }[] = [
     {
-        x: 12,
-        z: 19,
+        x: 14,
+        z: 21,
         mesh: 'mesh/食材箱 面包.vb',
         foodType: 'bread',
     },
     {
-        x: 12,
-        z: 21,
+        x: 14,
+        z: 23,
         mesh: 'mesh/食材箱 牛肉.vb',
         foodType: 'meat',
     },
     {
-        x: 12,
-        z: 23,
+        x: 14,
+        z: 25,
         mesh: 'mesh/食材箱 蔬菜.vb',
         foodType: 'vegetable',
     },
     {
-        x: 12,
-        z: 25,
+        x: 14,
+        z: 27,
         mesh: 'mesh/食材箱 番茄.vb',
         foodType: 'tomato',
     },
@@ -124,8 +125,8 @@ const foodBoxConfigs: {
 const stovePositions: { x: number; z: number }[] = Array.from({
     length: 5,
 }).map((_, i) => ({
-    x: 34 + i * 2,
-    z: 17,
+    x: 36 + i * 2,
+    z: 19,
 }));
 
 /**
@@ -136,8 +137,8 @@ const stovePositions: { x: number; z: number }[] = Array.from({
 const platePositions: { x: number; z: number }[] = Array.from({
     length: 5,
 }).map((_, i) => ({
-    x: 34 + i * 2,
-    z: 45,
+    x: 36 + i * 2,
+    z: 47,
 }));
 
 /**
@@ -184,6 +185,41 @@ const codeLadderS2: IInteractableData[] = [
             ),
         },
     })),
+    {
+        id: 'bin',
+        token: InteractableType.BinProp,
+        entityConfig: {
+            mesh: 'mesh/垃圾桶.vb',
+            position: new GameVector3(14, 1.8, 45),
+            meshScale: new GameVector3(0.15, 0.15, 0.15),
+        },
+    },
+    {
+        id: 'sink',
+        token: InteractableType.SinkProp,
+        entityConfig: {
+            mesh: 'mesh/洗碗池.vb',
+            position: new GameVector3(21, 1.35, 19),
+            meshScale: new GameVector3(0.125, 0.125, 0.125),
+        },
+        washPosition: new GameVector3(20, 1.35, 19),
+        cleanPosition: new GameVector3(22, 1.35, 19),
+    } as ISinkPropConfig,
+    {
+        id: 'deliveryWindow',
+        token: InteractableType.DeliveryWindowProp,
+        entityConfig: {
+            mesh: 'mesh/传送带.vb',
+            position: new GameVector3(51, 1.1, 32),
+            meshScale: new GameVector3(0.15, 0.15, 0.15),
+            meshOrientation: new GameQuaternion(0, 0, 0, 1).rotateY(
+                Math.PI / 2
+            ),
+        },
+        interactRadius: 3,
+        returnPlatePosition: new GameVector3(50, 1.5, 35),
+        isReturnPlateDirty: true,
+    } as IDeliveryWindowPropConfig,
     ...stovePositions.slice(0, 3).map<IContainerPropConfig>((position) => ({
         id: `pan_${position.x}_${position.z}`,
         token: InteractableType.PanProp,
@@ -207,26 +243,6 @@ const codeLadderS2: IInteractableData[] = [
         state: ContainerState.CLEAN,
         bindStaticContainerId: `stove_${position.x}_${position.z}`,
     })),
-    {
-        id: 'bin',
-        token: InteractableType.BinProp,
-        entityConfig: {
-            mesh: 'mesh/垃圾桶.vb',
-            position: new GameVector3(12, 1.8, 43),
-            meshScale: new GameVector3(0.15, 0.15, 0.15),
-        },
-    },
-    {
-        id: 'sink',
-        token: InteractableType.SinkProp,
-        entityConfig: {
-            mesh: 'mesh/洗碗池.vb',
-            position: new GameVector3(19, 1.35, 17),
-            meshScale: new GameVector3(0.125, 0.125, 0.125),
-        },
-        washPosition: new GameVector3(18, 1.35, 17),
-        cleanPosition: new GameVector3(20, 1.35, 17),
-    } as ISinkPropConfig,
     ...platePositions.map<IContainerPropConfig>((position) => ({
         id: `plate_${position.x}_${position.z}`,
         token: InteractableType.PlateProp,
