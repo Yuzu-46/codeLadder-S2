@@ -1,3 +1,5 @@
+import type { FoodType } from '../const/FoodConst';
+
 /**
  * 场景数据
  */
@@ -34,6 +36,14 @@ export interface ISceneData {
      * @description 创建的实体不参与游戏逻辑，只用于场景初始化
      */
     environmentEntities: Partial<GameEntityConfig>[];
+    /**
+     * 场景允许的配方 / Scene allowed recipes
+     */
+    allowedRecipes: FoodType[];
+    /**
+     * 场景的订单 / Scene orders
+     */
+    orders: FoodType[];
 }
 
 /**
