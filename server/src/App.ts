@@ -6,6 +6,7 @@ import { RemoteMgr } from './play/mgr/RemoteMgr';
 import { InteractableMgr } from './play/mgr/InteractableMgr';
 import { SceneMgr } from './play/mgr/SceneMgr';
 import { ConfigMgr } from './play/mgr/ConfigMgr';
+import { PropMgr } from './play/mgr/PropMgr';
 
 export class App extends Singleton<App>() {
     /** 玩家管理器 / Player manager */
@@ -20,6 +21,8 @@ export class App extends Singleton<App>() {
     private _sceneMgr: SceneMgr = SceneMgr.instance;
     /** 配置管理器 / Config manager */
     private _configMgr: ConfigMgr = ConfigMgr.instance;
+    /** 道具管理器 / Prop manager */
+    private _propMgr: PropMgr = PropMgr.instance;
 
     /**
      * 应用程序启动方法 / Application start method
@@ -31,6 +34,7 @@ export class App extends Singleton<App>() {
         console.log('(Server)：', i18n.t('welcome_game', { lng: 'zh-CN' }));
         console.log('(Server)：', i18n.t('welcome_ap', { lng: 'en' }));
         this._configMgr.load();
+        this._propMgr.init(id);
         this._playerMgr.start();
         this._remoteMgr.start();
         this._interactableMgr.start(id);

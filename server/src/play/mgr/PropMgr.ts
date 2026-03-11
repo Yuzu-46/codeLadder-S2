@@ -21,6 +21,7 @@ import type { BaseFoodProp } from '../entity/interactable/prop/movableProp/base/
 import { InteractableMgr } from './InteractableMgr';
 import { PropBindingMgr } from './PropBindingMgr';
 import type { Interactable } from '../entity/interactable/base/Interactable';
+import type { SceneType } from '../const/SceneConst';
 
 /**
  * 道具管理器 / Prop manager
@@ -30,6 +31,21 @@ export class PropMgr extends Singleton<PropMgr>() {
      * 配置管理器 / Config manager
      */
     private _configMgr = ConfigMgr.instance;
+    /**
+     * 允许的配方 / Allowed recipes
+     */
+    private _allowedRecipes: FoodType[] = [];
+
+    /**
+     * 初始化 / Initialize
+     * @param mapId 地图ID / Map ID
+     */
+    public init(mapId: string): void {
+        this._allowedRecipes =
+            this._configMgr.getSceneConfig(mapId as SceneType)
+                ?.allowedRecipes || [];
+    }
+
     /**
      * 在指定位置放置道具 / Place a prop at the specified position
      * @param position 位置 / Position
@@ -102,9 +118,9 @@ export class PropMgr extends Singleton<PropMgr>() {
         ingredients: IPropData<IngredientType, IngredientState>[]
     ): FoodType | null {
         // 遍历所有配方
-        for (const [foodType, recipe] of this._configMgr.getAllFoodConfig()) {
-            //TODO: 优化
-            if (this.canCreateRecipe(recipe, ingredients)) {
+        for (const foodType of this._allowedRecipes) {
+            const recipe = this._configMgr.getFoodConfig(foodType);
+            if (recipe && this.canCreateRecipe(recipe, ingredients)) {
                 return foodType as FoodType;
             }
         }
