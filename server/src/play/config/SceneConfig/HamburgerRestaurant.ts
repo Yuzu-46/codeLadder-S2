@@ -42,6 +42,8 @@ const hamburgerRestaurant: ISceneData = {
         },
     ],
     environmentEntities: [], // 暂时为空
+    allowedRecipes: [], // 暂时为空
+    orders: [], // 暂时为空
 };
 
 export default hamburgerRestaurant;

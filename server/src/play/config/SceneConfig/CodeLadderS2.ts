@@ -74,6 +74,16 @@ const codeLadderS2: ISceneData = {
             collides: true,
         },
     ],
+    allowedRecipes: [
+        'meatBurger',
+        'vegetableBurger',
+        'tomatoBurger',
+        'mixedBurger',
+        'vegetableTomatoBurger',
+        'nutritiousBurger',
+        'beefSoup',
+    ],
+    orders: ['meatBurger', 'mixedBurger', 'nutritiousBurger', 'beefSoup'],
 };
 
 export default codeLadderS2;
